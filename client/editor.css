@@ -1,0 +1,275 @@
+/* CSS declarations go here */
+body, html { 
+	margin: 0; 
+	padding: 0; 
+	color: #4a4744; 
+	background: #ffffff; 
+	font-family: arial,helvetica,sans-serif;
+	font-size: 13px;
+}
+h1 { font-size: 22px; margin-top: 0px; margin-bottom: 4px;}
+h2 { font-size: 18px; }
+input[type=button], button { 
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+	border:0px;
+	color:#ffffff;
+	font-size:13px;
+	padding: 6px 12px;
+	margin-bottom: 12px;
+	text-decoration:none;
+	min-width: 60px;
+	background-color: #999999;
+}
+input[type=text], textarea { 
+	border: solid;
+	border-width: 1px; 
+	border-color: #999999;
+	color: #4a4744;
+	padding: 4px;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+	font-size: 12px;
+}
+textarea { width: 364px; }
+input[type=text] { 
+	width: 200px; 
+	margin-left: 24px; 
+}
+table, th, td {
+	padding: 4px 12px 0px;
+	text-align: left;
+	margin: 0px;
+	border-spacing: 0px;
+}
+ul {
+	list-style-type: circle;
+	padding: 0px;
+	margin: 6px 0px 0px 18px;
+}
+li {
+	padding: 6px 8px 4px 0px; 
+	cursor: pointer;
+}
+
+/* LOGIN SCREEN */
+#loginScreen { 
+	width: 200px;
+	position: absolute; 
+	top: 1em; left: 1em; bottom: 0; right: 0;
+	font-size: 18px;
+}
+#login-buttons-google.login-button.single-login-button, 
+#messages-dialog-dismiss-button.login-button { 
+	background-color: #FF6319;
+	background-image: linear-gradient(to bottom, #ff9900, #FF6319);
+}
+
+/* FILE PAGE */
+#fileLeft { 
+	width: 110px; 
+	position: fixed; 
+	padding-top: 18px;
+	padding-left: 20px;
+	background-color: #999;
+	height:100%;
+	color: #fff;
+	cursor: default;
+}
+#fileRight {
+	margin: 0px 12px 0px 125px;
+}
+#fileRight th { min-width: 80px;}
+.tableButton { margin: 0px; }
+button.sortButton {
+	font-size:6px;
+	padding: 3px;
+	margin-bottom: 0px;
+	min-width: 5px;
+	vertical-align: text-bottom;
+}
+#confirmPopup { 
+	z-index: 1001;
+	position: fixed;
+	left: 50%;
+	margin-left: -103px;
+	top: 50%;
+	margin-top: -40px;
+	background-color: #999;
+	color: #fff;
+	border: solid 3px #999999;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+	padding: 0px 1em;
+}
+#confirmPopup p { color: #fff;}
+
+/* COMPOSE PAGE */
+#main { width: 100%; margin: 6px auto; }
+#composeLeft { float: left; width: 376px; margin: 12px 12px 0px 20px; }
+#composeRight { margin-left: 400px; padding: 0px 12px; margin-right: 22px; min-height: 500px;}
+
+
+/* slideout menu */
+
+.slideout {
+  position: fixed;
+  top: 270px;
+  right: 0px; 
+  -webkit-transition-duration: 0.5s;
+  -moz-transition-duration: 0.5s;
+  -o-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+}
+.composeNavButton {
+	margin-top: 0px;
+	background-color: #999;
+	cursor: default;	
+	-moz-border-radius:3px 0px 0px 3px;
+	-webkit-border-radius: 3px 0px 0px 3px;
+	border-radius:3px 0px 0px 3px;
+	z-index: 101;
+	color: #FFF;
+	text-align: center;
+	padding-top: 22px;
+	width: 28px; 
+	height:50px;
+	font-size: 20px;
+	opacity: 0.95;
+	-webkit-transition-duration: 0.5s;
+	-moz-transition-duration: 0.5s;
+	-o-transition-duration: 0.5s;
+	transition-duration: 0.5s;
+}
+.composeNav {
+	position: fixed;
+	top: 206px;
+	right: -142px; /* -282 */
+	-webkit-transition-duration: 0.5s;
+	-moz-transition-duration: 0.5s;
+	-o-transition-duration: 0.5s;
+	transition-duration: 0.5s;
+	width: 110px; /* 250 */ 
+	margin: 0px;
+	padding: 8px 12px 8px 20px;
+	color: #FFF;
+	background-color: #999;
+	cursor: default;	
+	-moz-border-radius: 6px 0px 0px 6px;
+	-webkit-border-radius: 6px 0px 0px 6px;
+	border-radius: 6px 0px 0px 6px;
+	z-index: 100;
+	opacity: 0.95;
+}
+.composeNav ul {
+	list-style-type: circle;
+	padding: 0px;
+	margin: 0px 0px 0px 18px;
+}
+.composeNav li {
+	padding: 5px 0px 0px 0px; 
+	cursor: pointer;
+}
+.composeNavOptions {
+	margin: 10px auto;
+	cursor: pointer;
+}
+
+.slideout.open-part, .slideout.open-all { transform: translateX(0px);}
+.slideout.open-part { width: 170px; }
+.slideout.open-all { width: 310px; }
+.slideout.closed { top: 270px; right: 0px; }
+.composeNav.closed { right: -142; width: 110px; }
+.composeNav.open-part { right: 0px; width: 110px; }
+.composeNav.open-all { right: 0px; width: 250px; }
+
+.composeNav.open-all.toolTips { top: 108px;}
+.composeNav.open-all.snippets { top: 6px;}
+
+
+#display { }
+#clear { clear: both; }
+/*
+#backToFileScreen, #toolTips, #snippets {
+	z-index: 200;
+	position: fixed;
+	right: .7em;
+	top: 1em;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+	border:0px;
+	color:#fff;
+	font-size:13px;
+	line-height: 18px;
+	padding: 6px 12px;
+	margin-bottom: 12px;
+	text-decoration:none;
+	width: 14px;
+	background-color: #999999;
+	text-align: center;
+	cursor: default;
+}
+#backToFileScreen { cursor: pointer;}
+#toolTips { top: 55px;}
+#snippets { top: 95px;}
+.tipsTextBox {
+	z-index: 1001;
+	position: fixed;
+	right: 57px;
+	top: 55px;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+	border:0px;
+	color:#fff;
+	font-size:13px;
+	line-height: 18px;
+	padding: 6px 12px;
+	margin-bottom: 12px;
+	text-decoration:none;
+	min-width: 14px;
+	background-color: #999999;
+	text-align: center;
+}
+#snippetsTextBox { top: 95px;}
+*/
+.snippetsText { text-decoration: underline; cursor: default; }
+
+/* display */
+#display table, #display td, #display p {
+	color:#4a4744;
+	font-size:13px;
+	line-height:18px;
+	font-family:arial,helvetica,sans-serif;
+	text-align:left;
+	padding: 0px;
+}
+#display p {margin-top:12px; margin-bottom:12px; }
+#display a { color:#235ab7; }
+#display sup, #display sub {
+    position: relative;
+    top: -0.4em;
+}
+#display sub { top: 0.4em; vertical-align: baseline; }
+#display .footnotes {
+	color:#4a4744;
+	font-size:12px;
+	line-height:15px;
+	font-family:arial,helvetica,sans-serif;
+	text-align:left;
+}
+/* adding new ordered list styling */
+/* #display ol, li { padding: 12px 0px 0px; margin-left: 8px; font-size: 12px; line-height: 12px;} */
+
+/* html display */
+#display_html { margin-right: 40px;  }
+#display_html p, #display_html plaintext {
+	margin-left: 0px;
+	padding-left: 0px;
+	font-size: 11px;
+	width: 476px;
+}

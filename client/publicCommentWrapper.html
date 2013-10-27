@@ -1,0 +1,123 @@
+<template name="publicCommentEmailWrapper">
+	{{#if display_setting "visual"}}
+		<!-- start inner table -->
+		<table width="100%" cellpadding="0" cellspacing="0" style="padding:12px 0px; margin:0 auto; background:#fff; font-family: Arial, helvetica, sans-serif; font-size: 13px; line-height: 18px; text-align:left; height: 45px;">
+		<!-- CREDO logo -->
+		<tr><td style="background:#FF6319;text-align:left; padding-left:12px; line-height:40px;padding-top:5px;color:#FFF;font-weight:bold; vertical-align:middle; height:45px;font-size:17px;font-weight:bold;">
+		    <img src="https://s3.amazonaws.com/s3.credoaction.com/images/logo-credo-120.png" border="0" alt="CREDO action" style="vertical-align:middle;min-width:120px;">
+		</td></tr>
+	{{else}}
+		<pre><plaintext>
+	{{/if}}
+{{#if getValue "headline"}}
+<!-- headline -->
+<tr><td style="text-align:left; padding: 15px 12px; font-family: Arial, helvetica, sans-serif; 
+	font-size: 18px; line-height: 22px;" valign="top">
+	<strong>{{getValue "headline"}}</strong>
+</td></tr>
+{{/if}}
+{{#if getValue "petition"}}
+<!-- start petition text table -->
+<tr><td style="background-color: #e6e4e0; padding: 0px 12px 12px;">
+{{#if getValue "statement_leadin"}}<p><em>{{getValue "statement_leadin"}}</em>{{/if}}
+<br/>
+<strong>{{getValue "petition"}}</strong></p>
+<p style="font-size: 11px; line-height: 15px; color: #ff6319; margin-bottom: 8px;">
+Submit a public comment:</p>
+<!-- start BUTTON: TAKE ACTION -->
+<table style="width: 180px; height: 45px;" cellspacing="0" cellpadding="0">
+<tr><td style="vertical-align: middle; text-align: center; font-weight: bold; font-size: 17px; 
+	line-height: 40px; background-color: #ff6319;">
+	<a style="text-decoration: none; color: white;" href="http://act.credoaction.com/sign/{{getValue "link"}}"> <!-- one-click link -->
+	<img border="0" alt="Take action now &#9658;" 
+	src="http://s3.amazonaws.com/s3.credoaction.com/images/buttons/btn_flat_take_action_now.png" 
+	style="vertical-align:middle;min-width:160px;"/></a>
+</td></tr>
+</table> <!-- end BUTTON: TAKE ACTION -->
+</td></tr>
+<!-- end petition text table -->
+{{/if}}
+<!-- start body of email -->
+<tr><td style="padding: 0px 12px 0px 12px; font-family: Arial, helvetica, sans-serif; 
+	font-size: 13px; line-height: 18px; text-align:left;">
+<p>Dear {{{django_string "{{ user.first_name|default:\"Friend\" }}"}}},</p>
+{{#if getValue "graphic"}}
+<!-- start image -->
+<table cellpadding=0 cellborder=0 align=right width=180 style="padding-left:5px; padding-right:0px;">
+<tr><td style="padding-right:0px;">
+<a href="http://act.credoaction.com/sign/{{getValue "link" }}?nosig=1" style="text-decoration:none;">
+<img src="{{getValue "graphic"}}" alt="{{getValue "graphic_alt_text" }}" align=right border=0>
+</a>
+</td></tr>
+</table>
+<!-- end image -->
+{{/if}}
+{{#if display_setting "visual"}}
+	{{#markdown}}{{{getValue "markdown_data" }}}{{/markdown}}
+{{else}}
+{{{show_html}}}
+{{/if}}
+{{#if getValue "signature"}}<p>{{ getValue "signature"}}<br />
+<a href="http://www.credoaction.com">CREDO Action from Working Assets</a>
+</p>{{/if}}
+<p style="font-size: 11px; line-height: 15px; color: #ff6319; margin-bottom: 8px; margin-top:0px;">
+	Submit a public comment:</p>
+<!-- start BUTTON: TAKE ACTION -->
+<table style="width: 180px; height: 45px;" cellspacing="0" cellpadding="0">
+<tr><td style="vertical-align: middle; text-align: center; font-weight: bold; font-size: 17px; 
+	line-height: 40px; background-color: #ff6319;">
+	<a style="text-decoration: none; color: white;" 
+	href="http://act.credoaction.com/sign/{{getValue "link" }}"> 
+	<!-- one-click link -->
+	<img border="0" alt="Take action now &#9658;" 
+	src="http://s3.amazonaws.com/s3.credoaction.com/images/buttons/btn_flat_take_action_now.png" 
+	style="vertical-align:middle;min-width:160px;"/></a>
+</td></tr>
+</table> <!-- end BUTTON: TAKE ACTION -->
+<p style="font-size: 11px; line-height: 18px; color: #ff6319;">
+	<a href="http://act.credoaction.com/sign/{{getValue "link"}}?nosig=1"> 
+	<!-- non-one click link -->
+	Learn more about this campaign </a>
+</p>
+{{#if getValue "footnotes"}}
+<p class="footnotes" style="padding: 12px 0px;">
+{{#markdown}}{{{getValue "footnotes" }}}{{/markdown}}
+</p>
+{{/if}}
+</td></tr> <!-- end body of email -->
+<tr><td style="padding: 20px 12px 0px 12px; font-family: Arial, helvetica, sans-serif; 
+	font-size: 13px; line-height: 18px; text-align:left;">
+<hr style="height: 1px;" size="1" /></td></tr>
+<!-- start FB and twitter -->
+<tr><td style="padding: 20px 12px 0px 12px; font-family: Arial, helvetica, sans-serif; 
+	font-size: 13px; line-height: 18px; text-align:left;">
+<table style="font-size: 11px; line-height: 13px; text-align: left; font-family: Arial, helvetica, sans-serif; 
+width: 100%;" border="0" cellpadding="0">
+<tr>
+<td style="padding: 5px 0px 0px;" valign="top" width="35">
+	<a href="http://www.facebook.com/share.php?no_akid=1&u=http%3A%2F%2Fact.credoaction.com%2Fsign%2F{{getValue "link"}}%3Fsource%3Dfb_share4%26referring_akid%3D{{{django_string "{{user.token}}"}}}">
+	<img src="http://s3.amazonaws.com/s3.credoaction.com/images/campaigns/facebook_28.gif" 
+	alt="FB" width="28" height="28" align="left" border="0" /></a></td>
+<td style="padding: 5px 0px 0px; font-size: 11px; line-height: 13px;" valign="top">
+	<a href="http://www.facebook.com/share.php?no_akid=1&u=http%3A%2F%2Fact.credoaction.com%2Fsign%2F{{getValue "link"}}%3Fsource%3Dfb_share4%26referring_akid%3D{{{django_string "{{user.token}}"}}}">
+	<strong>Share on Facebook</strong> <br /> Post to your wall</a></td>
+</tr>
+<tr>
+<td style="padding: 5px 0px;" valign="top" width="35">
+	<a href="{{getValue "twitter"}}">
+	<img src="http://s3.amazonaws.com/s3.credoaction.com/images/campaigns/twitter_28.gif" 
+	alt="Tw" width="28" height="28" align="left" border="0" /></a></td>
+<td style="padding: 5px 0px; font-size: 11px; line-height: 13px;" valign="top">
+	<a href="{{getValue "twitter"}}">
+	<strong>Tweet this</strong> <br /> Post to Twitter</a></td>
+</tr>
+</table>
+</td></tr> <!-- end FB and twitter -->
+	{{#if display_setting "visual"}}
+		<tr><td style="font-size:12px;padding: 0px 12px;">
+		© 2013 CREDO. All rights reserved.
+		</td></tr>
+		</table> <!-- end inner table -->
+	</div>
+	{{/if}}
+</template>

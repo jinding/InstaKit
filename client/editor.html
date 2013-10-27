@@ -1,0 +1,263 @@
+<head>
+  <title>Email editor</title>
+  <link rel="shortcut icon" type="image/x-icon" href="https://s3.amazonaws.com/s3.credoaction.com/images/logos/favicon.ico" />
+  <link rel="apple-touch-icon-precomposed" href="http://s3.amazonaws.com/s3.credoaction.com/templates/credo_ak_1.0-aws/assets/apple-touch-icon-precomposed.png">
+</head>
+
+<body>
+	{{#if currentUser}}
+		{{# if getValue "showComposePage"}}
+			{{> composePage}}
+		{{else}}
+			{{> filePage}}
+		{{/if}}
+	{{else}}
+		{{> loginPage}}
+	{{/if}}
+</body>
+
+<template name="loginPage">
+	<div id="loginScreen">
+	{{ loginButtons }}
+	</div>
+</template>
+
+<template name="filePage">
+	<div id="fileLeft">
+		new email
+		<hr style="color: #FFF;">
+		<ul>
+			<li id="templateChooser_petition">petition</li>
+			<li id="templateChooser_takeaction">take action</li>
+			<li id="templateChooser_publicComment">public comment</li>
+			<li id="templateChooser_call">call</li>
+			<li id="templateChooser_event">event</li>
+			<li id="templateChooser_mobilize">mobilize</li>
+			<li id="templateChooser_blank">blank</li>
+		</ul>
+		<hr style="color: #FFF; margin-top: 60px;">
+		<p id="logoutButton" style="cursor: pointer;">logout</p>
+	</div>
+	<div id="fileRight">
+		<table>
+			<tr>
+				<th>headline <button class="sortButton" id="sortHeadline">{{headlineButtonText}}</button></th>
+				<th>type <button class="sortButton" id="sortType">{{typeButtonText}}</button></th>
+				<th>created by <button class="sortButton" id="sortCreatedBy">{{createdByButtonText}}</button></th>
+				<th>saved by <button class="sortButton" id="sortSavedBy">{{savedByButtonText}}</button></th>
+				<th>last saved <button class="sortButton" id="sortSavedAt">{{savedAtButtonText}}</button></th>
+				<th colspan="3"><button name="filterButton" id="filterButton" class="tableButton" style="margin-bottom: 6px; vertical-align: text-bottom;">{{filterButtonText}}</button></th>
+			</tr>
+		{{#each fileList}}
+			<tr>
+				<td>{{headline}}</td>
+				<td>{{type}}</td>
+				<td>{{creator}}</td>
+				<td>{{savedBy}}</td>
+				<td style="min-width: 115px;">{{prettifyDate when}}</td>
+				<td style="padding-right:0px;"><input type="button" name="editButton" class="editButton tableButton" value="edit" style="background-color:#13D333;"></td>
+				<td style="padding-right:0px;"><input type="button" name="copyButton" class="copyButton tableButton" value="copy" style="background-color:#800080;"></td>
+				<td style="padding-right:0px;">{{#if belongsToUser creator }}<input type="button" name="deleteButton" class="deleteButton tableButton" value="delete" style="background-color:#FF0000;">{{else}}{{#if isAdmin}}<input type="button" name="deleteButton" class="deleteButton tableButton" value="admin delete">{{/if}}{{/if}}</td>
+			</tr>
+		{{/each}}
+		</table>
+	</div>
+	{{#if getValue "delete"}}
+		<div id="confirmPopup">
+			<p>Are you sure you want to delete this?</p>
+			<input type="button" name="yesDelete" id="yesDelete" value="yes, delete this" style="background-color:#13D333;">
+			<input type="button" name="cancelDelete" id="cancelDelete" value="cancel" style="background-color: #FF0000;">
+		</div>
+	{{/if}}
+</template>
+
+<template name="composePage">
+	<div id="main">
+		{{#if getValue "saveDialog"}}{{> saveDialog}}{{/if}}
+		<div id="composeLeft">
+			<h1>{{getValue "templateChooser"}} email</h1>
+			{{> templateOptions }}
+		</div>
+		{{> navBar}}
+		<div id="composeRight">
+			{{> display }}
+		</div>
+		<div id="clear"></div>
+	</div>
+</template>
+
+<template name="navBar">
+	<div class="slideout 
+	{{#if getValue "showNavBar"}}
+		{{#if getValue "toolTips"}}open-all
+			{{else}}{{#if getValue "snippets"}}open-all
+				{{else}}open-part
+			{{/if}}{{/if}}
+		{{else}}closed{{/if}}">
+		<div class="composeNavButton">«</div>
+		<div class="composeNav 
+		{{#if getValue "showNavBar"}}
+			{{#if getValue "toolTips"}}open-all toolTips
+			{{else}}{{#if getValue "snippets"}}open-all snippets
+				{{else}}open-part{{/if}}{{/if}}
+		{{else}}closed
+		{{/if}}">
+			<div class="composeNavOptions" id="buttonSave">save email</div>
+			<hr style="width: 40px; margin: 0px; padding: 0px; color: #FFF;">
+			<div class="composeNavOptions" id="buttonDisplay">show {{buttonText}}</div>
+			<hr style="width: 40px; margin: 0px; padding: 0px; color: #FFF;">
+			<div class="composeNavOptions" id="toolTips">markdown help
+				{{#if getValue "toolTips"}} {{> toolTipsText }} {{/if}}
+			</div>
+			<hr style="width: 40px; margin: 0px; padding: 0px; color: #FFF;">
+			<div class="composeNavOptions" id="snippets">ak snippets
+				{{#if getValue "snippets"}} {{> snippetsText }} {{/if}}
+			</div>
+			<hr style="width: 40px; margin: 0px; padding: 0px; color: #FFF;">
+			<div class="composeNavOptions" id="backToFileScreen">back to file page</div>
+		</div>
+	</div>
+</template>
+
+<template name="saveDialog">
+	<div id="confirmPopup">
+		<p>Are you sure you want to save this?</p>
+		<input type="button" name="yesSave" id="yesSave" value="yes, save this" style="background-color:#13D333;">
+		<input type="button" name="cancelSave" id="cancelSave" value="cancel" style="background-color: #FF0000;">
+	</div>
+</template>
+
+<template name="templateOptions">
+	{{#if wrapperStyle "petition"}}
+		{{> headline}}
+		{{> statement_leadin}}
+		{{> petition}}
+		{{> link}}
+		{{> graphic}}
+		{{> graphic_alt}}
+		{{> markdown_input}}
+		{{> signature }}
+		{{> footnotes}}
+		{{> twitter}}
+	{{else}}{{#if wrapperStyle "takeaction"}}
+		{{> headline}}
+		{{> statement_leadin}}
+		{{> petition}}
+		{{> link}}
+		{{> graphic}}
+		{{> graphic_alt}}
+		{{> markdown_input}}
+		{{> signature }}
+		{{> footnotes}}
+		{{> twitter}}
+	{{else}}{{#if wrapperStyle "public comment"}}
+		{{> headline}}
+		{{> statement_leadin}}
+		{{> petition}}
+		{{> link}}
+		{{> graphic}}
+		{{> graphic_alt}}
+		{{> markdown_input}}
+		{{> signature }}
+		{{> footnotes}}
+		{{> twitter}}
+	{{else}}{{#if wrapperStyle "call"}}
+		{{> headline}}
+		{{> petition}}
+		{{> link}}
+		{{> graphic}}
+		{{> graphic_alt}}
+		{{> markdown_input}}
+		{{> signature }}
+		{{> footnotes}}
+	{{else}}{{#if wrapperStyle "event"}}
+		{{> headline}}
+		{{> petition}}
+		{{> link}}
+		{{> graphic}}
+		{{> graphic_alt}}
+		{{> markdown_input}}
+		{{> signature }}
+		{{> footnotes}}
+	{{else}}{{#if wrapperStyle "mobilize"}}
+		{{> link}}
+		{{> signature }}
+		{{> topper}}
+		{{> headline}}
+		{{> markdown_input}}
+		{{> footnotes}}
+		{{> facebook }}
+		{{> twitter}}
+	{{else}}{{#if wrapperStyle "blank"}}
+		{{> headline}}
+		{{> markdown_input}}
+	{{/if}}{{/if}}{{/if}}{{/if}}{{/if}}{{/if}}{{/if}}
+</template>
+
+<template name="display">
+	<div id="display{{#if display_setting "html"}}_html{{/if}}">
+		{{#if wrapperStyle "petition"}}
+			{{> petitionEmailWrapper}}
+		{{else}} {{#if wrapperStyle "takeaction"}}
+			{{> takeactionEmailWrapper}}
+		{{else}} {{#if wrapperStyle "public comment"}}
+			{{> publicCommentEmailWrapper}}
+		{{else}} {{#if wrapperStyle "call"}}
+			{{> callEmailWrapper}}
+		{{else}} {{#if wrapperStyle "event"}}
+			{{> eventEmailWrapper}}
+		{{else}} {{#if wrapperStyle "mobilize"}}
+			{{> mobilizeEmailWrapper}}
+		{{else}} {{#if wrapperStyle "blank"}}
+			{{> blankEmailWrapper}}
+		{{/if}}{{/if}}{{/if}}{{/if}}{{/if}}{{/if}}{{/if}}
+	</div>
+</template>
+
+<template name="toolTipsText">
+<div class="tipsTextBox" id="toolTipsText">
+	<ul>
+		<li># H1, ## H2, ### H3</li>
+		<li>Links: [link text here](link.address.here)</li>
+		<li>Images: ![Alt text](/path/to/img.jpg "Optional title")</li>
+		<li>*italics* or _italics_</li>
+		<li>**bold** or __bold__</li>
+		<li>Line break: [two spaces at the end of a line]</li>
+		<li>> blockquote</li>
+		<li>* unordered list item</li>
+		<li>1. ordered list item'</li>
+		<li>use "\_" to make underscores not italicize</li>
+	</ul>
+</div>
+</template>
+
+<template name="snippetsText">
+<!--	<div class="tipsTextBox snippetsText" id="snippetsTextBox">-->
+	<ul>
+		<li><span class="snippetsText" id="insertLink">page URL</span></li>
+		<li><span class="snippetsText" id="userCity">user city</span></li>
+		<li><span class="snippetsText" id="userStateAbbrev">user state abbrev</span></li>
+		<li><span class="snippetsText" id="userStateName">user state name</span></li>
+		<li><span class="snippetsText" id="userZip">user zip</span></li>
+		<li><span class="snippetsText" id="targetAbbrev">Sen./Rep. Smith</span></li>
+		<li><span class="snippetsText" id="targetFullTitle">Senator/Representative Bob Smith</span></li>
+		<li><span class="snippetsText" id="targetFullName">Bob Smith</span></li>
+		<li><span class="snippetsText" id="targetLastName">Smith</span></li>
+		<li><span class="snippetsText" id="pluralThem">Him/her/them</span></li>
+		<li><span class="snippetsText" id="pluralThey">He/she/they</span></li>
+		<li><span class="snippetsText" id="pluralTheir">His/her/their</span></li>
+		<li><span class="snippetsText" id="pluralTheirs">His/hers/theirs</span></li>
+		<li><span class="snippetsText" id="pluralPeople">Person/people</span></li>
+		<li><span class="snippetsText" id="pluralS">"s" if plural</span></li>
+		<li><span class="snippetsText" id="pluralAre">Is/are</span></li>
+		<li><span class="snippetsText" id="pluralArent">Isn't/aren't</span></li>
+		<li><span class="snippetsText" id="pluralHave">Has/have</span></li>
+		<li><span class="snippetsText" id="pluralHavent">Hasn't/haven't</span></li>
+		<li><span class="snippetsText" id="pluralDo">Does/do</span></li>
+		<li><span class="snippetsText" id="pluralDont">Doesn't/don't</span></li>
+		<li><span class="snippetsText" id="pluralWere">Was/were</span></li>
+		<li><span class="snippetsText" id="pluralWerent">Wasn't/weren't</span></li>
+	</ul>
+</template>
+
+
