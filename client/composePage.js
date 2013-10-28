@@ -79,44 +79,48 @@ Template.facebook.events({
   }
 });
 
+function makeEmailFromSession() {
+  return {
+    id: Session.get("id"),
+    type: Session.get("templateChooser"),
+    headline: Session.get("headline"),
+    topper: Session.get("topper"),
+    statement_leadin: Session.get("statement_leadin"),
+    petition: Session.get("petition"),
+    link: Session.get("link"),
+    graphic: Session.get("graphic"),
+    graphic_alt_text: Session.get("graphic_alt_text"),
+    signature: Session.get("signature"),
+    footnotes: Session.get("footnotes"),
+    facebook: Session.get("facebook"),
+    twitter: Session.get("twitter"),
+    markdown_data: Session.get("markdown_data"),
+    creator: Session.get("creator") || Meteor.user().profile.name,
+    savedBy: Meteor.user().profile.name
+  }
+};
+
 Template.saveDialog.events({
   'click #cancelSave': function() {
       Session.set("saveDialog",false);
   },
   'click #yesSave': function() {
-    var email = {
-        id: Session.get("id"),
-        type: Session.get("templateChooser"),
-        headline: Session.get("headline"),
-        topper: Session.get("topper"),
-        statement_leadin: Session.get("statement_leadin"),
-        petition: Session.get("petition"),
-        link: Session.get("link"),
-        graphic: Session.get("graphic"),
-        graphic_alt_text: Session.get("graphic_alt_text"),
-        signature: Session.get("signature"),
-        footnotes: Session.get("footnotes"),
-        facebook: Session.get("facebook"),
-        twitter: Session.get("twitter"),
-        markdown_data: Session.get("markdown_data"),
-        creator: Session.get("creator"),
-        savedBy: Meteor.user().profile.name
-      };
-
-      Meteor.call('saveFile', email, function (err, res) {
-        console.log(email);
-        if (err)
-          Session.set('saveError', err.error);
-        else
-          Session.set('saveState', res);
-      });
-
-      Session.set("showComposePage",false);
-      Session.set("saveDialog",false);
+    Meteor.call('saveFile', makeEmailFromSession(), function (err, res) {
+      if (err) {
+        Session.set('saveError', err.error);
+      } else {
+        Session.set("emailNotSaved",false);
+        Session.set("saveDialog",false);
+        Router.go('home');
+      }
+    });
   }
 });
 
 Template.composePage.events({
+  'keyup input[type=text], textarea': function() {
+    Session.set("emailNotSaved",true);
+  },
   'click #display, click #display_html, click #composeRight': function() {
     Session.set("showNavBar",false);
     Session.set("snippets",false);
@@ -126,6 +130,24 @@ Template.composePage.events({
     var range = document.createRange();
     range.selectNode(document.getElementById("display_html"));
     window.getSelection().addRange(range);  
+  },
+  'click #buttonSave': function(evt) {
+    if (Session.get("newEmail")
+        || Session.equals("creator", Meteor.user().profile.name)) {
+      Meteor.call('saveFile', makeEmailFromSession(), function (err, res) {
+        if (err) {
+          Session.set('saveError', err.error);
+        } else {
+        Session.set("emailNotSaved",false);
+          Router.go('home');
+        }
+      });
+    } else {
+      Session.set("saveDialog",true);
+    }
+  },
+  'click #buttonBackToFilePage': function() {
+      Router.go('home');
   }
 });
 
@@ -138,66 +160,6 @@ Template.navBar.events({
     }
     evt.preventDefault();
   },
-  'click #buttonSave': function(evt) {
-    if (Session.get("newEmail")) {
-      var email = {
-        type: Session.get("templateChooser"),
-        headline: Session.get("headline"),
-        topper: Session.get("topper"),
-        statement_leadin: Session.get("statement_leadin"),
-        petition: Session.get("petition"),
-        link: Session.get("link"),
-        graphic: Session.get("graphic"),
-        graphic_alt_text: Session.get("graphic_alt_text"),
-        signature: Session.get("signature"),
-        footnotes: Session.get("footnotes"),
-        facebook: Session.get("facebook"),
-        twitter: Session.get("twitter"),
-        markdown_data: Session.get("markdown_data"),
-        creator: Meteor.user().profile.name,
-        savedBy: Meteor.user().profile.name
-      };
-      Meteor.call('saveFile', email, function (err, res) {
-        console.log(email);
-        if (err)
-          Session.set('saveError', err.error);
-        else
-          Session.set('saveState', res);
-      });
-      Session.set("showComposePage",false);
-    } else {
-      if (Session.equals("creator", Meteor.user().profile.name)) {
-        var email = {
-          id: Session.get("id"),
-          type: Session.get("templateChooser"),
-          headline: Session.get("headline"),
-          topper: Session.get("topper"),
-          statement_leadin: Session.get("statement_leadin"),
-          petition: Session.get("petition"),
-          link: Session.get("link"),
-          graphic: Session.get("graphic"),
-          graphic_alt_text: Session.get("graphic_alt_text"),
-          signature: Session.get("signature"),
-          footnotes: Session.get("footnotes"),
-          facebook: Session.get("facebook"),
-          twitter: Session.get("twitter"),
-          markdown_data: Session.get("markdown_data"),
-          creator: Session.get("creator"),
-          savedBy: Meteor.user().profile.name
-        };
-        Meteor.call('saveFile', email, function (err, res) {
-          console.log(email);
-          if (err)
-            Session.set('saveError', err.error);
-          else
-            Session.set('saveState', res);
-        });
-        Session.set("showComposePage",false);
-      } else {
-        Session.set("saveDialog",true);
-      }
-    }
-  },
   'click .composeNavButton': function() {
     if (Session.get("showNavBar")) {
       Session.set("showNavBar",false);
@@ -208,9 +170,6 @@ Template.navBar.events({
       Session.set("snippets",false);
       Session.set("toolTips",false);
     }
-  },
-  'click #backToFileScreen': function() {
-      Session.set("showComposePage",false);
   },
   'click #toolTips': function() {
       if (Session.get("toolTips")) {

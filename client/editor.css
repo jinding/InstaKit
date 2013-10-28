@@ -22,6 +22,7 @@ input[type=button], button {
 	min-width: 60px;
 	background-color: #999999;
 }
+input[type=button]:hover, button:hover { opacity: 0.75; }
 input[type=text], textarea { 
 	border: solid;
 	border-width: 1px; 
@@ -51,15 +52,14 @@ ul {
 }
 li {
 	padding: 6px 8px 4px 0px; 
-	cursor: pointer;
 }
 
 /* LOGIN SCREEN */
 #loginScreen { 
-	width: 200px;
-	position: absolute; 
-	top: 1em; left: 1em; bottom: 0; right: 0;
 	font-size: 18px;
+	width: 300px;
+	text-align: center;
+	margin: 60px auto 0px;
 }
 #login-buttons-google.login-button.single-login-button, 
 #messages-dialog-dismiss-button.login-button { 
@@ -78,9 +78,16 @@ li {
 	color: #fff;
 	cursor: default;
 }
+#fileLeft a { text-decoration: none; color: #FFF; }
+#fileLeft a:hover { color: #DDD; }
+p#logoutButton:hover { color: #DDD;}
 #fileRight {
 	margin: 0px 12px 0px 125px;
 }
+#fileRight a { text-decoration: none; }
+#fileRight a:link { color: #01D;}
+#fileRight a:visited { color: #0003AA;}
+#fileRight a:hover { opacity: .8; text-decoration: underline; }
 #fileRight th { min-width: 80px;}
 .tableButton { margin: 0px; }
 button.sortButton {
@@ -117,7 +124,7 @@ button.sortButton {
 
 .slideout {
   position: fixed;
-  top: 270px;
+  top: 236px; /* 270px; */
   right: 0px; 
   -webkit-transition-duration: 0.5s;
   -moz-transition-duration: 0.5s;
@@ -135,7 +142,7 @@ button.sortButton {
 	color: #FFF;
 	text-align: center;
 	padding-top: 22px;
-	width: 28px; 
+	width: 38px; /* 28px; */
 	height:50px;
 	font-size: 20px;
 	opacity: 0.95;
@@ -179,9 +186,9 @@ button.sortButton {
 }
 
 .slideout.open-part, .slideout.open-all { transform: translateX(0px);}
-.slideout.open-part { width: 170px; }
-.slideout.open-all { width: 310px; }
-.slideout.closed { top: 270px; right: 0px; }
+.slideout.open-part { width: 180px; }
+.slideout.open-all { width: 320px; }
+.slideout.closed { top: 236px; right: 0px; }
 .composeNav.closed { right: -142; width: 110px; }
 .composeNav.open-part { right: 0px; width: 110px; }
 .composeNav.open-all { right: 0px; width: 250px; }
