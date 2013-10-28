@@ -20,7 +20,7 @@ Template.statement_leadin.events({
 });
 
 Template.petition.events({
-  'keyup input[type=text]': function() {
+  'keyup textarea': function() {
     Session.set("petition", $('#petition_text').val());
   }
 });
@@ -118,7 +118,7 @@ Template.saveDialog.events({
 });
 
 Template.composePage.events({
-  'keyup input[type=text], textarea': function() {
+  'keyup input[type=text], keyup textarea': function() {
     Session.set("emailNotSaved",true);
   },
   'click #display, click #display_html, click #composeRight': function() {
@@ -138,7 +138,7 @@ Template.composePage.events({
         if (err) {
           Session.set('saveError', err.error);
         } else {
-        Session.set("emailNotSaved",false);
+          Session.set("emailNotSaved",false);
           Router.go('home');
         }
       });

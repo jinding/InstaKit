@@ -14,8 +14,7 @@
 
 <template name="petition">
 	<div id="petition">
-		<label for="petition_text">Statement text:</label>
-		<input type="text" id="petition_text" value="{{getValue "petition"}}">
+		<textarea class="textbox" rows="2" type="text" id="petition_text">{{#if getValue "petition"}}{{getValue "petition"}}{{else}}Statement text{{/if}}</textarea>
 	</div>
 </template>
 
