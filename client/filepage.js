@@ -2,94 +2,54 @@ Template.filePage.fileList = function() {
   var sort = Session.get("fileSort");
   var username = Meteor.user().profile.name;
 
-  if (Session.equals("filter", 'own')) {
+  // only display files where isDeleted is not true
+  if (Session.equals("filter", 'all')) {
     switch (sort) {
-      case 'savedAtAsc': return Files.find({$or: [{savedBy: username}, {creator: username}]},{sort: {when: 1}});
-      case 'savedAtDesc': return Files.find({$or: [{savedBy: username}, {creator: username}]},{sort: {when: -1}});
-      case 'headlineAsc': return Files.find({$or: [{savedBy: username}, {creator: username}]},{sort: {headline: 1}});
-      case 'headlineDesc': return Files.find({$or: [{savedBy: username}, {creator: username}]},{sort: {headline: -1}});
-      case 'typeAsc': return Files.find({$or: [{savedBy: username}, {creator: username}]},{sort: {type: 1}});
-      case 'typeDesc': return Files.find({$or: [{savedBy: username}, {creator: username}]},{sort: {type: -1}});
-      case 'createdByAsc': return Files.find({$or: [{savedBy: username}, {creator: username}]},{sort: {creator: 1}});
-      case 'createdByDesc': return Files.find({$or: [{savedBy: username}, {creator: username}]},{sort: {creator: -1}});
-      case 'savedByAsc': return Files.find({$or: [{savedBy: username}, {creator: username}]},{sort: {savedBy: 1}});
-      case 'savedByDesc': return Files.find({$or: [{savedBy: username}, {creator: username}]},{sort: {savedBy: -1}});
-      default: Session.set("fileSort", "savedAtDesc"); return Files.find({$or: [{savedBy: username}, {creator: username}]},{sort: {when: -1}});
+      case 'savedAtAsc': return Files.find({type: {$ne: 'page'}, isDeleted: {$ne: true}},{sort: {when: 1}});
+      case 'savedAtDesc': return Files.find({type: {$ne: 'page'}, isDeleted: {$ne: true}},{sort: {when: -1}});
+      case 'headlineAsc': return Files.find({type: {$ne: 'page'}, isDeleted: {$ne: true}},{sort: {headline: 1}});
+      case 'headlineDesc': return Files.find({type: {$ne: 'page'}, isDeleted: {$ne: true}},{sort: {headline: -1}});
+      case 'typeAsc': return Files.find({type: {$ne: 'page'}, isDeleted: {$ne: true}},{sort: {type: 1}});
+      case 'typeDesc': return Files.find({type: {$ne: 'page'}, isDeleted: {$ne: true}},{sort: {type: -1}});
+      case 'createdByAsc': return Files.find({type: {$ne: 'page'}, isDeleted: {$ne: true}},{sort: {creator: 1}});
+      case 'createdByDesc': return Files.find({type: {$ne: 'page'}, isDeleted: {$ne: true}},{sort: {creator: -1}});
+      case 'savedByAsc': return Files.find({type: {$ne: 'page'}, isDeleted: {$ne: true}},{sort: {savedBy: 1}});
+      case 'savedByDesc': return Files.find({type: {$ne: 'page'}, isDeleted: {$ne: true}},{sort: {savedBy: -1}});
+      default: Session.set("fileSort", "savedAtDesc"); return Files.find({type: {$ne: 'page'}, isDeleted: {$ne: true}},{sort: {when: -1}});
     }
   } else {
     switch (sort) {
-      case 'savedAtAsc': return Files.find({},{sort: {when: 1}});
-      case 'savedAtDesc': return Files.find({},{sort: {when: -1}});
-      case 'headlineAsc': return Files.find({},{sort: {headline: 1}});
-      case 'headlineDesc': return Files.find({},{sort: {headline: -1}});
-      case 'typeAsc': return Files.find({},{sort: {type: 1}});
-      case 'typeDesc': return Files.find({},{sort: {type: -1}});
-      case 'createdByAsc': return Files.find({},{sort: {creator: 1}});
-      case 'createdByDesc': return Files.find({},{sort: {creator: -1}});
-      case 'savedByAsc': return Files.find({},{sort: {savedBy: 1}});
-      case 'savedByDesc': return Files.find({},{sort: {savedBy: -1}});
-      default: Session.set("fileSort", "savedAtDesc"); return Files.find({},{sort: {when: -1}});
+      case 'savedAtAsc': return Files.find({type: {$ne: 'page'}, isDeleted: {$ne: true}, $or: [{savedBy: username}, {creator: username}]},{sort: {when: 1}});
+      case 'savedAtDesc': return Files.find({type: {$ne: 'page'}, isDeleted: {$ne: true}, $or: [{savedBy: username}, {creator: username}]},{sort: {when: -1}});
+      case 'headlineAsc': return Files.find({type: {$ne: 'page'}, isDeleted: {$ne: true}, $or: [{savedBy: username}, {creator: username}]},{sort: {headline: 1}});
+      case 'headlineDesc': return Files.find({type: {$ne: 'page'}, isDeleted: {$ne: true}, $or: [{savedBy: username}, {creator: username}]},{sort: {headline: -1}});
+      case 'typeAsc': return Files.find({type: {$ne: 'page'}, isDeleted: {$ne: true}, $or: [{savedBy: username}, {creator: username}]},{sort: {type: 1}});
+      case 'typeDesc': return Files.find({type: {$ne: 'page'}, isDeleted: {$ne: true}, $or: [{savedBy: username}, {creator: username}]},{sort: {type: -1}});
+      case 'createdByAsc': return Files.find({type: {$ne: 'page'}, isDeleted: {$ne: true}, $or: [{savedBy: username}, {creator: username}]},{sort: {creator: 1}});
+      case 'createdByDesc': return Files.find({type: {$ne: 'page'}, isDeleted: {$ne: true}, $or: [{savedBy: username}, {creator: username}]},{sort: {creator: -1}});
+      case 'savedByAsc': return Files.find({type: {$ne: 'page'}, isDeleted: {$ne: true}, $or: [{savedBy: username}, {creator: username}]},{sort: {savedBy: 1}});
+      case 'savedByDesc': return Files.find({type: {$ne: 'page'}, isDeleted: {$ne: true}, $or: [{savedBy: username}, {creator: username}]},{sort: {savedBy: -1}});
+      default: Session.set("fileSort", "savedAtDesc"); return Files.find({type: {$ne: 'page'}, isDeleted: {$ne: true}, $or: [{savedBy: username}, {creator: username}]},{sort: {when: -1}});
     }
   }
 };
 
-Template.filePage.headlineButtonText = function() {
-  switch (Session.get("fileSort")) {
-    case 'headlineAsc': return "▲";
-    case 'headlineDesc': return '▼';
-    default: return '—';
-  }
-}
-
-Template.filePage.typeButtonText = function() {
-  switch (Session.get("fileSort")) {
-    case 'typeAsc': return "▲";
-    case 'typeDesc': return '▼';
-    default: return '—';
-  }
-}
-
-Template.filePage.createdByButtonText = function() {
-  switch (Session.get("fileSort")) {
-    case 'createdByAsc': return "▲";
-    case 'createdByDesc': return '▼';
-    default: return '—';
-  }
-}
-
-Template.filePage.savedByButtonText = function() {
-  switch (Session.get("fileSort")) {
-    case 'savedByAsc': return "▲";
-    case 'savedByDesc': return '▼';
-    default: return '—';
-  }
-}
-
-Template.filePage.savedAtButtonText = function() {
-  switch (Session.get("fileSort")) {
-    case 'savedAtAsc': return "▲";
-    case 'savedAtDesc': return '▼';
-    default: return '—';
-  }
-}
-Template.filePage.currentUserName = function() {
-  return Meteor.user().profile.name;
-}
-
-Template.filePage.belongsToUser = function(name) {
-  return Meteor.user().profile.name === name ? true : false;
-}
 
 Template.filePage.filterButtonText = function() {
-  if (Session.equals("filter","own")) {
-    return "show all";
-  } else {
+  if (Session.equals("filter","all")) {
     return "show my emails";
+  } else {
+    return "show all";
   }
 }
 
-
 Template.filePage.events({
+  // go to restore files page -- only for admins
+  'click #restoreLink': function(evt) {
+    evt.preventDefault();
+    Router.go('restore');
+  },
+  // compose email chooser functions
   'click #templateChooser_petition': function(evt) {
     evt.preventDefault();
     Router.go('compose', 
@@ -138,10 +98,8 @@ Template.filePage.events({
                 {}, 
                 {query: {template: 'blank'}}
               );
-  }
-}); 
-
-Template.filePage.events({
+  },
+  // edit, copy and delete functions
   'click #logoutButton': function() {
     Meteor.logout();
   },
@@ -156,22 +114,23 @@ Template.filePage.events({
               );
   },
   'click .deleteButton': function() { 
-    Session.set("delete", this._id);
+    Session.set("confirmDelete", this._id);
   },
   'click #filterButton': function() {
-    if (Session.equals("filter", 'own')) {
-      Session.set("filter", "all");
-    } else {
+    if (Session.equals("filter", 'all')) {
       Session.set("filter", "own");
+    } else {
+      Session.set("filter", "all");
     }
   },
   'click #yesDelete': function() {
-    Files.remove(Session.get("delete"));
-    Session.set("delete","");
+    Files.update(Session.get("confirmDelete"), {$set: {isDeleted: true}});
+    Session.set("confirmDelete","");
   },
   'click #cancelDelete': function() {
-    Session.set("delete","");
+    Session.set("confirmDelete","");
   },
+  // sorting functions
   'click #sortSavedAt': function() {
     if (Session.equals("fileSort","savedAtAsc")) {
       Session.set("fileSort", "savedAtDesc");
@@ -209,7 +168,3 @@ Template.filePage.events({
   },
 });
 
-Template.filePage.isAdmin = function() {
-  var admins = new Array('Jin Ding');
-  return admins.indexOf(Meteor.user().profile.name) >= 0 ? true : false;
-}

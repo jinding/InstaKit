@@ -12,9 +12,10 @@
 	</div>
 </template>
 
+<!-- MAILINGS TEMPLATES -->
 <template name="filePage">
 	<div id="fileLeft">
-		new email
+		new mailing
 		<hr style="color: #FFF;">
 		<ul>
 			<li id="templateChooser_petition"><a href="{{ pathFor 'compose' template='petition' }}">petition</a></li>
@@ -25,7 +26,10 @@
 			<li id="templateChooser_mobilize"><a href="{{ pathFor 'compose' template='mobilize' }}">mobilize</a></li>
 			<li id="templateChooser_blank"><a href="{{ pathFor 'compose' template='blank' }}">blank</a></li>
 		</ul>
-		<hr style="color: #FFF; margin-top: 60px;">
+		<hr style="color: #FFF; margin-top: 40px;">
+<!--		<p><a href="{{ pathFor 'pages' }}" id="returnFilePage">pages</a></p> -->
+		{{# if isAdmin}}<p><a href="{{pathfor 'restore'}}" id="restoreLink">admin undelete</a></p>
+		{{/if}}
 		<p id="logoutButton" style="cursor: pointer;">logout</p>
 	</div>
 	<div id="fileRight">
@@ -51,7 +55,7 @@
 		{{/each}}
 		</table>
 	</div>
-	{{#if getValue "delete"}}
+	{{#if getValue "confirmDelete"}}
 		<div id="confirmPopup">
 			<p>Are you sure you want to delete this?</p>
 			<input type="button" name="yesDelete" id="yesDelete" value="yes, delete this" style="background-color:#13D333;">
@@ -60,23 +64,66 @@
 	{{/if}}
 </template>
 
+<!-- ADMIN DELETE PAGE TEMPLATES -->
+<template name="adminDeletedFilesPage">
+	<div id="fileLeft">
+		<p><a href="{{ pathFor 'mailings' }}" id="returnFilePage">mailings</a></p>
+		<p><a href="{{ pathFor 'pages' }}" id="returnFilePage">pages</a></p>
+		<hr style="color: #FFF;">
+		<p id="logoutButton" style="cursor: pointer;">logout</p>
+	</div>
+	<div id="fileRight">
+		<table>
+			<tr>
+				<th>headline <button class="sortButton" id="sortHeadline">{{headlineButtonText}}</button></th>
+				<th>type <button class="sortButton" id="sortType">{{typeButtonText}}</button></th>
+				<th>created by <button class="sortButton" id="sortCreatedBy">{{createdByButtonText}}</button></th>
+				<th>saved by <button class="sortButton" id="sortSavedBy">{{savedByButtonText}}</button></th>
+				<th>last saved <button class="sortButton" id="sortSavedAt">{{savedAtButtonText}}</button></th>
+				<th></th><th></th>
+			</tr>
+		{{#each fileList}}
+			<tr>
+				<td><a href="{{ pathFor 'compose' }}" class="editButton">{{#if headline}}{{headline}}{{else}}{{pageTitle}}{{/if}}</a></td>
+				<td>{{type}}</td>
+				<td>{{creator}}</td>
+				<td>{{savedBy}}</td>
+				<td style="min-width: 115px;">{{prettifyDate when}}</td>
+				<td style="padding-right:0px;">{{#if isAdmin}}<input type="button" name="restoreButton" class="restoreButton tableButton" value="admin restore" style="background-color:#13D333;">{{/if}}</td>
+				<td style="padding-right:0px;">{{#if isAdmin}}<input type="button" name="deleteButton" class="deleteButton tableButton" value="admin delete" style="background-color:#FF0000;">{{/if}}</td>
+			</tr>
+		{{/each}}
+		</table>
+	</div>
+	{{#if getValue "confirmDelete"}}
+		<div id="confirmPopup">
+			<p>Are you sure you want to delete this?<br>This action cannot be reversed.</p>
+			<input type="button" name="yesDelete" id="yesDelete" value="yes, delete this" style="background-color:#13D333;">
+			<input type="button" name="cancelDelete" id="cancelDelete" value="cancel" style="background-color: #FF0000;">
+		</div>
+	{{/if}}
+</template>
+
+<!-- COMPOSE MAILING TEMPLATES -->
 <template name="composePage">
 	<div id="main">
 		{{#if getValue "saveDialog"}}{{> saveDialog}}{{/if}}
 		<div id="composeLeft">
+			<div class="buttonHeader">
 			{{#if getValue "emailNotSaved" }}
 				<button id="buttonSave" style="background-color: #01E;">save {{getValue "templateChooser"}} email</button>
 				<button id="buttonBackToFilePage">discard changes</button>
 			{{else}}
 				<button id="buttonBackToFilePage">back to file page</button>
 			{{/if}}
+			</div>
 			{{> templateOptions }}
 		</div>
 		{{> navBar}}
 		<div id="composeRight">
 			{{> display }}
 		</div>
-		<div id="clear"></div>
+		<div class="clear"></div>
 	</div>
 </template>
 
@@ -222,7 +269,6 @@
 </template>
 
 <template name="snippetsText">
-<!--	<div class="tipsTextBox snippetsText" id="snippetsTextBox">-->
 	<ul>
 		<li><span class="snippetsText" id="insertLink">page URL</span></li>
 		<li><span class="snippetsText" id="userCity">user city</span></li>
@@ -250,4 +296,95 @@
 	</ul>
 </template>
 
+<!-- PAGE TEMPLATES -->
+<template name="createPage">
+  <div id="createPage">
+	<div class="createPageInputs">
+		<div class="buttonHeader">
+		{{#if getValue "pageNotSaved" }}
+			<button id="buttonSavePage" style="background-color: #01E;">save {{getValue "templateChooser"}} page</button>
+			<button id="buttonBackToPageList">discard changes</button>
+		{{else}}
+			<button id="buttonBackToPageList">back to pages</button>
+		{{/if}}
+			<button id="buttonAPI">push to AK</button>
+		</div>
+		{{> createPageInputs}}
+	</div>
+	<div id="createPageDisplay">
+		{{> createPageDisplay }}
+	</div>
+  	<div class="clear"></div>
+  </div>
+</template>
+
+<template name="createPageInputs">
+	{{> templatePageTitle }}
+	{{> templatePageName }}
+	{{> templatePageStatement }}
+	{{> templatePageAboutText }}
+	{{> templatePageGraphics }}
+	{{> templatePageTAF }}
+	{{> templatePageFacebook }}
+	{{> templatePageTwitterCopy }}
+	{{> templatePageSharePageLink }}
+	{{> templatePageConfEmail }}
+</template>
+
+<template name="createPageDisplay">
+	{{> pageCreationDisplay }}
+</template>
+
+<template name="savePageDialog">
+	<div id="confirmPopup">
+		<p>Are you sure you want to save this?</p>
+		<input type="button" name="yesSave" id="yesSave" value="yes, save this" style="background-color:#13D333;">
+		<input type="button" name="cancelSave" id="cancelSave" value="cancel" style="background-color: #FF0000;">
+	</div>
+</template>
+
+<template name="pages">
+	<div id="fileLeft">
+		new petition page
+		<hr style="color: #FFF;">
+		<ul>
+			<li id="templateChooser_petition"><a href="{{ pathFor 'createPage' template='petition' }}">petition</a></li>
+		</ul>
+		<hr style="color: #FFF; margin-top: 40px;">
+		<p><a href="{{ pathFor 'mailings' }}" id="returnFilePage">mailings</a></p>
+		{{# if isAdmin}}<p><a href="{{pathfor 'restore'}}" id="restoreLink">admin undelete</a></p>
+		{{/if}}
+		<p id="logoutButton" style="cursor: pointer;">logout</p>
+	</div>
+	<div id="fileRight">
+		<table>
+			<tr>
+				<th>title <button class="sortButton" id="sortHeadline">{{headlineButtonText}}</button></th>
+				<th>type <button class="sortButton" id="sortType">{{typeButtonText}}</button></th>
+				<th>created by <button class="sortButton" id="sortCreatedBy">{{createdByButtonText}}</button></th>
+				<th>saved by <button class="sortButton" id="sortSavedBy">{{savedByButtonText}}</button></th>
+				<th>last saved <button class="sortButton" id="sortSavedAt">{{savedAtButtonText}}</button></th>
+				<th colspan="2"><button name="filterButton" id="filterButton" class="tableButton" style="margin-bottom: 6px; vertical-align: text-bottom; background-color: #01E;">{{filterButtonText}}</button></th>
+			</tr>
+		{{#each fileList}}
+			<tr>
+				<td><a href="{{ pathFor 'createPage' }}" class="editButton">{{pageTitle}}</a></td>
+				<td>{{pageType}}</td>
+				<td>{{creator}}</td>
+				<td>{{savedBy}}</td>
+				<td style="min-width: 115px;">{{prettifyDate when}}</td>
+				<td style="padding-right:0px;"><input type="button" name="copyButton" class="copyButton tableButton" value="copy" style="background-color:#13D333;"></td>
+				<td style="padding-right:0px;">{{#if belongsToUser creator }}<input type="button" name="deleteButton" class="deleteButton tableButton" value="delete" style="background-color:#FF0000;">{{else}}{{#if isAdmin}}<input type="button" name="deleteButton" class="deleteButton tableButton" value="admin delete">{{/if}}{{/if}}</td>
+			</tr>
+		{{/each}}
+		</table>
+	</div>
+	{{#if getValue "confirmDelete"}}
+		<div id="confirmPopup">
+			<p>Are you sure you want to delete this?</p>
+			<input type="button" name="yesDelete" id="yesDelete" value="yes, delete this" style="background-color:#13D333;">
+			<input type="button" name="cancelDelete" id="cancelDelete" value="cancel" style="background-color: #FF0000;">
+		</div>
+	{{/if}}
+</template>
 

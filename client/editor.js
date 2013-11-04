@@ -24,9 +24,14 @@ Handlebars.registerHelper("sigFirstName", function() {
   return Session.get("signature").split(' ')[0];
 });
 
-Handlebars.registerHelper("show_html", function() {
+Handlebars.registerHelper("show_html", function(field) {
   var converter = new Showdown.converter();
-  return converter.makeHtml(Session.get("markdown_data"));
+  return converter.makeHtml(Session.get(field));
+});
+
+Handlebars.registerHelper("removeBackslash", function(field) {
+  var str = Session.get(field);
+  return str.replace(/\\/g,'');
 });
 
 Handlebars.registerHelper("prettifyDate", function(d) {
@@ -51,6 +56,7 @@ Handlebars.registerHelper("prettifyDate", function(d) {
 
 // router
 
+// email functions
 function setSessionVarsForEmail(obj) {
   Session.set("id", obj._id);
   Session.set("markdown_data", obj.markdown_data);
@@ -97,16 +103,78 @@ function initSessionVarsForCompose() {
   Session.set("saveDialog",false);
 }
 
+// page functions
+function setSessionVarsForPage(obj) {
+  Session.set("id", obj._id);
+  Session.set("type", obj.type);
+  Session.set("pageType", obj.pageType);
+  Session.set("pageTitle", obj.pageTitle);
+  Session.set("pageName", obj.pageName);
+  Session.set("pageStatementLeadIn", obj.pageStatementLeadIn);
+  Session.set("pageStatementText", obj.pageStatementText);
+  Session.set("pageAboutText", obj.pageAboutText);
+  Session.set("pageGraphicEmail", obj.pageGraphicEmail);
+  Session.set("pageGraphicFacebook", obj.pageGraphicFacebook);
+  Session.set("pageGraphicHomePage", obj.pageGraphicHomePage);
+  Session.set("pageSharePageLink", obj.pageSharePageLink);
+  Session.set("pageTAFSL", obj.pageTAFSL);
+  Session.set("pageTAFCopy", obj.pageTAFCopy);
+  Session.set("pageFacebookTitle", obj.pageFacebookTitle);
+  Session.set("pageFacebookCopy", obj.pageFacebookCopy);
+  Session.set("pageTwitterCopy", obj.pageTwitterCopy);
+  Session.set("pageConfEmailSL", obj.pageConfEmailSL);
+  Session.set("pageConfEmailBody", obj.pageConfEmailBody);
+  Session.set("creator", obj.creator);
+  Session.set("when", obj.when);
+}
+
+function setSessionVarsForNewPage() {
+  // template type is set in the link event handler so not necessary here
+  // clear the other email session data
+  Session.set("type", "page");
+  Session.set("pageTitle", "");
+  Session.set("pageName", "");
+  Session.set("pageStatementLeadIn", "");
+  Session.set("pageStatementText", "");
+  Session.set("pageAboutText", "");
+  Session.set("pageGraphicEmail", "");
+  Session.set("pageGraphicFacebook", "");
+  Session.set("pageGraphicHomePage", "");
+  Session.set("pageSharePageLink", "");
+  Session.set("pageTAFSL", "");
+  Session.set("pageTAFCopy", "");
+  Session.set("pageFacebookTitle", "");
+  Session.set("pageFacebookCopy", "");
+  Session.set("pageTwitterCopy", "");
+  Session.set("pageConfEmailSL", "");
+  Session.set("pageConfEmailBody", "");
+  Session.set("creator", "");
+}
+
+function initSessionVarsForPageCompose() {
+  Session.set("showNavBar",false);
+  Session.set("snippets",false);
+  Session.set("toolTips",false);
+  Session.set("pageNotSaved",false);
+  Session.set("saveDialog",false);
+}
+
+
 Router.map(function () {
   this.route('home', {
     path: '/',
     template: 'filePage',
     action: Session.set('emailNotSaved',false)
   });
+  this.route('mailings', {
+    path: '/mailings/',
+    template: 'filePage',
+    action: Session.set('emailNotSaved',false)
+  });
 
   this.route('compose', {
     // compose route with an optional ID parameter
-    path: '/compose/:_id?',
+    path: '/mailings/compose/:_id?',
     template: 'composePage',
     before: function () {
       if (this.params._id) {
@@ -131,6 +199,43 @@ Router.map(function () {
       initSessionVarsForCompose();
     }
   });
+  this.route('pages', {
+    path: '/pages/',
+    template: 'pages'
+  });
+
+  this.route('createPage', {
+    path: '/pages/compose/:_id?',
+    template: 'createPage',
+    before: function () {
+      if (this.params._id) {
+        Session.set("newPage", false);
+        var page = Files.findOne(this.params._id);
+        // check for missing email and throw a 404
+        setSessionVarsForPage(page);
+      } else if (this.params.copy) {
+        var page = Files.findOne(this.params.copy);
+        // check for missing email and throw a 404
+        setSessionVarsForPage(page); // copy email vars from selected email
+        Session.set("newPage", true); // but this is a new email, not a current email
+        // clear creator and ID vars because this is a new email
+        Session.set("creator", "");
+        Session.set("id", "");
+      } else {
+        Session.set("newPage", true);
+        // default to petition email if no query parameter for template set
+        Session.set('templateChooser', this.params.template || 'petition');
+        setSessionVarsForNewPage();
+      } 
+      initSessionVarsForPageCompose();
+    }
+  });
+
+  this.route('restore', {
+    path: '/restore/',
+    template: 'adminDeletedFilesPage'
+  });
+
 });
 
 // this hook will run on almost all routes
@@ -143,8 +248,63 @@ Router.before(function () {
 
 
 window.onbeforeunload = function closeIt() {
-  return Session.get("emailNotSaved") ?  "This email hasn't been saved." : null;
+  if (Session.get("emailNotSaved")) {
+    return "This email hasn't been saved.";
+  } else if (Session.get("pageNotSaved")) {
+    return "This page hasn't been saved.";
+  } else { return null; }
 };
 
+Handlebars.registerHelper("headlineButtonText", function() {
+  switch (Session.get("fileSort")) {
+    case 'headlineAsc': return "▲";
+    case 'headlineDesc': return '▼';
+    default: return '—';
+  }
+});
 
+Handlebars.registerHelper("typeButtonText", function() {
+  switch (Session.get("fileSort")) {
+    case 'typeAsc': return "▲";
+    case 'typeDesc': return '▼';
+    default: return '—';
+  }
+});
+
+Handlebars.registerHelper("createdByButtonText", function() {
+  switch (Session.get("fileSort")) {
+    case 'createdByAsc': return "▲";
+    case 'createdByDesc': return '▼';
+    default: return '—';
+  }
+});
+
+Handlebars.registerHelper("savedByButtonText", function() {
+  switch (Session.get("fileSort")) {
+    case 'savedByAsc': return "▲";
+    case 'savedByDesc': return '▼';
+    default: return '—';
+  }
+});
+
+Handlebars.registerHelper("savedAtButtonText", function() {
+  switch (Session.get("fileSort")) {
+    case 'savedAtAsc': return "▲";
+    case 'savedAtDesc': return '▼';
+    default: return '—';
+  }
+});
+
+Handlebars.registerHelper("currentUserName", function() {
+  return Meteor.user().profile.name;
+});
+
+Handlebars.registerHelper("belongsToUser", function(name) {
+  return Meteor.user().profile.name === name ? true : false;
+});
+
+Handlebars.registerHelper("isAdmin", function() {
+  var admins = new Array('Jin Ding');
+  return admins.indexOf(Meteor.user().profile.name) >= 0 ? true : false;
+});
 

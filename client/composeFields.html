@@ -1,75 +1,62 @@
 <template name="headline">
-	<div id="headline">
-		<label for="headline_text">{{#if wrapperStyle "blank"}}File name:{{else}}Headline:{{/if}}</label> 
-		<input type="text" id="headline_text" value="{{getValue "headline"}}">
-	</div>
+	<div class="composePageInputLabel"><label for="headline_text">{{#if wrapperStyle "blank"}}File name:{{else}}Headline:{{/if}}</label></div>
+	<div class="composePageInputText"><input type="text" id="headline_text" value="{{getValue "headline"}}"></div>
+	<div class="clear"></div>
 </template>
 
 <template name="statement_leadin">
-	<div id="statement_leadin">
-		<label for="statement_leadin_text">Statement lead-in:</label>
-		<input type="text" id="statement_leadin_text" value="{{#if wrapperStyle "petition"}}{{#if getValue "statement_leadin"}}{{getValue "statement_leadin"}}{{else}}The petition reads:{{/if}}{{else}}{{getValue "statement_leadin"}}{{/if}}">
-	</div>
+	<div class="composePageInputLabel"><label for="statement_leadin_text">Statement lead-in:</label></div>
+	<div class="composePageInputText"><input type="text" id="statement_leadin_text" value="{{#if wrapperStyle "petition"}}{{#if getValue "statement_leadin"}}{{getValue "statement_leadin"}}{{else}}The petition reads:{{/if}}{{else}}{{getValue "statement_leadin"}}{{/if}}"></div>
+	<div class="clear"></div>
 </template>
 
 <template name="petition">
-	<div id="petition">
-		<textarea class="textbox" rows="2" type="text" id="petition_text">{{#if getValue "petition"}}{{getValue "petition"}}{{else}}Statement text{{/if}}</textarea>
-	</div>
+	<textarea class="textbox" rows="2" type="text" id="petition_text">{{#if getValue "petition"}}{{getValue "petition"}}{{else}}"Statement_text"{{/if}}</textarea>
 </template>
 
 <template name="link">
-	<div id="link">
-		<label for="link_text">{{#if wrapperStyle "event"}}Signup page full URL:{{else}}{{#if wrapperStyle "mobilize"}}Petition page full URL:{{else}}Page short URL:{{/if}}{{/if}}</label>
-		<input type="text" id="link_text" value="{{getValue "link"}}">
-	</div>
+	<div class="composePageInputLabel"><label for="link_text">Page full URL:</label></div>
+	<div class="composePageInputText"><input type="text" id="link_text" value="{{#if getValue "link"}}{{getValue "link"}}{{else}}{{#if wrapperStyle "call"}}http://act.credoaction.com/call/{{else}}{{#if wrapperStyle "event"}}http://act.credoaction.com/event/{{else}}{{#if wrapperStyle "mobilize"}}http://www.credomobilize.com/petitions/?source=CREDO{{else}}http://act.credoaction.com/sign/{{/if}}{{/if}}{{/if}}{{/if}}"></div>
+	<div class="clear"></div>
 </template>
 
 <template name="graphic">
-	<div id="graphic">
-		<label for="graphic_text">Graphic URL:</label>
-		<input type="text" id="graphic_text" value="{{getValue "graphic"}}">
-	</div>
+	<div class="composePageInputLabel"><label for="graphic_text">Graphic URL:</label></div>
+	<div class="composePageInputText"><input type="text" id="graphic_text" value="{{getValue "graphic"}}"></div>
+	<div class="clear"></div>
 </template>
 
 <template name="graphic_alt">
-	<div id="graphic_alt">
-		<label for="graphic_alt_text">Graphic alt text:</label>
-		<input type="text" id="graphic_alt_text" value="{{getValue "graphic_alt_text"}}">
-	</div>
+	<div class="composePageInputLabel"><label for="graphic_alt_text">Graphic alt text:</label></div>
+	<div class="composePageInputText"><input type="text" id="graphic_alt_text" value="{{getValue "graphic_alt_text"}}"></div>
+	<div class="clear"></div>
 </template>
 
 <template name="signature">
-	<div id="signature">
-		<label for="signature_text">{{# if wrapperStyle "mobilize"}}Petition creator:{{else}}Signature:{{/if}}</label>
-		<input type="text" id="signature_text" value="{{getValue "signature"}}">
-	</div>
+	<div class="composePageInputLabel"><label for="signature_text">{{# if wrapperStyle "mobilize"}}Petition creator:{{else}}Signature:{{/if}}</label></div>
+	<div class="composePageInputText"><input type="text" id="signature_text" value="{{getValue "signature"}}"></div>
+	<div class="clear"></div>
 </template>
 
 <template name="footnotes">
-	<div id="footnotes">
-		<textarea rows="2" type="text" id="footnotes_text">{{#if getValue "footnotes"}}{{{getValue "footnotes"}}}{{else}}Footnotes in Markdown.
+	<textarea rows="2" type="text" id="footnotes_text">{{#if getValue "footnotes"}}{{{getValue "footnotes"}}}{{else}}Footnotes in Markdown.
 Make sure to escape underscores like so: "\_"{{/if}}</textarea>
-	</div>
 </template>
 
 <template name="facebook">
-	<div id="facebook">
-		<label for="facebook_text">Facebook URL:</label>
-		<input type="text" id="facebook_text" value="{{getValue "facebook"}}">
-	</div>
+	<div class="composePageInputLabel"><label for="facebook_text">Facebook URL:</label></div>
+	<div class="composePageInputText"><input type="text" id="facebook_text" value="{{getValue "facebook"}}"></div>
+	<div class="clear"></div>
 </template>
 
 <template name="twitter">
-	<div id="twitter">
-		<label for="twitter_text">Twitter URL:</label>
-		<input type="text" id="twitter_text" value="{{getValue "twitter"}}">
-	</div>
+	<div class="composePageInputLabel"><label for="twitter_text">Twitter URL:</label></div>
+	<div class="composePageInputText"><input type="text" id="twitter_text" value="{{getValue "twitter"}}"></div>
+	<div class="clear"></div>
 </template>
 
 <template name="markdown_input">
- 	<div id="markdown_text_box">
-		<textarea class="textbox" rows="20" type="text" id="markdown_text">
+	<textarea class="textbox" rows="20" type="text" id="markdown_text">
 {{#if getValue "markdown_data"}}{{{getValue "markdown_data"}}}
 {{else}}{{#if wrapperStyle "mobilize"}}We have to speak out now to stop it. That's why I started my own campaign on CREDOMobilize.com, which allows activists to start their own petitions. My petition, which is to the U.S. Bureau of Reclamation, says the following:
 
@@ -81,21 +68,24 @@ Make sure to escape underscores like so: "\_"{{/if}}</textarea>
 
 Thank you for your support.
 {{else}}{{#if wrapperStyle "event"}}
+Link: [{{getValue "link"}}]({{getValue "link"}})
+
 > **What**:    
 **When:**  
 **Where:**  
+{{else}}{{#if wrapperStyle "blank"}}Email body text in Markdown
+Make sure to escape underscores like so: "\_"
 {{else}}Email body text in Markdown
 Make sure to escape underscores like so: "\_"
-{{/if}}{{/if}}{{/if}}</textarea>
-	</div>
+
+Link: [{{getValue "link"}}]({{getValue "link"}})
+{{/if}}{{/if}}{{/if}}{{/if}}</textarea>
 </template>
 
 <template name="topper">
-	<div id="topper">
-		<textarea rows="4" type="text" id="topper_text">
+	<textarea rows="4" type="text" id="topper_text">
 {{#if getValue "topper"}}{{{getValue "topper"}}}
 {{else}}The email below is from {{getValue "signature"}}, a CREDO activist in Berkeley, California. {{ sigFirstName }} started a petition on [CREDO Mobilize](http://credomobilize.com?source=email_topper"), where activists can launch their own campaigns for progressive change. Will you help {{ sigFirstName }} pressure the Bureau of Reclamation to abandon a disastrous proposal to raise the Shasta Dam and flood sacred lands by [signing his petition]({{getValue "link"}}) and sharing it with your friends and family?{{/if}}
-		</textarea>
-	</div>
+	</textarea>
 </template>
 

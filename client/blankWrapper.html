@@ -1,4 +1,4 @@
 <template name="blankEmailWrapper">
-{{#if display_setting "visual"}} {{#markdown}}{{{getValue "markdown_data" }}}{{/markdown}}{{else}}<pre><plaintext>{{{show_html}}}
+{{#if display_setting "visual"}} {{#markdown}}{{{getValue "markdown_data" }}}{{/markdown}}{{else}}<pre><plaintext>{{{show_html "markdown_data"}}}
 {{/if}}
 </template>

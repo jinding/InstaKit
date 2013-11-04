@@ -118,7 +118,19 @@ button.sortButton {
 #main { width: 100%; margin: 6px auto; }
 #composeLeft { float: left; width: 376px; margin: 12px 12px 0px 20px; }
 #composeRight { margin-left: 400px; padding: 0px 12px; margin-right: 22px; min-height: 500px;}
-
+.composePageInputs {
+  width: 376px;
+  padding-top: 12px;
+  float: left;
+}
+.composePageInputLabel {  width: 110px; float: left; margin: 4px 4px 4px 0px; padding-top: 6px; }
+.composePageInputText { width: 248px; float: right; margin: 4px 4px 4px 0px;}
+#composeLeft input {
+  width: 238px;     
+  vertical-align: top;
+  margin-left: 0px;
+}
+#composeLeft textarea { width: 362px; }
 
 /* slideout menu */
 
@@ -198,52 +210,7 @@ button.sortButton {
 
 
 #display { }
-#clear { clear: both; }
-/*
-#backToFileScreen, #toolTips, #snippets {
-	z-index: 200;
-	position: fixed;
-	right: .7em;
-	top: 1em;
-	-moz-border-radius:3px;
-	-webkit-border-radius:3px;
-	border-radius:3px;
-	border:0px;
-	color:#fff;
-	font-size:13px;
-	line-height: 18px;
-	padding: 6px 12px;
-	margin-bottom: 12px;
-	text-decoration:none;
-	width: 14px;
-	background-color: #999999;
-	text-align: center;
-	cursor: default;
-}
-#backToFileScreen { cursor: pointer;}
-#toolTips { top: 55px;}
-#snippets { top: 95px;}
-.tipsTextBox {
-	z-index: 1001;
-	position: fixed;
-	right: 57px;
-	top: 55px;
-	-moz-border-radius:3px;
-	-webkit-border-radius:3px;
-	border-radius:3px;
-	border:0px;
-	color:#fff;
-	font-size:13px;
-	line-height: 18px;
-	padding: 6px 12px;
-	margin-bottom: 12px;
-	text-decoration:none;
-	min-width: 14px;
-	background-color: #999999;
-	text-align: center;
-}
-#snippetsTextBox { top: 95px;}
-*/
+.clear { clear: both; }
 .snippetsText { text-decoration: underline; cursor: default; }
 
 /* display */
@@ -257,11 +224,8 @@ button.sortButton {
 }
 #display p {margin-top:12px; margin-bottom:12px; }
 #display a { color:#235ab7; }
-#display sup, #display sub {
-    position: relative;
-    top: -0.4em;
-}
-#display sub { top: 0.4em; vertical-align: baseline; }
+#display sup { font-size: 65%; line-height: 0; position: relative; top: -0.4em; }
+#display sub { font-size: 65%; line-height: 0; position: relative; top: 0.4em; vertical-align: baseline; }
 #display .footnotes {
 	color:#4a4744;
 	font-size:12px;
@@ -270,7 +234,9 @@ button.sortButton {
 	text-align:left;
 }
 /* adding new ordered list styling */
-/* #display ol, li { padding: 12px 0px 0px; margin-left: 8px; font-size: 12px; line-height: 12px;} */
+#display ol { margin: 0px 0px 12px 0px; list-style-type: decimal; }
+#display ul { margin: 0px 0px 12px 0px; list-style-type: disc; }
+#display li { font-size: 13px; line-height: 15px; margin: 0px 10px 0px 0px; }
 
 /* html display */
 #display_html { margin-right: 40px;  }
@@ -280,3 +246,97 @@ button.sortButton {
 	font-size: 11px;
 	width: 476px;
 }
+
+
+/* page creation styling */
+#createPage { margin: 0px auto; width: 1080px; font-family: arial,sans-serif; font-weight: 400; color: #766F67; }
+.createPageInputs {
+  width: 520px;
+  padding-top: 12px;
+  float: left;
+}
+.createPageInputLabel {  width: 150px; float: left; margin: 4px; padding-top: 6px; font-weight: bold;}
+.createPageInputText { width: 350px; float: right; margin: 4px;}
+.createPageInputs input, .createPageInputs textarea {
+  width: 340px;     
+  vertical-align: top;
+  margin-left: 0px;
+}
+#createPageDisplay { width: 520px; padding-top: 2px; float: right; padding-right: 12px;}
+
+/* page creation display styling
+--------------------------------------*/
+#createPageDisplay p { font: 13px/15px arial,sans-serif; margin-bottom: 13px; margin-top: 0px; }
+#createPageDisplay p:last-child { margin-bottom: 0px; }
+#createPageDisplay a { color:#235ab7; }
+#createPageDisplay a.buttonA:hover { color: #fff; cursor: pointer; text-decoration: underline; }
+#createPageDisplay strong, b { font-weight: bold; }
+#createPageDisplay label, #createPageDisplay label p { font-size: 12px; line-height: 20px; }
+#createPageDisplay em, #createPageDisplay i { font-style: italic; }
+.titleA { font-size: 22px; line-height: 26px; margin: 12px 0px 12px 0px; }
+.banding { position: relative; }
+.banding:before, .banding:after { width: 10px; content: ""; position: absolute; top: 0; bottom: 0; }
+.banding:before { right: 100%; }
+.banding:after { left: 100%; }
+
+/*	Typography for Campaigners
+--------------------------------------*/
+.story { overflow: hidden; }
+.story .story-image1 { float: left; padding: 0px 10px 10px 0px; }
+.story img.left { float: left; padding: 0px 10px 10px 0px; margin: 0px 0px 0px 0px; }
+.story img.right { float: right; padding: 0px 0px 10px 10px; margin: 0px 0px 0px 0px; }
+.story blockquote { font-size: 15px; line-height: 18px; /* padding: 10px 0px 10px 0px; */ margin: 0px 0px 20px 30px; }
+.story blockquote p { font-size: 15px; line-height: 18px; margin-bottom: 22px; }
+.story blockquote p:last-child { padding: 0px; margin: 0px; }
+.story .highlight { font-size: 22px; line-height: 28px; border-top: 1px solid #ff6319; border-bottom: 1px solid #ff6319; padding: 10px 0px 10px 0px; margin: 0px 0px 20px 0px; }
+.story .highlight p { font-size: 22px; line-height: 28px; margin-bottom: 22px; }
+.story .highlight p:last-child { padding: 0px; margin: 0px; }
+.story sup { font-size: 65%; line-height: 0; position: relative; vertical-align: baseline; top: -0.7em; }
+.story ol { margin: 0px 0px 12px 0px; list-style-type: decimal; }
+.story ul { margin: 0px 0px 12px 0px; list-style-type: disc; }
+.story li { font-size: 13px; line-height: 15px; margin: 0px 10px 0px 0px; }
+.story .sources:before { content: "SOURCES:"; font-size: 10px; line-height: 18px; margin-left: -20px; }
+.story ol.sources { margin: 0px 0px 20px 20px; }
+.story .sources li { font-size: 12px; margin: 0px 0px 0px 0px; }
+.story .resources:before { content: "RESOURCES:"; font-size: 10px; line-height: 18px; margin-left: -20px; }
+.story ul.resources { margin: 0px 0px 20px 20px; }
+.story .resources li { font-size: 12px; margin: 0px 0px 0px 0px; }
+/* ----------	general .form-item rules */
+.form-item { padding-bottom: 10px; }
+/* ---------- 	Form Box */
+.form-box { margin: 0px 0px 20px 0px; }
+.form-prompt-box { background: #ddd; padding: 10px 0px 12px 0px; }
+.form-prompt-box.banding:before, .form-prompt-box.banding:after { background: #ddd; }
+/*-----------    Facebook */
+.facebook { margin: 12px 0px; font-size: 12px; border: 1px #6d84b4 solid; min-height: 145px; }
+#fb_header { background-color: #6d84b4; display: block; padding: 2px; color: white; vertical-align: middle; }
+.fb_graphic { float: left; padding: 12px;}
+#fb_title { margin: 12px; color: #3b5998; font-weight: bold;}
+#fb_copy { margin: 12px; color: gray;}
+
+#tw { margin: 12px 0px; font-size: 12px; border: 1px #aaa solid; }
+#tw_logo { float: left; padding: 12px; vertical-align: middle; }
+#tw_copy { margin: 12px; color: gray;}
+
+#tafemail { margin: 12px 0px; font-size: 12px; border: 1px #aaa solid; }
+#tafemail_logo { margin: 12px; float: left;}
+#tafemail_sl { margin: 12px; font-weight: bold; }
+#tafemail_body { margin: 12px; }
+
+#confemail { margin: 12px 0px; font-size: 12px; border: 1px #aaa solid; }
+#confemail_sl { margin: 12px; font-weight: bold; }
+#confemail_body { margin: 12px; }
+
+/* page creation input styling */
+.taf, .bodytext { margin: 12px 0px; padding: 12px; font-size: 12px; background-color: #ddd; }
+.taf_logo { float: left; padding-right: 12px; }
+.taf_title { margin: 0px; color: gray; font-weight: bold;}
+.taf_copy { margin: 0px; color: gray;}
+.taf textarea, .taf input { width: 440px;}
+
+.bodytext_desc { float: left; padding-right: 4px; font-weight: bold; width: 65px; padding-top: 8px;}
+.bodytext textarea { width: 484px;}
+.bodytext input { width: 415px; vertical-align: middle; }
+ 
+
+

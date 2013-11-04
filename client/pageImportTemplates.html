@@ -1,0 +1,15 @@
+<template name="pageImportStatementLeadIn">
+	<p>{{getValue "pageStatementLeadIn"}}</p>
+</template>
+
+<template name="pageImportStatementText">
+	{{#markdown}}{{getValue "pageStatementText"}}{{/markdown}}
+</template>
+
+<template name="pageImportAboutText">
+	{{#markdown}}{{{getValue "pageAboutText"}}}{{/markdown}}
+</template>
+
+<template name="pageImportConfEmailBody">
+	{{#markdown}}{{{getValue "pageConfEmailBody"}}}{{/markdown}}
+</template>

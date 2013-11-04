@@ -147,7 +147,17 @@ Template.composePage.events({
     }
   },
   'click #buttonBackToFilePage': function() {
-      Router.go('home');
+    Router.go('home');
+  },
+  'click #buttonAPI': function() {
+    Meteor.call('createAKemail', makeEmailFromSession(), function (err,res) {
+     if (err) {
+        Session.set('APIerror', err.error);
+        console.log(err);
+      } else {
+        console.log('api success');
+      }
+    });
   }
 });
 

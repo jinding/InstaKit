@@ -1,0 +1,45 @@
+<template name="pageCreationDisplay">
+	<h2 class="titleA">{{#if getValue "pageTitle"}}{{getValue "pageTitle"}}{{else}}Headline{{/if}}</h2>
+	<div class="col1">
+	{{#if getValue "pageStatementText"}}
+	<div id="petition-box" class="form-box">
+	<div class="form-prompt-box banding">
+	{{#if getValue "pageStatementLeadIn"}}<div class="statement-leadin"><p><b>{{getValue "pageStatementLeadIn"}}</b></p></div>{{/if}}
+	<div class="statement-text">{{#markdown}}{{getValue "pageStatementText"}}{{/markdown}}</div>
+	</div> <!-- .form-prompt-box -->
+	{{/if}}
+	</div> <!-- #petition-box -->
+	</div><!-- .col1 -->
+
+	<div class="col2 about-text story">
+	{{#if getValue "pageGraphicEmail"}}<div class="story-image1"><img src="{{getValue "pageGraphicEmail"}}" alt="{{getValue "pageTitle"}}" width="180" height="180" /></div>{{/if}}
+	{{#markdown}}{{{getValue "pageAboutText" }}}{{/markdown}}
+
+	{{#if getValue "pageSharePageLink"}}
+		<p><b>Click here to go to the share page</b>: <a href="{{getValue "pageSharePageLink"}}" target="_blank">{{getValue "pageSharePageLink"}}</a></p>
+	{{/if}}
+	{{#if getValue "pageGraphicHomePage"}}
+		homepage graphic: <img src="{{getValue "pageGraphicHomePage"}}"><br>
+	{{/if}}
+	</div><!-- .col2 -->
+	<div class="facebook" style="min-height: 150px;">
+		<div id="fb_header"><img src="https://fbstatic-a.akamaihd.net/rsrc.php/v2/yd/r/Cou7n-nqK52.gif" style="padding-right: 5px;"/><b>Post to your wall</b></div>
+		<div class="fb_graphic"><img src="{{getValue "pageGraphicFacebook"}}" width="100" height="100" /></div>
+		<div id="fb_title">{{getValue "pageFacebookTitle"}}</div>
+		<div id="fb_copy">{{getValue "pageFacebookCopy"}}</div>
+	</div>
+	<div id="tw" style="min-height: 55px;">
+		<div id="tw_logo"><img src="http://shpg.org/images/icon-twitter.gif"/></div>
+		<div id="tw_copy">{{getValue "pageTwitterCopy"}}</div>
+	</div>
+	<div id="tafemail" style="min-height: 50px;">
+		<div id="tafemail_logo"><img src="http://shpg.org/images/icon-email.gif"></div>
+		<div id="tafemail_sl">Subject: {{getValue "pageTAFSL"}}</div>
+		<div id="tafemail_body">{{getValue "pageTAFCopy"}}</div>
+	</div>
+	<div id="confemail">
+		<div id="confemail_sl">Confirmation email: {{getValue "pageConfEmailSL"}}</div>
+		<div id="confemail_body">{{#markdown}}{{{getValue "pageConfEmailBody"}}}{{/markdown}}</div>
+	</div>
+
+</template>

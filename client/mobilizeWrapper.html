@@ -44,7 +44,7 @@
 {{#if display_setting "visual"}}
 	{{#markdown}}{{{getValue "markdown_data" }}}{{/markdown}}
 {{else}}
-{{{show_html}}}
+{{{show_html "markdown_data"}}}
 {{/if}}
 {{#if getValue "signature"}}<p>{{ getValue "signature"}}</p>{{/if}}
 <!-- start BUTTON: SIGN THE PETITION -->

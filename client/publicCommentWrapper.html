@@ -13,22 +13,21 @@
 <!-- headline -->
 <tr><td style="text-align:left; padding: 15px 12px; font-family: Arial, helvetica, sans-serif; 
 	font-size: 18px; line-height: 22px;" valign="top">
-	<strong>{{getValue "headline"}}</strong>
+	<strong>{{removeBackslash "headline"}}</strong>
 </td></tr>
 {{/if}}
 {{#if getValue "petition"}}
 <!-- start petition text table -->
 <tr><td style="background-color: #e6e4e0; padding: 0px 12px 12px;">
-{{#if getValue "statement_leadin"}}<p><em>{{getValue "statement_leadin"}}</em>{{/if}}
-<br/>
-<strong>{{getValue "petition"}}</strong></p>
+<p>{{#if getValue "statement_leadin"}}<em>{{removeBackslash "statement_leadin"}}</em><br/>{{/if}}
+<strong>{{{removeBackslash "petition" }}}</strong></p>
 <p style="font-size: 11px; line-height: 15px; color: #ff6319; margin-bottom: 8px;">
 Submit a public comment:</p>
 <!-- start BUTTON: TAKE ACTION -->
 <table style="width: 180px; height: 45px;" cellspacing="0" cellpadding="0">
 <tr><td style="vertical-align: middle; text-align: center; font-weight: bold; font-size: 17px; 
 	line-height: 40px; background-color: #ff6319;">
-	<a style="text-decoration: none; color: white;" href="http://act.credoaction.com/sign/{{getValue "link"}}"> <!-- one-click link -->
+	<a style="text-decoration: none; color: white;" href="{{getValue "link"}}"> <!-- one-click link -->
 	<img border="0" alt="Take action now &#9658;" 
 	src="http://s3.amazonaws.com/s3.credoaction.com/images/buttons/btn_flat_take_action_now.png" 
 	style="vertical-align:middle;min-width:160px;"/></a>
@@ -45,7 +44,7 @@ Submit a public comment:</p>
 <!-- start image -->
 <table cellpadding=0 cellborder=0 align=right width=180 style="padding-left:5px; padding-right:0px;">
 <tr><td style="padding-right:0px;">
-<a href="http://act.credoaction.com/sign/{{getValue "link" }}?nosig=1" style="text-decoration:none;">
+<a href="{{getValue "link" }}?nosig=1" style="text-decoration:none;">
 <img src="{{getValue "graphic"}}" alt="{{getValue "graphic_alt_text" }}" align=right border=0>
 </a>
 </td></tr>
@@ -55,7 +54,7 @@ Submit a public comment:</p>
 {{#if display_setting "visual"}}
 	{{#markdown}}{{{getValue "markdown_data" }}}{{/markdown}}
 {{else}}
-{{{show_html}}}
+{{{show_html "markdown_data"}}}
 {{/if}}
 {{#if getValue "signature"}}<p>{{ getValue "signature"}}<br />
 <a href="http://www.credoaction.com">CREDO Action from Working Assets</a>
@@ -67,7 +66,7 @@ Submit a public comment:</p>
 <tr><td style="vertical-align: middle; text-align: center; font-weight: bold; font-size: 17px; 
 	line-height: 40px; background-color: #ff6319;">
 	<a style="text-decoration: none; color: white;" 
-	href="http://act.credoaction.com/sign/{{getValue "link" }}"> 
+	href="{{getValue "link" }}"> 
 	<!-- one-click link -->
 	<img border="0" alt="Take action now &#9658;" 
 	src="http://s3.amazonaws.com/s3.credoaction.com/images/buttons/btn_flat_take_action_now.png" 
@@ -75,19 +74,13 @@ Submit a public comment:</p>
 </td></tr>
 </table> <!-- end BUTTON: TAKE ACTION -->
 <p style="font-size: 11px; line-height: 18px; color: #ff6319;">
-	<a href="http://act.credoaction.com/sign/{{getValue "link"}}?nosig=1"> 
+	<a href="{{getValue "link"}}?nosig=1"> 
 	<!-- non-one click link -->
 	Learn more about this campaign </a>
 </p>
-{{#if getValue "footnotes"}}
-<p class="footnotes" style="padding: 12px 0px;">
-{{#markdown}}{{{getValue "footnotes" }}}{{/markdown}}
-</p>
-{{/if}}
+{{#if getValue "footnotes"}}{{#markdown}}{{{getValue "footnotes" }}}{{/markdown}}{{/if}}
 </td></tr> <!-- end body of email -->
-<tr><td style="padding: 20px 12px 0px 12px; font-family: Arial, helvetica, sans-serif; 
-	font-size: 13px; line-height: 18px; text-align:left;">
-<hr style="height: 1px;" size="1" /></td></tr>
+<tr><td><hr size="1" color="#d7d9db" style="height: 1px;"></td><tr>
 <!-- start FB and twitter -->
 <tr><td style="padding: 20px 12px 0px 12px; font-family: Arial, helvetica, sans-serif; 
 	font-size: 13px; line-height: 18px; text-align:left;">
@@ -95,11 +88,11 @@ Submit a public comment:</p>
 width: 100%;" border="0" cellpadding="0">
 <tr>
 <td style="padding: 5px 0px 0px;" valign="top" width="35">
-	<a href="http://www.facebook.com/share.php?no_akid=1&u=http%3A%2F%2Fact.credoaction.com%2Fsign%2F{{getValue "link"}}%3Fsource%3Dfb_share4%26referring_akid%3D{{{django_string "{{user.token}}"}}}">
+	<a href="http://www.facebook.com/share.php?no_akid=1&u={{getValue "link"}}?source=fb_share4&referring_akid={{{django_string "{{user.token}}"}}}">
 	<img src="http://s3.amazonaws.com/s3.credoaction.com/images/campaigns/facebook_28.gif" 
 	alt="FB" width="28" height="28" align="left" border="0" /></a></td>
 <td style="padding: 5px 0px 0px; font-size: 11px; line-height: 13px;" valign="top">
-	<a href="http://www.facebook.com/share.php?no_akid=1&u=http%3A%2F%2Fact.credoaction.com%2Fsign%2F{{getValue "link"}}%3Fsource%3Dfb_share4%26referring_akid%3D{{{django_string "{{user.token}}"}}}">
+	<a href="http://www.facebook.com/share.php?no_akid=1&u={{getValue "link"}}?source=fb_share4&referring_akid={{{django_string "{{user.token}}"}}}">
 	<strong>Share on Facebook</strong> <br /> Post to your wall</a></td>
 </tr>
 <tr>
@@ -113,11 +106,11 @@ width: 100%;" border="0" cellpadding="0">
 </tr>
 </table>
 </td></tr> <!-- end FB and twitter -->
-	{{#if display_setting "visual"}}
-		<tr><td style="font-size:12px;padding: 0px 12px;">
-		© 2013 CREDO. All rights reserved.
-		</td></tr>
-		</table> <!-- end inner table -->
+{{#if display_setting "visual"}}
+	<tr><td style="font-size:12px;padding: 0px 12px;">
+	© 2013 CREDO. All rights reserved.
+	</td></tr>
+	</table> <!-- end inner table -->
 	</div>
-	{{/if}}
+{{/if}}
 </template>
