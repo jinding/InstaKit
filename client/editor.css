@@ -97,7 +97,7 @@ button.sortButton {
 	min-width: 5px;
 	vertical-align: text-bottom;
 }
-#confirmPopup { 
+#confirmPopup, .errorPopup { 
 	z-index: 1001;
 	position: fixed;
 	left: 50%;
@@ -112,7 +112,8 @@ button.sortButton {
 	border-radius:3px;
 	padding: 0px 1em;
 }
-#confirmPopup p { color: #fff;}
+#confirmPopup p, .errorPopup p { color: #fff;}
+.errorPopup { background-color: #D11; width: 300px; text-align: center; font-weight: bold; border: #D11;}
 
 /* COMPOSE PAGE */
 #main { width: 100%; margin: 6px auto; }
@@ -247,9 +248,15 @@ button.sortButton {
 	width: 476px;
 }
 
+.apiInfo {
+	width: 480px;
+	padding-top: 12px;
+	padding-left: 0px;
+	float: left;
+}
 
 /* page creation styling */
-#createPage { margin: 0px auto; width: 1080px; font-family: arial,sans-serif; font-weight: 400; color: #766F67; }
+#createPage, #postAPIpage { margin: 0px auto; width: 1080px; font-family: arial,sans-serif; font-weight: 400; color: #766F67; }
 .createPageInputs {
   width: 520px;
   padding-top: 12px;
@@ -263,6 +270,7 @@ button.sortButton {
   margin-left: 0px;
 }
 #createPageDisplay { width: 520px; padding-top: 2px; float: right; padding-right: 12px;}
+#postAPIpageDisplay { width: 550px; padding-top: 2px; float: right; padding-right: 12px;}
 
 /* page creation display styling
 --------------------------------------*/

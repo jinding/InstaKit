@@ -1,26 +1,101 @@
+function standardizePageLinks(str) {
+  // does {LINK} exist in the copy, if so, don't do anything
+  if (str.search(/{ *LINK *}/i) < 0)
+    //if {{page.canonical_url}} exists, replace with {LINK}
+    if (str.search(/{{ *page.canonical*_url *}}/i) >= 0)
+      return str.replace(/{{ *page.canonical*_url *}}/i,'{LINK}');
+    else return str+' {LINK}'; // no LINK reference exist, so append
+  else return str;
+};
+
+function setSessionVars() {
+  Session.set("pageTitle", $('#pageTitle').val());
+  Session.set("pageName", $('#pageName').val());
+  Session.set("pageStatementLeadIn", $('#pageStatementLeadIn').val());
+  Session.set("pageImportStatementLeadIn", Template.pageImportStatementLeadIn());
+  Session.set("pageStatementText", $('#pageStatementText').val());
+  Session.set("pageImportStatementText", Template.pageImportStatementText());
+  Session.set("pageAboutText", $('#pageAboutText').val());
+  Session.set("pageImportAboutText", Template.pageImportAboutText());
+  Session.set("pageFacebookTitle", $('#pageFacebookTitle').val());
+  Session.set("pageFacebookCopy", $('#pageFacebookCopy').val());
+  Session.set("pageTwitterCopy", $('#pageTwitterCopy').val());
+  Session.set("pageTAFSL", $('#pageTAFSL').val());
+  Session.set("pageTAFCopy", $('#pageTAFCopy').val());
+  Session.set("pageConfEmailSL", $('#pageConfEmailSL').val());
+  Session.set("pageConfEmailBody", $('#pageConfEmailBody').val());
+  Session.set("pageImportConfEmailBody", Template.pageImportConfEmailBody());
+  Session.set("pageGraphicEmail", $('#pageGraphicEmail').val());
+  Session.set("pageGraphicFacebook", $('#pageGraphicFacebook').val());
+  Session.set("pageGraphicHomePage", $('#pageGraphicHomePage').val());
+  Session.set("pageFacebookLength", 260 - $('#pageFacebookCopy').val().length);
+  var linkLength = $('#pageTwitterCopy').val().search(/{ *LINK *}/i) < 0 ? 23 : 16;
+  Session.set("pageTwitterLength", 140 - linkLength - $('#pageTwitterCopy').val().length);
+}
+
 function makePageFromSession() {
+  setSessionVars();
   return {
     id: Session.get("id"),
     type: 'page',
     pageType: 'petition',
     pageTitle: Session.get("pageTitle"),
     pageName: Session.get("pageName"),
-    pageStatementLeadIn: Session.get("pageImportStatementLeadIn"),
-    pageStatementText: Session.get("pageImportStatementText"),
-    pageAboutText: Session.get("pageImportAboutText"),
+    pageStatementLeadIn: Session.get("pageStatementLeadIn"),
+    pageStatementText: Session.get("pageStatementText"),
+    pageAboutText: Session.get("pageAboutText"),
     pageGraphicEmail: Session.get("pageGraphicEmail"),
     pageGraphicFacebook: Session.get("pageGraphicFacebook"),
     pageGraphicHomePage: Session.get("pageGraphicHomePage"),
-    pageSharePageLink: Session.get("pageSharePageLink"),
     pageTAFSL: Session.get("pageTAFSL"),
-    pageTAFCopy: Session.get("pageTAFCopy"),
+    pageTAFCopy: standardizePageLinks(Session.get("pageTAFCopy")), // {LINK} is added if not present
     pageFacebookTitle: Session.get("pageFacebookTitle"),
     pageFacebookCopy: Session.get("pageFacebookCopy"),
-    pageTwitterCopy: Session.get("pageTwitterCopy"),
+    pageTwitterCopy: standardizePageLinks(Session.get("pageTwitterCopy")), // {LINK} is added if not present
     pageConfEmailSL: Session.get("pageConfEmailSL"),
-    pageConfEmailBody: Session.get("pageImportConfEmailBody"),
+    pageConfEmailBody: Session.get("pageConfEmailBody"),
     creator: Session.get("creator") || Meteor.user().profile.name,
-    savedBy: Meteor.user().profile.name
+    savedBy: Meteor.user().profile.name,
+    pageImportStatementLeadIn: Session.get("pageImportStatementLeadIn"),
+    pageImportStatementText: Session.get("pageImportStatementText"),
+    pageImportAboutText: Session.get("pageImportAboutText"),
+    pageImportConfEmailBody: Session.get("pageImportConfEmailBody")
+  }
+};
+
+function makePageAfterAPI(res) {
+  setSessionVars();
+  return {
+    id: Session.get("id"),
+    type: 'page',
+    pageType: 'petition',
+    pageTitle: Session.get("pageTitle"),
+    pageName: Session.get("pageName"),
+    pageStatementLeadIn: Session.get("pageStatementLeadIn"),
+    pageStatementText: Session.get("pageStatementText"),
+    pageAboutText: Session.get("pageAboutText"),
+    pageGraphicEmail: Session.get("pageGraphicEmail"),
+    pageGraphicFacebook: Session.get("pageGraphicFacebook"),
+    pageGraphicHomePage: Session.get("pageGraphicHomePage"),
+    pageTAFSL: Session.get("pageTAFSL"),
+    pageTAFCopy: standardizePageLinks(Session.get("pageTAFCopy")), // {LINK} is added if not present
+    pageFacebookTitle: Session.get("pageFacebookTitle"),
+    pageFacebookCopy: Session.get("pageFacebookCopy"),
+    pageTwitterCopy: standardizePageLinks(Session.get("pageTwitterCopy")), // {LINK} is added if not present
+    pageConfEmailSL: Session.get("pageConfEmailSL"),
+    pageConfEmailBody: Session.get("pageConfEmailBody"),
+    creator: Session.get("creator") || Meteor.user().profile.name,
+    savedBy: Meteor.user().profile.name,
+    pageImportStatementLeadIn: Session.get("pageImportStatementLeadIn"),
+    pageImportStatementText: Session.get("pageImportStatementText"),
+    pageImportAboutText: Session.get("pageImportAboutText"),
+    pageImportConfEmailBody: Session.get("pageImportConfEmailBody"),
+    AKpageURL: res.AKpage,
+    AKpageEditURL: res.AKpageEdit,
+    AKpageBitly: res.bitly,
+    pageSharePageLink: res.SPpage,
+    AKpageID: res.pageID,
+    AKpageResourceURI: res.resource_uri
   }
 };
 
@@ -44,26 +119,92 @@ Template.createPage.events({
       Session.set("saveDialog",true);
     }
   },
-  'click #buttonAPI': function() {
-    Meteor.call('saveFile', makePageFromSession(), function (err, res) {
-      if (err) {
-        Session.set('saveError', err.error);
-      } else {
-        console.log('page saved');
-        Session.set("pageNotSaved",false);
-        Session.set("saveDialog",false);
-      }
-    });
-    Meteor.call('createAKpage', makePageFromSession(), function (err,res) {
-     if (err) {
-        Session.set('APIerror', err.error);
-        console.log(err);
-      } else {
-        console.log('api success');
-        Router.go('pages');
-      }
-    });
+  'click .buttonAPIok': function() {
+    Session.set("apiError","");
+    Session.set("apiSuccess","");
+    Session.set("duplicatePage",false);
+    Router.go('postAPI', {_id: Session.get('id')});
   },
+  'click .buttonAPIupdate': function() {
+    Session.set('duplicatePage',false);
+    var page = makePageFromSession();
+    Meteor.call('updateAKpage', page, function (error,res) {
+      if (error) {
+          Session.set('apiError', error.reason);
+      } else {
+          Session.set('apiSuccess', 'API success!');
+          Session.set('apiResults', res);
+          console.log('updateAKpage success',res);
+//        Router.go('pages');
+      }
+    }); // end populateAKpage
+  }, 
+  'click #buttonAPI': function() {
+    Session.set("apiError","");
+    var page = makePageFromSession();
+    // only move forward if the share text doesn't exceed length limits
+    if (Session.get('pageTwitterLength') < 0 || Session.get('pageFacebookLength') < 0) {
+      Session.set('apiError', 'Share text is too long. Please check Facebook and Twitter copy again.');
+    } else {
+      Meteor.call('saveFile', page, function (err, res) {
+        if (err) {
+          Session.set('saveError', err.error);
+        } else {
+          console.log('page saved');
+          Session.set("pageNotSaved",false);
+          Session.set("saveDialog",false);
+        }
+      });
+      // first, create a page in AK with the short name
+      Meteor.call('createAKpage', page, function (err,loc) {
+        if (err) {
+          // log and display any errors that come up from creating the page
+          if (err.error === 400) {
+            // duplicate page short name, ask if user wants to update that page
+  //          Session.set('duplicatePage', true);
+            Session.set('apiError', err.reason);
+          } else {
+            Session.set('apiError', err.reason);
+          }
+          console.log(err.reason);
+        } else {
+          console.log('create page success '+loc);
+          Meteor.call('populateAKpage', page, loc, function (error,res) {
+            if (error) {
+                Session.set('apiError', error.reason);
+            } else {
+                Session.set('apiSuccess', 'API success!');
+                Session.set('apiResults', res);
+                Session.set('AKpageURL', res.AKpage);
+                Session.set('AKpageEditURL', res.AKpageEdit);
+                Session.set('AKpageBitly', res.bitly);
+                Session.set('pageSharePageLink', res.SPpage);
+                Session.set('AKpageID', res.pageID);
+                Session.set('AKpageResourceURI', res.resource_uri);
+
+                Meteor.call('saveFile', makePageAfterAPI(res), function (err, response) {
+                  if (err) {
+                    Session.set('saveError', err.error);
+                  } else {
+                    console.log('page saved');
+                    Session.set("pageNotSaved",false);
+                    Session.set("saveDialog",false);
+                  }
+                });
+                console.log('populateAKpage success',res);
+  //        Router.go('pages');
+            }
+          }); // end populateAKpage
+        } // end if err
+      }); // end createAKpage 
+    }
+  },
+  'click #buttonBackToPageList': function() {
+    Router.go('pages');    
+  }
+});
+
+Template.postAPIpage.events({
   'click #buttonBackToPageList': function() {
     Router.go('pages');    
   }
@@ -105,12 +246,16 @@ Template.templatePageFacebook.events({
   },
   'keyup textarea, keydown textarea': function() {
     Session.set("pageFacebookCopy", $('#pageFacebookCopy').val());
+    Session.set("pageFacebookLength", 260 - $('#pageFacebookCopy').val().length)
   }
 });
 
 Template.templatePageTwitterCopy.events({
   'keyup textarea, keydown textarea': function() {
     Session.set("pageTwitterCopy", $('#pageTwitterCopy').val());
+    // assume 15 chars for bitly link, but if {LINK} exists then only need 9 more spaces
+    var linkLength = $('#pageTwitterCopy').val().search(/{ *LINK *}/i) < 0 ? 23 : 16;
+    Session.set("pageTwitterLength", 140 - linkLength - $('#pageTwitterCopy').val().length)
   }
 });
 
@@ -132,12 +277,6 @@ Template.templatePageConfEmail.events({
   'keyup textarea, keydown textarea': function() {
     Session.set("pageConfEmailBody", $('#pageConfEmailBody').val());
     Session.set("pageImportConfEmailBody", Template.pageImportConfEmailBody());
-  }
-});
-
-Template.templatePageSharePageLink.events({
-  'keyup input[type=text], keydown input[type=text]': function() {
-    Session.set("pageSharePageLink", $('#pageSharePageLink').val());
   }
 });
 
@@ -230,6 +369,9 @@ Template.pages.events({
   },
   'click .deleteButton': function() { 
     Session.set("confirmDelete", this._id);
+  },
+  'click .apiButton': function() {
+    Router.go('postAPI', {_id: this._id});
   },
   'click #filterButton': function() {
     if (Session.equals("filter", 'all')) {

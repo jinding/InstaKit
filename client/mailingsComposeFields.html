@@ -11,7 +11,7 @@
 </template>
 
 <template name="petition">
-	<textarea class="textbox" rows="2" type="text" id="petition_text">{{#if getValue "petition"}}{{getValue "petition"}}{{else}}"Statement_text"{{/if}}</textarea>
+	<textarea class="textbox" rows="4" type="text" id="petition_text">{{#if getValue "petition"}}{{getValue "petition"}}{{else}}"Statement_text"{{/if}}</textarea>
 </template>
 
 <template name="link">
@@ -39,7 +39,7 @@
 </template>
 
 <template name="footnotes">
-	<textarea rows="2" type="text" id="footnotes_text">{{#if getValue "footnotes"}}{{{getValue "footnotes"}}}{{else}}Footnotes in Markdown.
+	<textarea rows="5" type="text" id="footnotes_text">{{#if getValue "footnotes"}}{{{getValue "footnotes"}}}{{else}}Footnotes in Markdown.
 Make sure to escape underscores like so: "\_"{{/if}}</textarea>
 </template>
 
@@ -88,4 +88,5 @@ Link: [{{getValue "link"}}]({{getValue "link"}})
 {{else}}The email below is from {{getValue "signature"}}, a CREDO activist in Berkeley, California. {{ sigFirstName }} started a petition on [CREDO Mobilize](http://credomobilize.com?source=email_topper"), where activists can launch their own campaigns for progressive change. Will you help {{ sigFirstName }} pressure the Bureau of Reclamation to abandon a disastrous proposal to raise the Shasta Dam and flood sacred lands by [signing his petition]({{getValue "link"}}) and sharing it with your friends and family?{{/if}}
 	</textarea>
 </template>
+
 

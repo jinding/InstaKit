@@ -111,7 +111,7 @@ Template.saveDialog.events({
       } else {
         Session.set("emailNotSaved",false);
         Session.set("saveDialog",false);
-        Router.go('home');
+        Router.go('mailings');
       }
     });
   }
@@ -139,7 +139,7 @@ Template.composePage.events({
           Session.set('saveError', err.error);
         } else {
           Session.set("emailNotSaved",false);
-          Router.go('home');
+          Router.go('mailings');
         }
       });
     } else {
@@ -147,7 +147,7 @@ Template.composePage.events({
     }
   },
   'click #buttonBackToFilePage': function() {
-    Router.go('home');
+    Router.go('mailings');
   },
   'click #buttonAPI': function() {
     Meteor.call('createAKemail', makeEmailFromSession(), function (err,res) {

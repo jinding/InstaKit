@@ -1,0 +1,136 @@
+<!-- PAGE TEMPLATES -->
+
+<!-- pages list -->
+<template name="pages">
+	<div id="fileLeft">
+		new petition page
+		<hr style="color: #FFF;">
+		<ul>
+			<li id="templateChooser_petition"><a href="{{ pathFor 'createPage' template='petition' }}">petition</a></li>
+		</ul>
+		<hr style="color: #FFF; margin-top: 40px;">
+		<p><a href="{{ pathFor 'mailings' }}" id="returnFilePage">mailings</a></p>
+		{{# if isAdmin}}<p><a href="{{pathfor 'restore'}}" id="restoreLink">admin undelete</a></p>
+		{{/if}}
+		<p id="logoutButton" style="cursor: pointer;">logout</p>
+	</div>
+	<div id="fileRight">
+		<table>
+			<tr>
+				<th>title <button class="sortButton" id="sortHeadline">{{headlineButtonText}}</button></th>
+				<th>type <button class="sortButton" id="sortType">{{typeButtonText}}</button></th>
+				<th>created by <button class="sortButton" id="sortCreatedBy">{{createdByButtonText}}</button></th>
+				<th>saved by <button class="sortButton" id="sortSavedBy">{{savedByButtonText}}</button></th>
+				<th>last saved <button class="sortButton" id="sortSavedAt">{{savedAtButtonText}}</button></th>
+				<th colspan="3"><button name="filterButton" id="filterButton" class="tableButton" style="margin-bottom: 6px; vertical-align: text-bottom; background-color: #01E;">{{filterButtonText}}</button></th>
+			</tr>
+		{{#each fileList}}
+			<tr>
+				<td><a href="{{ pathFor 'createPage' }}" class="editButton">{{pageTitle}}</a></td>
+				<td>{{pageType}}</td>
+				<td>{{creator}}</td>
+				<td>{{savedBy}}</td>
+				<td style="min-width: 115px;">{{prettifyDate when}}</td>
+				<td style="padding-right:0px;"><input type="button" name="copyButton" class="copyButton tableButton" value="copy" style="background-color:#13D333;"></td>
+				<td style="padding-right:0px;">{{#if belongsToUser creator }}<input type="button" name="deleteButton" class="deleteButton tableButton" value="delete" style="background-color:#FF0000;">{{else}}{{#if isAdmin}}<input type="button" name="deleteButton" class="deleteButton tableButton" value="admin delete">{{/if}}{{/if}}</td>
+				<td style="padding-right:0px;">{{#if AKpageID}}<input type="button" name="apiButton" class="apiButton tableButton" value="created page info" >{{/if}}</td>
+			</tr>
+		{{/each}}
+		</table>
+	</div>
+	{{#if getValue "confirmDelete"}}
+		<div id="confirmPopup">
+			<p>Are you sure you want to delete this?</p>
+			<input type="button" name="yesDelete" id="yesDelete" value="yes, delete this" style="background-color:#13D333;">
+			<input type="button" name="cancelDelete" id="cancelDelete" value="cancel" style="background-color: #FF0000;">
+		</div>
+	{{/if}}
+</template>
+
+<!-- compose page templates -->
+<template name="createPage">
+  <div id="createPage">
+	<div class="createPageInputs">
+		<div class="buttonHeader">
+		{{#if getValue "pageNotSaved" }}
+			<button id="buttonSavePage" style="background-color: #01E;">save {{getValue "templateChooser"}} page</button>
+			<button id="buttonBackToPageList">discard changes</button>
+		{{else}}
+			<button id="buttonBackToPageList">back to pages</button>
+		{{/if}}
+			<button id="buttonAPI">push to AK</button>
+		</div>
+		{{> createPageInputs}}
+	</div>
+	<div id="createPageDisplay">
+		{{> createPageDisplay }}
+	</div>
+  	<div class="clear"></div>
+	{{#if getValue "apiError"}}
+		<div class="errorPopup">
+			<p>ERROR</p>
+			<p>{{getValue "apiError"}}</p>
+			<button class="buttonAPIok" style="background-color: #01E;">ok</button>
+  		</div>
+  	{{else}} {{#if getValue "apiSuccess"}}
+		<div class="errorPopup" style="background-color: #13D333;">
+			<p>SUCCESS</p>
+			<p>{{getValue "apiSuccess"}}</p>
+			<button class="buttonAPIok" style="background-color: #01E;">ok</button>
+  		</div>
+<!--	{{else}} {{#if getValue "duplicatePage"}}
+		<div class="errorPopup">
+			<p>A page with this short name already exists in AK.</p>
+			<p>Do you want to update this page with these new values?</p>
+			<button class="buttonAPIupdate" style="background-color: #01E;">yes, update page</button>
+			<button class="buttonAPIok" style="background-color: #01E;">no, cancel API call</button>
+  		</div>
+	{{/if}} -->
+	{{/if}}
+  	{{/if}}
+  </div>
+</template>
+
+<template name="createPageInputs">
+	{{> templatePageTitle }}
+	{{> templatePageName }}
+	{{> templatePageStatement }}
+	{{> templatePageAboutText }}
+	{{> templatePageGraphics }}
+	{{> templatePageTAF }}
+	{{> templatePageFacebook }}
+	{{> templatePageTwitterCopy }}
+	{{> templatePageConfEmail }}
+</template>
+
+<template name="createPageDisplay">
+	{{> pageCreationDisplay }}
+</template>
+
+<template name="savePageDialog">
+	<div id="confirmPopup">
+		<p>Are you sure you want to save this?</p>
+		<input type="button" name="yesSave" id="yesSave" value="yes, save this" style="background-color:#13D333;">
+		<input type="button" name="cancelSave" id="cancelSave" value="cancel" style="background-color: #FF0000;">
+	</div>
+</template>
+
+<template name="postAPIpage">
+	<div id="postAPIpage">
+		<div class="apiInfo">
+			<button id="buttonBackToPageList">back to pages</button>
+			<p>ActionKit page ID: {{getValue 'AKpageID'}}</p>
+			<p>ActionKit page URL: <a href="{{getValue 'AKpageURL'}}" target="_blank">{{getValue 'AKpageURL'}}</a></p>
+			<p>ActionKit edit page URL: <a href="{{getValue 'AKpageEditURL'}}" target="_blank">{{getValue 'AKpageEditURL'}}</a></p>
+			<p>Share page URL: <a href="{{getValue 'pageSharePageLink'}}" target="_blank">{{getValue 'pageSharePageLink'}}</a></p>
+			<p>Bitly: <a href="{{getValue 'AKpageBitly'}}" target="_blank">{{getValue 'AKpageBitly'}}</a></p>
+	{{#if isAdmin}}
+			<p>ActionKit page resource URI: <a href="{{getValue 'AKpageResourceURI'}}" target="_blank">{{getValue 'AKpageResourceURI'}}</a></p>
+	{{/if}}
+		</div>
+		<div id="postAPIpageDisplay">
+			{{> createPageDisplay }}
+		</div>
+	  	<div class="clear"></div>
+	</div>
+</template>
