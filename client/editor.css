@@ -270,7 +270,6 @@ button.sortButton {
   margin-left: 0px;
 }
 #createPageDisplay { width: 520px; padding-top: 2px; float: right; padding-right: 12px;}
-#postAPIpageDisplay { width: 550px; padding-top: 2px; float: right; padding-right: 12px;}
 
 /* page creation display styling
 --------------------------------------*/
@@ -296,19 +295,19 @@ button.sortButton {
 .story blockquote { font-size: 15px; line-height: 18px; /* padding: 10px 0px 10px 0px; */ margin: 0px 0px 20px 30px; }
 .story blockquote p { font-size: 15px; line-height: 18px; margin-bottom: 22px; }
 .story blockquote p:last-child { padding: 0px; margin: 0px; }
-.story .highlight { font-size: 22px; line-height: 28px; border-top: 1px solid #ff6319; border-bottom: 1px solid #ff6319; padding: 10px 0px 10px 0px; margin: 0px 0px 20px 0px; }
-.story .highlight p { font-size: 22px; line-height: 28px; margin-bottom: 22px; }
-.story .highlight p:last-child { padding: 0px; margin: 0px; }
+#createPageDisplay .story .highlight { font-size: 22px; line-height: 28px; border-top: 1px solid #ff6319; border-bottom: 1px solid #ff6319; padding: 10px 0px 10px 0px; margin: 0px 0px 20px 0px; }
+#createPageDisplay .story .highlight p { font-size: 22px; line-height: 28px; margin-bottom: 22px; }
+#createPageDisplay .story .highlight p:last-child { padding: 0px; margin: 0px; }
 .story sup { font-size: 65%; line-height: 0; position: relative; vertical-align: baseline; top: -0.7em; }
 .story ol { margin: 0px 0px 12px 0px; list-style-type: decimal; }
 .story ul { margin: 0px 0px 12px 0px; list-style-type: disc; }
 .story li { font-size: 13px; line-height: 15px; margin: 0px 10px 0px 0px; }
-.story .sources:before { content: "SOURCES:"; font-size: 10px; line-height: 18px; margin-left: -20px; }
-.story ol.sources { margin: 0px 0px 20px 20px; }
-.story .sources li { font-size: 12px; margin: 0px 0px 0px 0px; }
-.story .resources:before { content: "RESOURCES:"; font-size: 10px; line-height: 18px; margin-left: -20px; }
-.story ul.resources { margin: 0px 0px 20px 20px; }
-.story .resources li { font-size: 12px; margin: 0px 0px 0px 0px; }
+#createPageDisplay .story .sources:before { content: "SOURCES:"; font-size: 10px; line-height: 18px; margin-left: -20px; }
+#createPageDisplay .story ol.sources { margin: 0px 0px 20px 20px; }
+#createPageDisplay .story .sources li { font-size: 12px; margin: 0px 0px 0px 0px; }
+#createPageDisplay .story .resources:before { content: "RESOURCES:"; font-size: 10px; line-height: 18px; margin-left: -20px; }
+#createPageDisplay .story ul.resources { margin: 0px 0px 20px 20px; }
+#createPageDisplay .story .resources li { font-size: 12px; margin: 0px 0px 0px 0px; }
 /* ----------	general .form-item rules */
 .form-item { padding-bottom: 10px; }
 /* ---------- 	Form Box */

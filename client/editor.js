@@ -116,7 +116,6 @@ function setSessionVarsForPage(obj) {
   Session.set("pageGraphicEmail", obj.pageGraphicEmail);
   Session.set("pageGraphicFacebook", obj.pageGraphicFacebook);
   Session.set("pageGraphicHomePage", obj.pageGraphicHomePage);
-  Session.set("pageSharePageLink", obj.pageSharePageLink);
   Session.set("pageTAFSL", obj.pageTAFSL);
   Session.set("pageTAFCopy", obj.pageTAFCopy);
   Session.set("pageFacebookTitle", obj.pageFacebookTitle);
@@ -126,6 +125,12 @@ function setSessionVarsForPage(obj) {
   Session.set("pageConfEmailBody", obj.pageConfEmailBody);
   Session.set("creator", obj.creator);
   Session.set("when", obj.when);
+  Session.set('AKpageURL', obj.AKpageURL);
+  Session.set('AKpageEditURL', obj.AKpageEditURL);
+  Session.set('AKpageBitly', obj.AKpageBitly);
+  Session.set('pageSharePageLink', obj.pageSharePageLink);
+  Session.set('AKpageID',obj.AKpageID);
+  Session.set('AKpageResourceURI', obj.AKpageResourceURI);
 }
 
 function setSessionVarsForNewPage() {
@@ -140,7 +145,6 @@ function setSessionVarsForNewPage() {
   Session.set("pageGraphicEmail", "");
   Session.set("pageGraphicFacebook", "");
   Session.set("pageGraphicHomePage", "");
-  Session.set("pageSharePageLink", "");
   Session.set("pageTAFSL", "");
   Session.set("pageTAFCopy", "");
   Session.set("pageFacebookTitle", "");
@@ -149,6 +153,12 @@ function setSessionVarsForNewPage() {
   Session.set("pageConfEmailSL", "");
   Session.set("pageConfEmailBody", "");
   Session.set("creator", "");
+  Session.set('AKpageURL', "");
+  Session.set('AKpageEditURL', "");
+  Session.set('AKpageBitly', "");
+  Session.set('pageSharePageLink', "");
+  Session.set('AKpageID',"");
+  Session.set('AKpageResourceURI', "");
 }
 
 function initSessionVarsForPageCompose() {
@@ -234,6 +244,15 @@ Router.map(function () {
   this.route('restore', {
     path: '/restore/',
     template: 'adminDeletedFilesPage'
+  });
+
+  this.route('postAPI', {
+    path: '/pages/postAPI/:_id?',
+    template: 'postAPIpage',
+    before: function() {
+      var page = Files.findOne(this.params._id);  
+      setSessionVarsForPage(page);
+    }
   });
 
 });

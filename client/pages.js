@@ -5,7 +5,7 @@ function standardizePageLinks(str) {
     if (str.search(/{{ *page.canonical*_url *}}/i) >= 0)
       return str.replace(/{{ *page.canonical*_url *}}/i,'{LINK}');
     else return str+' {LINK}'; // no LINK reference exist, so append
-  else return str;
+  else return str.replace(/{ *LINK *}/i, '{LINK}');
 };
 
 function setSessionVars() {
