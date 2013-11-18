@@ -50,7 +50,7 @@ function updatePageShare(page, loc, bitly) {
                           data: {
                       			name: page.pageName,
                       			title: page.pageTitle,
-                      			allow_multiple_responses: true,
+                      			allow_multiple_responses: false,
                       			fields: { 
                       			 	'image_email_180': page.pageGraphicEmail,
 									'image_homepage_100': page.pageGraphicHomePage,
@@ -59,6 +59,8 @@ function updatePageShare(page, loc, bitly) {
 									'taf_facebook_copy': page.pageFacebookCopy,
 									'taf_tweet': updateTwitterForAK(page.pageTwitterCopy,bitly)
                       			}, // end fields
+                      			one_click: true,
+                      			recognize: 'once',
                       			required_fields: [
                       			 	{   id: 2,
 										name: 'zip',

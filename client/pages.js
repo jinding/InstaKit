@@ -111,6 +111,8 @@ Template.createPage.events({
           Session.set('saveError', err.error);
         } else {
         console.log('page saved');
+        console.log('upsert id ' + res.insertedId);
+        Session.set('id', res.insertedId);
         Session.set("pageNotSaved",false);
         Router.go('pages');
         }
@@ -151,6 +153,8 @@ Template.createPage.events({
           Session.set('saveError', err.error);
         } else {
           console.log('page saved');
+          console.log('upsert id ' + res.insertedId);
+          Session.set('id', res.insertedId);
           Session.set("pageNotSaved",false);
           Session.set("saveDialog",false);
         }

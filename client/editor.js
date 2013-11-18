@@ -221,14 +221,14 @@ Router.map(function () {
       if (this.params._id) {
         Session.set("newPage", false);
         var page = Files.findOne(this.params._id);
-        // check for missing email and throw a 404
+        // check for missing page and throw a 404
         setSessionVarsForPage(page);
       } else if (this.params.copy) {
         var page = Files.findOne(this.params.copy);
         // check for missing email and throw a 404
-        setSessionVarsForPage(page); // copy email vars from selected email
-        Session.set("newPage", true); // but this is a new email, not a current email
-        // clear creator and ID vars because this is a new email
+        setSessionVarsForPage(page); // copy page vars from selected page
+        Session.set("newPage", true); // but this is a new page, not a current page
+        // clear creator and ID vars because this is a new page
         Session.set("creator", "");
         Session.set("id", "");
       } else {
