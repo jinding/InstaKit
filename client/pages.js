@@ -59,7 +59,13 @@ function makePageFromSession() {
     pageImportStatementLeadIn: Session.get("pageImportStatementLeadIn"),
     pageImportStatementText: Session.get("pageImportStatementText"),
     pageImportAboutText: Session.get("pageImportAboutText"),
-    pageImportConfEmailBody: Session.get("pageImportConfEmailBody")
+    pageImportConfEmailBody: Session.get("pageImportConfEmailBody"),
+    AKpageURL: Session.get("AKpageURL"),
+    AKpageEditURL: Session.get("AKpageEditURL"),
+    AKpageBitly: Session.get("AKpageBitly"),
+    pageSharePageLink: Session.get("pageSharePageLink"),
+    AKpageID: Session.get("AKpageID"),
+    AKpageResourceURI: Session.get("AKpageResourceURI")
   }
 };
 
@@ -112,7 +118,7 @@ Template.createPage.events({
         } else {
         console.log('page saved');
         console.log('upsert id ' + res.insertedId);
-        Session.set('id', res.insertedId);
+        if (!Session.get('id')) { Session.set('id', res.insertedId); }
         Session.set("pageNotSaved",false);
         Router.go('pages');
         }
@@ -154,7 +160,7 @@ Template.createPage.events({
         } else {
           console.log('page saved');
           console.log('upsert id ' + res.insertedId);
-          Session.set('id', res.insertedId);
+          if (!Session.get('id')) { Session.set('id', res.insertedId); }
           Session.set("pageNotSaved",false);
           Session.set("saveDialog",false);
         }
@@ -366,16 +372,16 @@ Template.pages.events({
     Router.go('createPage', {_id: this._id});
   },
   'click .copyButton': function() {
-    Router.go('createPage', 
-                {}, 
-                {query: {copy: this._id}}
-              );
+    Router.go('createPage', {}, {query: {copy: this._id}});
   },
   'click .deleteButton': function() { 
     Session.set("confirmDelete", this._id);
   },
   'click .apiButton': function() {
     Router.go('postAPI', {_id: this._id});
+  },
+  'click .emailButton': function() {
+    Router.go('compose', {}, {query: {page: this._id}});
   },
   'click #filterButton': function() {
     if (Session.equals("filter", 'all')) {

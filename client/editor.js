@@ -87,11 +87,26 @@ function setSessionVarsForNewEmail() {
   Session.set("link", "");
   Session.set("graphic", "");
   Session.set("graphic_alt_text", "");
-  Session.set("signature", "");
+  if (Session.equals("templateChooser","mobilize"))
+    Session.set('signature', "");
+  else Session.set('signature', Meteor.user().profile.name + ', Campaign Manager');
   Session.set("footnotes", "");
   Session.set("facebook", "");
   Session.set("twitter", "");
   Session.set("creator", "");
+}
+
+function setSessionVarsForEmailFromPage(obj) {
+  Session.set("markdown_data", obj.pageAboutText);
+  Session.set("templateChooser", obj.pageType);
+  Session.set("headline", obj.pageTitle);
+  Session.set("statement_leadin", obj.pageStatementLeadIn);
+  Session.set("petition", obj.pageStatementText);
+  Session.set("link", obj.AKpageURL);
+  Session.set("graphic", obj.pageGraphicEmail);
+  Session.set('signature', Meteor.user().profile.name + ', Campaign Manager');
+//  Session.set("facebook", obj.facebook);
+//  Session.set("twitter", obj.pageTwitterCopy);
 }
 
 function initSessionVarsForCompose() {
@@ -188,19 +203,27 @@ Router.map(function () {
     template: 'composePage',
     before: function () {
       if (this.params._id) {
+        // edit an existing email
         Session.set("newEmail", false);
         var email = Files.findOne(this.params._id);
-        // check for missing email and throw a 404
         setSessionVarsForEmail(email);
       } else if (this.params.copy) {
+        // create a new email by copying another email
         var email = Files.findOne(this.params.copy);
-        // check for missing email and throw a 404
         setSessionVarsForEmail(email); // copy email vars from selected email
         Session.set("newEmail", true); // but this is a new email, not a current email
         // clear creator and ID vars because this is a new email
         Session.set("creator", "");
         Session.set("id", "");
+      } else if (this.params.page) {
+        // create an email from a saved page
+        var page = Files.findOne(this.params.page);
+        setSessionVarsForEmailFromPage(page);
+        Session.set("newEmail", true);
+        Session.set("creator","");
+        Session.set("id","");
       } else {
+        // create a new email
         Session.set("newEmail", true);
         // default to petition email if no query parameter for template set
         Session.set('templateChooser',this.params.template || 'petition');

@@ -22,7 +22,7 @@
 				<th>created by <button class="sortButton" id="sortCreatedBy">{{createdByButtonText}}</button></th>
 				<th>saved by <button class="sortButton" id="sortSavedBy">{{savedByButtonText}}</button></th>
 				<th>last saved <button class="sortButton" id="sortSavedAt">{{savedAtButtonText}}</button></th>
-				<th colspan="3"><button name="filterButton" id="filterButton" class="tableButton" style="margin-bottom: 6px; vertical-align: text-bottom; background-color: #01E;">{{filterButtonText}}</button></th>
+				<th colspan="4"><button name="filterButton" id="filterButton" class="tableButton" style="margin-bottom: 6px; vertical-align: text-bottom; background-color: #01E;">{{filterButtonText}}</button></th>
 			</tr>
 		{{#each fileList}}
 			<tr>
@@ -34,6 +34,7 @@
 				<td style="padding-right:0px;"><input type="button" name="copyButton" class="copyButton tableButton" value="copy" style="background-color:#13D333;"></td>
 				<td style="padding-right:0px;">{{#if belongsToUser creator }}<input type="button" name="deleteButton" class="deleteButton tableButton" value="delete" style="background-color:#FF0000;">{{else}}{{#if isAdmin}}<input type="button" name="deleteButton" class="deleteButton tableButton" value="admin delete">{{/if}}{{/if}}</td>
 				<td style="padding-right:0px;">{{#if AKpageID}}<input type="button" name="apiButton" class="apiButton tableButton" value="created page info" >{{/if}}</td>
+				<td style="padding-right:0px;"><input type="button" name="emailButton" class="emailButton tableButton" value="new email" style="background-color:#FF6319;" ></td>
 			</tr>
 		{{/each}}
 		</table>
@@ -53,7 +54,7 @@
 	<div class="createPageInputs">
 		<div class="buttonHeader">
 		{{#if getValue "pageNotSaved" }}
-			<button id="buttonSavePage" style="background-color: #01E;">save {{getValue "templateChooser"}} page</button>
+			<button id="buttonSavePage" style="background-color: #01E;">save page</button>
 			<button id="buttonBackToPageList">discard changes</button>
 		{{else}}
 			<button id="buttonBackToPageList">back to pages</button>
