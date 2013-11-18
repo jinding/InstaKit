@@ -117,21 +117,21 @@ button.sortButton {
 
 /* COMPOSE PAGE */
 #main { width: 100%; margin: 6px auto; }
-#composeLeft { float: left; width: 376px; margin: 12px 12px 0px 20px; }
-#composeRight { margin-left: 400px; padding: 0px 12px; margin-right: 22px; min-height: 500px;}
+#composeLeft { float: left; width: 550px; margin: 12px 12px 0px 20px; }
+#composeRight { margin-left: 574px; padding: 0px 12px; margin-right: 22px; min-height: 500px;}
 .composePageInputs {
-  width: 376px;
+  width: 550px;
   padding-top: 12px;
   float: left;
 }
-.composePageInputLabel {  width: 110px; float: left; margin: 4px 4px 4px 0px; padding-top: 6px; }
-.composePageInputText { width: 248px; float: right; margin: 4px 4px 4px 0px;}
+.composePageInputLabel {  width: 106px; float: left; margin: 4px 4px 4px 0px; padding-top: 6px; }
+.composePageInputText { width: 426px; float: right; margin: 4px 4px 4px 0px;}
 #composeLeft input {
-  width: 238px;     
+  width: 416px;     
   vertical-align: top;
   margin-left: 0px;
 }
-#composeLeft textarea { width: 362px; }
+#composeLeft textarea { width: 536px; }
 
 /* slideout menu */
 
@@ -304,10 +304,10 @@ button.sortButton {
 .story li { font-size: 13px; line-height: 15px; margin: 0px 10px 0px 0px; }
 #createPageDisplay .story .sources:before { content: "SOURCES:"; font-size: 10px; line-height: 18px; margin-left: -20px; }
 #createPageDisplay .story ol.sources { margin: 0px 0px 20px 20px; }
-#createPageDisplay .story .sources li { font-size: 12px; margin: 0px 0px 0px 0px; }
+#createPageDisplay .story .sources li { font-size: 12px; margin: 0px 0px 0px 4px; }
 #createPageDisplay .story .resources:before { content: "RESOURCES:"; font-size: 10px; line-height: 18px; margin-left: -20px; }
 #createPageDisplay .story ul.resources { margin: 0px 0px 20px 20px; }
-#createPageDisplay .story .resources li { font-size: 12px; margin: 0px 0px 0px 0px; }
+#createPageDisplay .story .resources li { font-size: 12px; margin: 0px 0px 0px 4px; }
 /* ----------	general .form-item rules */
 .form-item { padding-bottom: 10px; }
 /* ---------- 	Form Box */

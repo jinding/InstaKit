@@ -59,6 +59,7 @@ Handlebars.registerHelper("prettifyDate", function(d) {
 // email functions
 function setSessionVarsForEmail(obj) {
   Session.set("id", obj._id);
+  console.log(Session.get("id"));
   Session.set("markdown_data", obj.markdown_data);
   Session.set("templateChooser", obj.type);
   Session.set("topper", obj.topper);
