@@ -109,6 +109,23 @@ Template.createPage.events({
   'keyup input[type=text], keyup textarea': function() {
     Session.set("pageNotSaved",true);
   },
+  'click #buttonMakeEmail': function() {
+    var page = makePageFromSession();
+    // save page first then create email
+    Meteor.call('saveFile', page, function (err, res) {
+      if (err) {
+        Session.set('saveError', err.error);
+      } else {
+        console.log('page saved');
+        console.log('upsert id ' + res.insertedId);
+        if (!Session.get('id')) { Session.set('id', res.insertedId); }
+        Session.set("pageNotSaved",false);
+        Session.set("saveDialog",false);
+        // go to compose mailing page, pulling data from the saved page
+        Router.go('compose', {}, {query: {page: res.insertedId}});
+      }
+    });
+  },
   'click #buttonSavePage': function() {
     if (Session.get("newPage")
         || Session.equals("creator", Meteor.user().profile.name)) {
@@ -217,6 +234,9 @@ Template.createPage.events({
 Template.postAPIpage.events({
   'click #buttonBackToPageList': function() {
     Router.go('pages');    
+  },
+  'click #buttonMakeEmail': function() {
+    Router.go('compose', {}, {query: {page: Session.get("id")}});
   }
 });
 

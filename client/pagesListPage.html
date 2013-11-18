@@ -60,6 +60,7 @@
 			<button id="buttonBackToPageList">back to pages</button>
 		{{/if}}
 			<button id="buttonAPI">push to AK</button>
+			<button id="buttonMakeEmail" style="background-color:#FF6319;">create email</button>
 		</div>
 		{{> createPageInputs}}
 	</div>
@@ -112,6 +113,7 @@
 	<div id="postAPIpage">
 		<div class="apiInfo">
 			<button id="buttonBackToPageList">back to pages</button>
+			<button id="buttonMakeEmail" style="background-color:#FF6319;">create email</button>
 			<p>ActionKit page ID: {{getValue 'AKpageID'}}</p>
 			<p>ActionKit page URL: <a href="{{getValue 'AKpageURL'}}" target="_blank">{{getValue 'AKpageURL'}}</a></p>
 			<p>ActionKit edit page URL: <a href="{{getValue 'AKpageEditURL'}}" target="_blank">{{getValue 'AKpageEditURL'}}</a></p>

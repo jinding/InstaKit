@@ -88,7 +88,7 @@ function setSessionVarsForNewEmail() {
   Session.set("graphic", "");
   Session.set("graphic_alt_text", "");
   if (Session.equals("templateChooser","mobilize"))
-    Session.set('signature', "");
+    Session.set("signature", "");
   else Session.set('signature', Meteor.user().profile.name + ', Campaign Manager');
   Session.set("footnotes", "");
   Session.set("facebook", "");
