@@ -1,1 +1,1 @@
-### Editor tool for writing CREDO emails
+## Editor tool for creating CREDO campaigns
