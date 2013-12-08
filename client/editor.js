@@ -226,6 +226,8 @@ Router.map(function () {
       } else {
         // create a new email
         Session.set("newEmail", true);
+        Session.set("creator","");
+        Session.set("id","");
         // default to petition email if no query parameter for template set
         Session.set('templateChooser',this.params.template || 'petition');
         setSessionVarsForNewEmail();
@@ -257,7 +259,9 @@ Router.map(function () {
         Session.set("id", "");
       } else {
         Session.set("newPage", true);
-        // default to petition email if no query parameter for template set
+        Session.set("creator", "");
+        Session.set("id", "");
+        // default to petition page type if no query parameter for template set
         Session.set('templateChooser', this.params.template || 'petition');
         setSessionVarsForNewPage();
       } 
