@@ -20,6 +20,10 @@ Handlebars.registerHelper("getValue", function(value) {
   return Session.get(value);
 });
 
+Handlebars.registerHelper("highlight", function(value) {
+  return Session.get(value) ? null : 'unchanged';
+});
+
 Handlebars.registerHelper("sigFirstName", function() {
   return Session.get("signature").split(' ')[0];
 });

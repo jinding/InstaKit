@@ -1,29 +1,29 @@
 <template name="templatePageTitle">
 	<div class="bodytext" >
 		<div class="bodytext_desc">Title</div>
-		<div class="taf_title"><input type="text" id="pageTitle" value="{{getValue "pageTitle"}}"></div>
+		<div class="taf_title"><input type="text" id="pageTitle" class="{{highlight "pageTitle"}}" value="{{getValue "pageTitle"}}"></div>
 	</div>
 </template>
 
 <template name="templatePageName">
 	<div class="bodytext" >
 		<div class="bodytext_desc">Short URL</div>
-		<div class="taf_title"><input type="text" id="pageName" value="{{getValue "pageName"}}"></div>
+		<div class="taf_title"><input type="text" id="pageName" class="{{highlight "pageName"}}" value="{{getValue "pageName"}}"></div>
 	</div>
 </template>
 
 <template name="templatePageStatement">
 	<div class="bodytext" >
 		<div class="bodytext_desc">Petition</div>
-		<div class="taf_title"><input type="text" id="pageStatementLeadIn" value="{{#if getValue "pageStatementLeadIn"}}{{getValue "pageStatementLeadIn"}}{{else}}Statement lead-in:{{/if}}"></div>
-		<div class="taf_copy"><textarea class="textbox" rows="4" type="text" id="pageStatementText">{{#if getValue "pageStatementText"}}{{getValue "pageStatementText"}}{{else}}"Petition text in Markdown"{{/if}}</textarea></div>
+		<div class="taf_title"><input type="text" id="pageStatementLeadIn" class="{{highlight "pageStatementLeadIn"}}" value="{{#if getValue "pageStatementLeadIn"}}{{getValue "pageStatementLeadIn"}}{{else}}Statement lead-in:{{/if}}"></div>
+		<div class="taf_copy"><textarea class="textbox {{highlight "pageStatementText"}}" rows="4" type="text" id="pageStatementText">{{#if getValue "pageStatementText"}}{{getValue "pageStatementText"}}{{else}}"Petition text in Markdown"{{/if}}</textarea></div>
 	</div>
 </template>
 
 <template name="templatePageAboutText">
 	<div class="bodytext" >
 		<div class="bodytext_desc">About text</div>
-		<div class="taf_copy"><textarea class="textbox" rows="15" type="text" id="pageAboutText">{{#if getValue "pageAboutText"}}{{getValue "pageAboutText"}}{{else}}In Markdown{{/if}}</textarea></div>
+		<div class="taf_copy"><textarea class="textbox {{highlight "pageAboutText"}}" rows="15" type="text" id="pageAboutText">{{#if getValue "pageAboutText"}}{{getValue "pageAboutText"}}{{else}}In Markdown{{/if}}</textarea></div>
 	</div>
 </template>
 
@@ -31,8 +31,8 @@
 	<div class="taf" >
 		<div class="taf_logo"><img src="http://shpg.org/images/icon-fb.gif"/><br>
 			<span style="color: #FF0000;">{{getValue 'pageFacebookLength'}}</span></div>
-		<div class="taf_title"><input type="text" id="pageFacebookTitle" value="{{getValue "pageFacebookTitle"}}"></div>
-		<div class="taf_copy"><textarea class="textbox" rows="4" type="text" id="pageFacebookCopy">{{getValue "pageFacebookCopy"}}</textarea></div>
+		<div class="taf_title"><input type="text" id="pageFacebookTitle" class="{{highlight "pageFacebookTitle"}}" value="{{getValue "pageFacebookTitle"}}"></div>
+		<div class="taf_copy"><textarea class="textbox {{highlight "pageFacebookCopy"}}" rows="4" type="text" id="pageFacebookCopy">{{getValue "pageFacebookCopy"}}</textarea></div>
 	</div>
 </template>
 
@@ -40,23 +40,23 @@
 	<div class="taf" >
 		<div class="taf_logo"><img src="http://shpg.org/images/icon-twitter.gif"/><br>
 			<span style="color: #FF0000;">{{getValue 'pageTwitterLength'}}</span></div>
-		<div class="taf_copy"><textarea class="textbox" rows="3" type="text" id="pageTwitterCopy">{{#if getValue "pageTwitterCopy"}}{{getValue "pageTwitterCopy"}}{{else}}Include {{{django_string "{LINK}"}}} where you want the short link inserted.{{/if}}</textarea></div>
+		<div class="taf_copy"><textarea class="textbox {{highlight "pageTwitterCopy"}}" rows="3" type="text" id="pageTwitterCopy">{{#if getValue "pageTwitterCopy"}}{{getValue "pageTwitterCopy"}}{{else}}Include {{{django_string "{LINK}"}}} where you want the short link inserted.{{/if}}</textarea></div>
 	</div>
 </template>
 
 <template name="templatePageTAF">
 	<div class="taf" >
 		<div class="taf_logo"><img src="http://shpg.org/images/icon-email.gif"></div>
-		<div class="taf_title"><input type="text" id="pageTAFSL" value="{{#if getValue "pageTAFSL"}}{{getValue "pageTAFSL"}}{{else}}TAF email subject line{{/if}}"></div>
-		<div class="taf_copy"><textarea class="textbox" rows="5" type="text" id="pageTAFCopy">{{#if getValue "pageTAFCopy"}}{{getValue "pageTAFCopy"}}{{else}}TAF email body. Link: {{{ django_string "{LINK}" }}}{{/if}}</textarea></div>
+		<div class="taf_title"><input type="text" id="pageTAFSL" class="{{highlight "pageTAFSL"}}" value="{{#if getValue "pageTAFSL"}}{{getValue "pageTAFSL"}}{{else}}TAF email subject line{{/if}}"></div>
+		<div class="taf_copy"><textarea class="textbox {{highlight "pageTAFCopy"}}" rows="5" type="text" id="pageTAFCopy">{{#if getValue "pageTAFCopy"}}{{getValue "pageTAFCopy"}}{{else}}TAF email body. Link: {{{ django_string "{LINK}" }}}{{/if}}</textarea></div>
 	</div>
 </template>
 
 <template name="templatePageConfEmail">
 	<div class="bodytext" >
 		<div class="bodytext_desc">Conf email</div>
-		<div class="taf_title"><input type="text" id="pageConfEmailSL" value="{{#if getValue "pageConfEmailSL"}}{{getValue "pageConfEmailSL"}}{{else}}Subject line{{/if}}"></div>
-		<div class="taf_copy"><textarea class="textbox" rows="8" type="text" id="pageConfEmailBody">{{#if getValue "pageConfEmailBody"}}{{getValue "pageConfEmailBody"}}{{else}}Thanks for taking action on our petition: {{{django_string "{{ page.title }}"}}}.
+		<div class="taf_title"><input type="text" id="pageConfEmailSL" class="{{highlight "pageConfEmailSL"}}" value="{{#if getValue "pageConfEmailSL"}}{{getValue "pageConfEmailSL"}}{{else}}Subject line{{/if}}"></div>
+		<div class="taf_copy"><textarea class="textbox {{highlight "pageConfEmailBody"}}" rows="8" type="text" id="pageConfEmailBody">{{#if getValue "pageConfEmailBody"}}{{getValue "pageConfEmailBody"}}{{else}}Thanks for taking action on our petition: {{{django_string "{{ page.title }}"}}}.
 
 Here are some ways you can spread the word:
 
@@ -88,11 +88,11 @@ SUBJECT: {{{django_string "{% include\_tmpl page.followup.taf\_subject escaped %
 <template name="templatePageGraphics">
 	<div class="bodytext" >
 		<div class="bodytext_desc">HP 100px</div>
-		<div class="taf_title"><input type="text" id="pageGraphicHomePage" value="{{getValue "pageGraphicHomePage"}}"></div>
+		<div class="taf_title"><input type="text" id="pageGraphicHomePage" class="{{highlight "pageGraphicHomePage"}}" value="{{getValue "pageGraphicHomePage"}}"></div>
 		<div class="bodytext_desc">FB 200px</div>
-		<div class="taf_title"><input type="text" id="pageGraphicFacebook" value="{{getValue "pageGraphicFacebook"}}"></div>
+		<div class="taf_title"><input type="text" id="pageGraphicFacebook" class="{{highlight "pageGraphicFacebook"}}" value="{{getValue "pageGraphicFacebook"}}"></div>
 		<div class="bodytext_desc">Email 180px</div>
-		<div class="taf_title"><input type="text" id="pageGraphicEmail" value="{{getValue "pageGraphicEmail"}}"></div>
+		<div class="taf_title"><input type="text" id="pageGraphicEmail" class="{{highlight "pageGraphicEmail"}}" value="{{getValue "pageGraphicEmail"}}"></div>
 	</div>
 </template>
 

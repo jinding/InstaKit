@@ -126,6 +126,7 @@ button.sortButton {
 }
 .composePageInputLabel {  width: 106px; float: left; margin: 4px 4px 4px 0px; padding-top: 6px; }
 .composePageInputText { width: 426px; float: right; margin: 4px 4px 4px 0px;}
+.unchanged { outline: none; box-shadow: 0 0 10px #FF6319; }
 #composeLeft input {
   width: 416px;     
   vertical-align: top;

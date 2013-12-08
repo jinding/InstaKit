@@ -1,62 +1,62 @@
 <template name="headline">
 	<div class="composePageInputLabel"><label for="headline_text">{{#if wrapperStyle "blank"}}File name:{{else}}Headline:{{/if}}</label></div>
-	<div class="composePageInputText"><input type="text" id="headline_text" value="{{getValue "headline"}}"></div>
+	<div class="composePageInputText"><input type="text" id="headline_text" value="{{getValue "headline"}}" class="{{highlight "headline"}}"></div>
 	<div class="clear"></div>
 </template>
 
 <template name="statement_leadin">
 	<div class="composePageInputLabel"><label for="statement_leadin_text">Statement lead-in:</label></div>
-	<div class="composePageInputText"><input type="text" id="statement_leadin_text" value="{{#if wrapperStyle "petition"}}{{#if getValue "statement_leadin"}}{{getValue "statement_leadin"}}{{else}}The petition reads:{{/if}}{{else}}{{getValue "statement_leadin"}}{{/if}}"></div>
+	<div class="composePageInputText"><input type="text" id="statement_leadin_text" class="{{highlight "statement_leadin"}}" value="{{#if wrapperStyle "petition"}}{{#if getValue "statement_leadin"}}{{getValue "statement_leadin"}}{{else}}The petition reads:{{/if}}{{else}}{{getValue "statement_leadin"}}{{/if}}"></div>
 	<div class="clear"></div>
 </template>
 
 <template name="petition">
-	<textarea class="textbox" rows="4" type="text" id="petition_text">{{#if getValue "petition"}}{{getValue "petition"}}{{else}}"Statement_text"{{/if}}</textarea>
+	<textarea class="textbox {{highlight "petition"}}" rows="4" type="text" id="petition_text">{{#if getValue "petition"}}{{getValue "petition"}}{{else}}"Statement_text"{{/if}}</textarea>
 </template>
 
 <template name="link">
 	<div class="composePageInputLabel"><label for="link_text">Page full URL:</label></div>
-	<div class="composePageInputText"><input type="text" id="link_text" value="{{#if getValue "link"}}{{getValue "link"}}{{else}}{{#if wrapperStyle "call"}}http://act.credoaction.com/call/{{else}}{{#if wrapperStyle "event"}}http://act.credoaction.com/event/{{else}}{{#if wrapperStyle "mobilize"}}http://www.credomobilize.com/petitions/?source=CREDO{{else}}http://act.credoaction.com/sign/{{/if}}{{/if}}{{/if}}{{/if}}"></div>
+	<div class="composePageInputText"><input type="text" id="link_text" class="{{highlight "link"}}" value="{{#if getValue "link"}}{{getValue "link"}}{{else}}{{#if wrapperStyle "call"}}http://act.credoaction.com/call/{{else}}{{#if wrapperStyle "event"}}http://act.credoaction.com/event/{{else}}{{#if wrapperStyle "mobilize"}}http://www.credomobilize.com/petitions/?source=CREDO{{else}}http://act.credoaction.com/sign/{{/if}}{{/if}}{{/if}}{{/if}}"></div>
 	<div class="clear"></div>
 </template>
 
 <template name="graphic">
 	<div class="composePageInputLabel"><label for="graphic_text">Graphic URL:</label></div>
-	<div class="composePageInputText"><input type="text" id="graphic_text" value="{{getValue "graphic"}}"></div>
+	<div class="composePageInputText"><input type="text" id="graphic_text" class="{{highlight "graphic"}}" value="{{getValue "graphic"}}"></div>
 	<div class="clear"></div>
 </template>
 
 <template name="graphic_alt">
 	<div class="composePageInputLabel"><label for="graphic_alt_text">Graphic alt text:</label></div>
-	<div class="composePageInputText"><input type="text" id="graphic_alt_text" value="{{getValue "graphic_alt_text"}}"></div>
+	<div class="composePageInputText"><input type="text" id="graphic_alt_text" class="{{highlight "graphic_alt_text"}}" value="{{getValue "graphic_alt_text"}}"></div>
 	<div class="clear"></div>
 </template>
 
 <template name="signature">
 	<div class="composePageInputLabel"><label for="signature_text">{{# if wrapperStyle "mobilize"}}Petition creator:{{else}}Signature:{{/if}}</label></div>
-	<div class="composePageInputText"><input type="text" id="signature_text" value="{{getValue "signature"}}"></div>
+	<div class="composePageInputText"><input type="text" id="signature_text" class="{{highlight "signature"}}" value="{{getValue "signature"}}"></div>
 	<div class="clear"></div>
 </template>
 
 <template name="footnotes">
-	<textarea rows="5" type="text" id="footnotes_text">{{#if getValue "footnotes"}}{{{getValue "footnotes"}}}{{else}}Footnotes in Markdown.
-Make sure to escape underscores like so: "\_"{{/if}}</textarea>
+	<textarea rows="5" type="text" id="footnotes_text" class="{{highlight "footnotes"}}">{{#if getValue "footnotes"}}{{{getValue "footnotes"}}}{{else}}Footnotes in Markdown.
+Make sure to escape underscores in visible text like so: "\_" (but not necessary for links){{/if}}</textarea>
 </template>
 
 <template name="facebook">
 	<div class="composePageInputLabel"><label for="facebook_text">Facebook URL:</label></div>
-	<div class="composePageInputText"><input type="text" id="facebook_text" value="{{getValue "facebook"}}"></div>
+	<div class="composePageInputText"><input type="text" id="facebook_text" class="{{highlight "facebook"}}" value="{{getValue "facebook"}}"></div>
 	<div class="clear"></div>
 </template>
 
 <template name="twitter">
 	<div class="composePageInputLabel"><label for="twitter_text">Twitter URL:</label></div>
-	<div class="composePageInputText"><input type="text" id="twitter_text" value="{{getValue "twitter"}}"></div>
+	<div class="composePageInputText"><input type="text" id="twitter_text" class="{{highlight "twitter"}}" value="{{getValue "twitter"}}"></div>
 	<div class="clear"></div>
 </template>
 
 <template name="markdown_input">
-	<textarea class="textbox" rows="20" type="text" id="markdown_text">
+	<textarea class="textbox {{highlight "markdown_text"}}" rows="20" type="text" id="markdown_text">
 {{#if getValue "markdown_data"}}{{{getValue "markdown_data"}}}
 {{else}}{{#if wrapperStyle "mobilize"}}We have to speak out now to stop it. That's why I started my own campaign on CREDOMobilize.com, which allows activists to start their own petitions. My petition, which is to the U.S. Bureau of Reclamation, says the following:
 
@@ -83,7 +83,7 @@ Link: [{{getValue "link"}}]({{getValue "link"}})
 </template>
 
 <template name="topper">
-	<textarea rows="4" type="text" id="topper_text">
+	<textarea rows="4" type="text" id="topper_text" class="{{highlight "topper"}}">
 {{#if getValue "topper"}}{{{getValue "topper"}}}
 {{else}}The email below is from {{getValue "signature"}}, a CREDO activist in Berkeley, California. {{ sigFirstName }} started a petition on [CREDO Mobilize](http://credomobilize.com?source=email_topper"), where activists can launch their own campaigns for progressive change. Will you help {{ sigFirstName }} pressure the Bureau of Reclamation to abandon a disastrous proposal to raise the Shasta Dam and flood sacred lands by [signing his petition]({{getValue "link"}}) and sharing it with your friends and family?{{/if}}
 	</textarea>
