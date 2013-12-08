@@ -106,8 +106,8 @@ function setSessionVarsForEmailFromPage(obj) {
   Session.set("link", obj.AKpageURL);
   Session.set("graphic", obj.pageGraphicEmail);
   Session.set('signature', Meteor.user().profile.name + ', Campaign Manager');
-//  Session.set("facebook", obj.facebook);
-//  Session.set("twitter", obj.pageTwitterCopy);
+  var twitter = obj.pageTwitterCopy.replace(/{ *LINK *}/i, obj.AKpageBitly);
+  Session.set("twitter", 'https://twitter.com/intent/tweet?&text='+encodeURIComponent(twitter));
 }
 
 function initSessionVarsForCompose() {
