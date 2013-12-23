@@ -117,12 +117,14 @@ Template.createPage.events({
         Session.set('saveError', err.error);
       } else {
         console.log('page saved');
-        console.log('upsert id ' + res.insertedId);
-        if (!Session.get('id')) { Session.set('id', res.insertedId); }
+        console.log('if new page, upsert id ' + res.insertedId);
         Session.set("pageNotSaved",false);
         Session.set("saveDialog",false);
+        // if this page has not already been saved and does not yet have an ID, set the ID to the insertedID
+        var ID = Session.get('id') ? Session.get('id') : res.insertedId;
+        Session.set('id', ID); 
         // go to compose mailing page, pulling data from the saved page
-        Router.go('compose', {}, {query: {page: res.insertedId}});
+        Router.go('compose', {}, {query: {page: ID}});
       }
     });
   },
@@ -133,11 +135,11 @@ Template.createPage.events({
         if (err) {
           Session.set('saveError', err.error);
         } else {
-        console.log('page saved');
-        console.log('upsert id ' + res.insertedId);
-        if (!Session.get('id')) { Session.set('id', res.insertedId); }
-        Session.set("pageNotSaved",false);
-        Router.go('pages');
+          console.log('page saved');
+          console.log('upsert id ' + res.insertedId);
+          if (!Session.get('id')) { Session.set('id', res.insertedId); }
+          Session.set("pageNotSaved",false);
+          Router.go('pages');
         }
       });
     } else {
