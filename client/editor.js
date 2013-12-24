@@ -258,9 +258,15 @@ Router.map(function () {
         // check for missing email and throw a 404
         setSessionVarsForPage(page); // copy page vars from selected page
         Session.set("newPage", true); // but this is a new page, not a current page
-        // clear creator and ID vars because this is a new page
+        // clear creator and ID vars, as well as created page vars because this is a new page
         Session.set("creator", "");
         Session.set("id", "");
+        Session.set('AKpageURL', "");
+        Session.set('AKpageEditURL', "");
+        Session.set('AKpageBitly', "");
+        Session.set('pageSharePageLink', "");
+        Session.set('AKpageID',"");
+        Session.set('AKpageResourceURI', "");
       } else {
         Session.set("newPage", true);
         Session.set("creator", "");

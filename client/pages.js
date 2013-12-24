@@ -69,8 +69,7 @@ function makePageFromSession() {
   }
 };
 
-function makePageAfterAPI(res) {
-  setSessionVars();
+function makePageAfterAPI(page,res) {
   return {
     id: Session.get("id"),
     type: 'page',
@@ -152,19 +151,57 @@ Template.createPage.events({
     Session.set("duplicatePage",false);
     Router.go('postAPI', {_id: Session.get('id')});
   },
-  'click .buttonAPIupdate': function() {
+  'click #buttonAPIupdate': function() {
     Session.set('duplicatePage',false);
     var page = makePageFromSession();
-    Meteor.call('updateAKpage', page, function (error,res) {
-      if (error) {
+    // only move forward if the share text doesn't exceed length limits
+    if (Session.get('pageTwitterLength') < 0 || Session.get('pageFacebookLength') < 0) {
+      Session.set('apiError', 'Share text is too long. Please check Facebook and Twitter copy again.');
+    } else {
+      // first, save the page
+      Meteor.call('saveFile', page, function (err, res) {
+        if (err) {
+          Session.set('saveError', err.error);
+        } else {
+          console.log('page saved');
+          console.log('upsert id ' + res.insertedId);
+          if (!Session.get('id')) { Session.set('id', res.insertedId); }
+          Session.set("pageNotSaved",false);
+          Session.set("saveDialog",false);
+        }
+      });
+      // edit created AK page
+      Meteor.call('updateAKpage', page, function (error,res) {
+        if (error) {
           Session.set('apiError', error.reason);
-      } else {
+        } else {
           Session.set('apiSuccess', 'API success!');
           Session.set('apiResults', res);
+          Session.set('AKpageURL', res.AKpage);
+          Session.set('AKpageEditURL', res.AKpageEdit);
+          Session.set('AKpageBitly', res.bitly);
+          Session.set('pageSharePageLink', res.SPpage);
+          Session.set('AKpageID', res.pageID);
+          Session.set('AKpageResourceURI', res.resource_uri);
+
+          page.AKpageURL = res.AKpage;
+          page.AKpageBitly = res.bitly;
+          page.pageSharePageLink = res.SPpage;
+
+          // save the page again with new page_url, bitly and share page links
+          Meteor.call('saveFile', page, function (err, res) {
+            if (err) {
+              Session.set('saveError', err.error);
+            } else {
+              console.log('page saved');
+              Session.set("pageNotSaved",false);
+              Session.set("saveDialog",false);
+            }
+          });
           console.log('updateAKpage success',res);
-//        Router.go('pages');
-      }
-    }); // end populateAKpage
+        }
+      }); // end updateAKpage
+    } // end if share text is within length limits
   }, 
   'click #buttonAPI': function() {
     Session.set("apiError","");
@@ -211,7 +248,15 @@ Template.createPage.events({
                 Session.set('AKpageID', res.pageID);
                 Session.set('AKpageResourceURI', res.resource_uri);
 
-                Meteor.call('saveFile', makePageAfterAPI(res), function (err, response) {
+                page.AKpageURL = res.AKpage;
+                page.AKpageEditURL = res.AKpageEdit;
+                page.AKpageURL = res.AKpage;
+                page.AKpageBitly = res.bitly;
+                page.pageSharePageLink = res.SPpage;
+                page.AKpageID = res.pageID;
+                page.AKpageResourceURI = res.resource_uri;
+
+                Meteor.call('saveFile', page, function (err, response) {
                   if (err) {
                     Session.set('saveError', err.error);
                   } else {
@@ -221,7 +266,6 @@ Template.createPage.events({
                   }
                 });
                 console.log('populateAKpage success',res);
-  //        Router.go('pages');
             }
           }); // end populateAKpage
         } // end if err

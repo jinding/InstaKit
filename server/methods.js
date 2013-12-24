@@ -81,7 +81,7 @@ function updatePageShare(page, loc, bitly) {
                       });		
 		return true; 
 	} catch (e) {
-		if (e.response.statusCode === 400)
+		if (e.response.statusCode && e.response.statusCode === 400)
         	throw new Meteor.Error(e.response.statusCode, e.response.content, e.response);
         else
         	throw new Meteor.Error(500, "Unknown error updating page share fields", e.response.data);
@@ -106,7 +106,7 @@ function updatePageForm(page,resource) {
 	  console.log(createPageForm.headers.location);
 	  return createPageForm.headers.location;
 	} catch (e) {
-		if (e.response.statusCode === 400)
+		if (e.response.statusCode && e.response.statusCode === 400)
         	throw new Meteor.Error(e.response.statusCode, e.response.content, e.response);
         else
         	throw new Meteor.Error(500, "Unknown error updating page form", e.response.data);
@@ -134,7 +134,7 @@ function updatePageFields(page,resource,sp) {
 	  console.log(addPageFields.headers.location);
 	  return addPageFields.headers.location;
 	} catch (e) {
-		if (e.response.statusCode === 400)
+		if (e.response.statusCode && e.response.statusCode === 400)
         	throw new Meteor.Error(e.response.statusCode, e.response.content, e.response);
         else
         	throw new Meteor.Error(500, "Unknown error updating page after-action fields", e.response.data);
@@ -152,12 +152,165 @@ function createShortLink(page) {
 					});
 		return bitly.data.data.url;
 	} catch (e) {
-		if (e.response.data.statusCode === 400)
+		if (e.response.data.statusCode && e.response.data.statusCode === 400)
         	throw new Meteor.Error(e.response.data.statusCode, e.response.data.status_txt, e.response);
         else
         	throw new Meteor.Error(500, "Unknown error updating page after-action fields", e.response.data);
 	}
 };
+
+// functions for updating an already created AK page
+
+function updatePageShareForCreatedPage(page, loc, bitly) {
+	// update petition page that already exists in AK
+	try {
+		var updatePage = HTTP.call("PUT", loc,
+						 {auth: 'meteor:dingbergalis',
+  						  headers: {'Content-type': 'application/json'},
+                          data: {
+                      			name: page.pageName,
+                      			title: page.pageTitle,
+                      			allow_multiple_responses: false,
+                      			fields: { 
+                      			 	'image_email_180': page.pageGraphicEmail,
+									'image_homepage_100': page.pageGraphicHomePage,
+									'image_facebook_114': page.pageGraphicFacebook,
+									'taf_facebook_title': page.pageFacebookTitle,
+									'taf_facebook_copy': page.pageFacebookCopy,
+									'taf_tweet': updateTwitterForAK(page.pageTwitterCopy,bitly)
+                      			}, // end fields
+                      			one_click: true,
+                      			recognize: 'once',
+                      			required_fields: [
+                      			 	{   id: 2,
+										name: 'zip',
+										resource_uri: '/rest/v1/formfield/2/'},
+									{   id: 3,
+									    name: 'address1',
+									    resource_uri: '/rest/v1/formfield/3/'},
+									{   id: 6,
+									    name: 'first_name',
+									    resource_uri: '/rest/v1/formfield/6/'},
+									{   id: 7,
+									    name: 'last_name',
+									    resource_uri: '/rest/v1/formfield/7/'}
+								], // end required_fields
+								tags: [{name: 'credo', resource_uri: '/rest/v1/tag/32/'}],
+								type: 'Petition'
+                      		} // end data
+                      });		
+		return true; 
+	} catch (e) {
+		console.log('error in updatePageShareForCreatedPage');
+		console.log(e.response);
+		if (e.response.statusCode && e.response.statusCode === 400)
+        	throw new Meteor.Error(e.response.statusCode, e.response.content, e.response);
+        else
+        	throw new Meteor.Error(500, "Unknown error updating page share fields for previously created page", e.response.data);
+	}
+};
+
+function updatePageFormForCreatedPage(page,loc) {
+	// create the petition cms form and set its page to the petition page resource_uri.
+	// doing this automatically updates the petition page to find this form
+	try {
+	  console.log('in updatePageFormForCreatedPage form uri '+loc);
+	  var updatePageForm = HTTP.call("PUT", loc,
+	  						 {auth: 'meteor:dingbergalis',
+	  						  headers: {'Content-type': 'application/json'},
+	                          data: {about_text: page.pageImportAboutText,
+	                      			 page: page.AKpageResourceURI,
+	                      			 statement_leadin: page.pageImportStatementLeadIn,
+	                      			 statement_text: page.pageImportStatementText,			             
+	                      			 thank_you_text: 'thank you'
+	                      			} // end data
+	                     	 });		
+	  return true;
+	} catch (e) {
+		console.log('error in updatePageFormForCreatedPage');
+		console.log(e.response);
+		if (e.response.statusCode && e.response.statusCode === 400)
+        	throw new Meteor.Error(e.response.statusCode, e.response.content, e.response);
+        else
+        	throw new Meteor.Error(500, "Unknown error updating page form for created page", e.response.data);
+  	}
+};
+
+function updatePageFieldsForCreatedPage(page,loc,sp) {
+	try {
+	  console.log('in updatePageFieldsForCreatedPage '+loc);
+	  var updatePageFields = HTTP.call("PUT", loc,
+	  							{auth: 'meteor:dingbergalis',
+	  							 headers: {'Content-type': 'application/json'},
+	  							 data: {
+	                      			page: page.AKpageResourceURI,
+                      			 	email_body: page.pageImportConfEmailBody,
+                      			 	email_subject: page.pageConfEmailSL,
+                      			 	taf_body: updateTAFCopyForAK(page.pageTAFCopy),
+                      			 	taf_subject: page.pageTAFSL,
+                      			 	url: sp
+	  							 } // end data
+	  							} // end auth
+	  						);
+	  return true;
+	} catch (e) {
+		console.log('error in updatePageFieldsForCreatedPage');
+		console.log(e.response);
+		if (e.response.statusCode && e.response.statusCode === 400)
+        	throw new Meteor.Error(e.response.statusCode, e.response.content, e.response);
+        else
+        	throw new Meteor.Error(500, "Unknown error updating page after-action fields for created page", e.response.data);
+  	}
+};
+
+function updateShareProgressPageForCreatedPage(page) {
+	try {
+		var loc = page.pageSharePageLink.replace('http://share.credoaction.com/4/','');
+		console.log('in updateShareProgressPageForCreatedPage ' + loc);
+		var res = HTTP.call('GET', 'https://run.shareprogress.org/api/v1/pages/read',
+				{ headers: {'Content-type': 'application/json'},
+				  data: {
+				  	id: loc,
+					'key': 'saYLoUzgQUmlYRjyrEhUiQ'
+				  }
+				}); // end GET
+		var variants = res.data.response[0].variants;
+		var sp = HTTP.call('POST', 'https://run.shareprogress.org/api/v1/pages/update',
+				{ headers: {'Content-type': 'application/json'},
+  				  data: {
+  				  	  id: loc,
+					  'key': 'saYLoUzgQUmlYRjyrEhUiQ',
+					  'page_url': 'http://act.credoaction.com/sign/'+page.pageName,
+					  'page_title': page.pageTitle+' | CREDO Action',
+					  'auto_fill': true,
+					  'variants': {
+					  	'facebook': [{  id: variants.facebook[0].id,
+					  					facebook_title: page.pageFacebookTitle,
+					  					facebook_description: page.pageFacebookCopy,
+					  					facebook_thumbnail: page.pageGraphicFacebook }],
+					  	'email': 	[{  id: variants.email[0].id,
+					  					email_subject: page.pageTAFSL,
+					  			 		email_body: page.pageTAFCopy }],
+					  	'twitter': [{   id: variants.twitter[0].id,
+					  					twitter_message: page.pageTwitterCopy }]
+					} // end variants
+				  } // end data
+				}); // end HTTP
+		console.log('ShareProgress page creation successful? ' + sp.data.success);
+		if (sp.data.success === true)
+			return sp.data.response[0];
+		else {
+			if (sp.data.message && sp.data.message.variants[0])
+				throw new Meteor.Error(500, sp.data.message.variants[0], sp);
+			else throw new Meteor.Error(500, sp.data.message);
+		}	
+	} catch (e) {
+		if (sp.data.message && sp.data.message.variants[0])
+			throw new Meteor.Error(500, sp.data.message.variants[0], sp);
+		else throw new Meteor.Error(500, 'Error creating share page');
+	}
+};
+
 
 
 Meteor.methods({
@@ -178,7 +331,7 @@ Meteor.methods({
 		return createPage.headers.location; 
 	} catch (e) {
 		console.log(e.response);
-		if (e.response.statusCode === 400)
+		if (e.response.statusCode && e.response.statusCode === 400)
 			if (e.response.data && e.response.data.petitionpage && e.response.data.petitionpage.name[0])
 	        	throw new Meteor.Error(e.response.statusCode, e.response.data.petitionpage.name[0], e.response);
 	        else throw new Meteor.Error(e.response.statusCode, e.response.content, e.response);
@@ -205,144 +358,51 @@ Meteor.methods({
   	pageObj.resource_uri = AK.resource_uri;
   	return pageObj;
   },
-  createAKemail: function (email) {
-  	console.log(email.headline);
+  updateAKpage: function (page) {
+	// update page already created in AK
 	try {
-	  // create new petition page.
-	  var createPage = HTTP.call("POST", "https://act.credoaction.com/rest/v1/petitionpage/",
-	  						 {auth: 'meteor:dingbergalis',
-	  						  headers: {'Content-type': 'application/json'},
-	                          data: {title: email.headline,
-	                      			 name: email.link,
-	                      			 fields: { 'image_email_180': email.graphic },
-	                      			 required_fields: [{id: 2,
-						                               name: 'zip',
-						                               resource_uri: '/rest/v1/formfield/2/'},
-						                           {   id: 3,
-						                               name: 'address1',
-						                               resource_uri: '/rest/v1/formfield/3/'},
-						                           {   id: 6,
-						                               name: 'first_name',
-						                               resource_uri: '/rest/v1/formfield/6/'},
-						                           {   id: 7,
-						                               name: 'last_name',
-						                               resource_uri: '/rest/v1/formfield/7/'}],
-									 tags: [{name: 'credo', resource_uri: '/rest/v1/tag/32/'}]						             
-	                      			} // end data
-	                      });		
-	  console.log(createPage.headers.location);
-	  // find out where this petition got created and get its resource_uri. not sure if this is efficient way to do this.
-	  var getPetitionPageId = HTTP.call("GET", createPage.headers.location,
-	  						  {auth: 'meteor:dingbergalis'});
-	  console.log(getPetitionPageId.data.resource_uri);
-	  // create the petition cms form and set its page to the petition page resource_uri.
-	  // doing this automatically updates the petition page to find this form
-	  var createPageForm = HTTP.call("POST", "https://act.credoaction.com/rest/v1/petitionform/",
-	  						 {auth: 'meteor:dingbergalis',
-	  						  headers: {'Content-type': 'application/json'},
-	                          data: {about_text: email.markdown_data,
-	                      			 page: getPetitionPageId.data.resource_uri,
-	                      			 statement_leadin: email.statement_leadin,
-	                      			 statement_text: email.petition,
-	                      			 thank_you_text: 'thank you'					             
-	                      			} // end data
-	                      });		
-	  console.log(createPageForm);
+		// resource URI location is based on page_id so does not change with an edit
+		var loc = 'https://act.credoaction.com'+page.AKpageResourceURI;
+		console.log('page resource URI: '+ loc);
 
-	  // NEXT STEPS: show button for only petitions
-	  // Error handling- what if page name is already taken?
-	  // Should we update or create new page?
-	  // what if there is no petition text?  this might throw an error
-	  // also need to figure out how to spit out html instead of markdown for email body
-	  // create a petition page type and also be able to push that to an email
+		// update new bitly link in case page short name was edited
+	  	var bitly = createShortLink(page);
+	  	console.log('returned by bitly: '+bitly);
 
+	  	// overwrite page title, name and custom fields
+	  	// eventually need to check for error that updated page name conflicts with another page in AK
+		updatePageShareForCreatedPage(page, loc, bitly);
 
-/*	this doesn't work when creating an email. not as useful anyway.  
-	var result = HTTP.call("POST", "https://act.credoaction.com/rest/v1/mailing/",
-	  						 {auth: 'meteor:dingbergalis',
-	  						  headers: {'Content-type': 'application/json'},
-	                          data: {subjects: [{text: email.headline}],
-	                      			 users: 30}
-	                      });
-*/
+		// get resource_uris for page fields and page form
+	  	var AK = HTTP.call('GET', loc, {auth: 'meteor:dingbergalis'}).data;
+	  	var cmsForm = AK.cms_form;
+	  	var followupPageFields = AK.followup.resource_uri;
 
-	  return true;
+		// modify SP page
+		var sp = updateShareProgressPageForCreatedPage(page);
+		console.log('shareprogress returns ',sp.share_page_url);
+
+	  	updatePageFormForCreatedPage(page, 'https://act.credoaction.com'+cmsForm);
+	  	updatePageFieldsForCreatedPage(page, 'https://act.credoaction.com'+followupPageFields, sp.share_page_url);
+
+	  	var pageObj = {};
+	  	pageObj.AKpage = 'http://act.credoaction.com/sign/' + page.pageName;
+	  	pageObj.AKpageEdit = 'https://act.credoaction.com/admin/core/petitionpage/' + page.AKpageID;
+	  	pageObj.SPpage = sp.share_page_url;
+	  	pageObj.bitly = bitly;
+	  	pageObj.pageID = page.AKpageID;
+	  	pageObj.resource_uri = page.AKpageResourceURI;
+	  	return pageObj;
+
 	} catch (e) {
-		// assume it was a 4xx or 5xx error.  really need to watch for other kinds of errors.
 		console.log(e.response);
-	  // Got a network error, time-out or HTTP error in the 400 or 500 range.
-	  return false;
-  	}
+		if (e.response.statusCode && e.response.statusCode === 400)
+			if (e.response.data && e.response.data.petitionpage && e.response.data.petitionpage.name[0])
+	        	throw new Meteor.Error(e.response.statusCode, e.response.data.petitionpage.name[0], e.response);
+	        else throw new Meteor.Error(e.response.statusCode, e.response.content, e.response);
+        else
+        	throw new Meteor.Error(500, "Unknown error updating page", e.response.data);
+	}
   }
 });
 
-/*  	console.log(page.pageTitle);
-  	console.log(page.pageName);
-  	console.log(page.pageStatementLeadIn);
-  	console.log(page.pageStatementText);
-  	console.log(page.pageAboutText);
-  	console.log(page.pageGraphicEmail);
-  	console.log(page.pageGraphicFacebook);
-  	console.log(page.pageGraphicHomePage);
-  	console.log(page.pageSharePageLink);
-  	console.log(page.pageTAFSL);
-  	console.log(page.pageTAFCopy);
-  	console.log(page.pageFacebookTitle);
-  	console.log(page.pageFacebookCopy);
-  	console.log(page.pageTwitterCopy);
-  	console.log(page.pageConfEmailSL);
-  	console.log(page.pageConfEmailBody);
-  */
-
-  /*
-  createAKpage: function (page) {
-	try {
-	  // create new petition page.
-	  var createPage = HTTP.call("POST", "https://act.credoaction.com/rest/v1/petitionpage/",
-	  						 {auth: 'meteor:dingbergalis',
-	  						  headers: {'Content-type': 'application/json'},
-	                          data: {
-	                      			name: page.pageName,		                      			 
-	                      			title: page.pageTitle,
-	                      			allow_multiple_responses: true,
-	                      			fields: { 
-	                      			 	'image_email_180': page.pageGraphicEmail,
-										'image_homepage_100': page.pageGraphicHomePage,
-										'image_facebook_114': page.pageGraphicFacebook,
-										'taf_facebook_title': page.pageFacebookTitle,
-										'taf_facebook_copy': page.pageFacebookCopy,
-										'taf_tweet': page.pageTwitterCopy
-	                      			}, // end fields
-	                      			required_fields: [
-	                      			 	{   id: 2,
-											name: 'zip',
-											resource_uri: '/rest/v1/formfield/2/'},
-										{   id: 3,
-										    name: 'address1',
-										    resource_uri: '/rest/v1/formfield/3/'},
-										{   id: 6,
-										    name: 'first_name',
-										    resource_uri: '/rest/v1/formfield/6/'},
-										{   id: 7,
-										    name: 'last_name',
-										    resource_uri: '/rest/v1/formfield/7/'}
-									], // end required_fields
-									tags: [{name: 'credo', resource_uri: '/rest/v1/tag/32/'}],
-									type: 'Petition'		             
-	                      		} // end data
-	                      });		
-	  console.log(createPage.headers.location);
-	  // find out where this petition got created and get its resource_uri. not sure if this is efficient way to do this.
-	  var getPetitionPageId = HTTP.call("GET", createPage.headers.location, {auth: 'meteor:dingbergalis'});
-	  updatePageForm(page,getPetitionPageId);
-	  updatePageFields(page,getPetitionPageId);
-	  return true;
-	} catch (e) {
-		// assume it was a 4xx or 5xx error.  really need to watch for other kinds of errors.
-		console.log(e.response.statusCode);
-		console.log(e.response);
-	  // Got a network error, time-out or HTTP error in the 400 or 500 range.
-	  return false;
-  	}
-  },
-  */

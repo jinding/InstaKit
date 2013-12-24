@@ -59,7 +59,11 @@
 		{{else}}
 			<button id="buttonBackToPageList">back to pages</button>
 		{{/if}}
+		{{#if getValue 'AKpageID' }}
+			<button id="buttonAPIupdate">update AK page</button>
+		{{else}}
 			<button id="buttonAPI">push to AK</button>
+		{{/if}}
 			<button id="buttonMakeEmail" style="background-color:#FF6319;">create email</button>
 		</div>
 		{{> createPageInputs}}
@@ -114,6 +118,7 @@
 		<div class="apiInfo">
 			<button id="buttonBackToPageList">back to pages</button>
 			<button id="buttonMakeEmail" style="background-color:#FF6319;">create email</button>
+			<p><b>MAKE SURE TO EDIT PAGE TAGS AFTER CREATING OR EDITING PAGES</b></p>
 			<p>ActionKit page ID: {{getValue 'AKpageID'}}</p>
 			<p>ActionKit page URL: <a href="{{getValue 'AKpageURL'}}" target="_blank">{{getValue 'AKpageURL'}}</a></p>
 			<p>ActionKit edit page URL: <a href="{{getValue 'AKpageEditURL'}}" target="_blank">{{getValue 'AKpageEditURL'}}</a></p>
