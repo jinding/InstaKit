@@ -214,9 +214,13 @@ Template.createPage.events({
         if (err) {
           Session.set('saveError', err.error);
         } else {
-          console.log('page saved');
+          console.log('page saved in click #buttonAPI');
           console.log('upsert id ' + res.insertedId);
-          if (!Session.get('id')) { Session.set('id', res.insertedId); }
+          if (!Session.get('id')) { 
+            Session.set('id', res.insertedId); 
+            page = makePageFromSession(); 
+            console.log('page id ' + page.id);
+          }
           Session.set("pageNotSaved",false);
           Session.set("saveDialog",false);
         }
