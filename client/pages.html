@@ -14,9 +14,15 @@
 
 <template name="templatePageStatement">
 	<div class="bodytext" >
+		{{#if wrapperStyle 'letter'}}
+		<div class="bodytext_desc">Comment</div>
+		<div class="taf_title"><input type="text" id="pageStatementLeadIn" class="{{highlight "pageStatementLeadIn"}}" value="{{#if getValue "pageStatementLeadIn"}}{{getValue "pageStatementLeadIn"}}{{else}}Statement lead-in:{{/if}}"></div>
+		<div class="taf_copy"><textarea class="textbox {{highlight "pageStatementText"}}" rows="4" type="text" id="pageStatementText">{{#if getValue "pageStatementText"}}{{getValue "pageStatementText"}}{{else}}"Public comment text in Markdown"{{/if}}</textarea></div>
+		{{else}}
 		<div class="bodytext_desc">Petition</div>
 		<div class="taf_title"><input type="text" id="pageStatementLeadIn" class="{{highlight "pageStatementLeadIn"}}" value="{{#if getValue "pageStatementLeadIn"}}{{getValue "pageStatementLeadIn"}}{{else}}Statement lead-in:{{/if}}"></div>
 		<div class="taf_copy"><textarea class="textbox {{highlight "pageStatementText"}}" rows="4" type="text" id="pageStatementText">{{#if getValue "pageStatementText"}}{{getValue "pageStatementText"}}{{else}}"Petition text in Markdown"{{/if}}</textarea></div>
+		{{/if}}
 	</div>
 </template>
 
