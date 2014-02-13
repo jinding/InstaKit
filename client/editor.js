@@ -103,7 +103,9 @@ function setSessionVarsForNewEmail() {
 
 function setSessionVarsForEmailFromPage(obj) {
   Session.set("markdown_data", obj.pageAboutText);
-  Session.set("templateChooser", obj.pageType);
+  if (obj.pageType === 'letter')
+    Session.set('templateChooser', 'takeaction')
+  else Session.set("templateChooser", obj.pageType);
   Session.set("headline", obj.pageTitle);
   Session.set("statement_leadin", obj.pageStatementLeadIn);
   Session.set("petition", obj.pageStatementText);
