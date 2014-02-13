@@ -73,7 +73,7 @@ function makePageAfterAPI(page,res) {
   return {
     id: Session.get("id"),
     type: 'page',
-    pageType: 'petition',
+    pageType: Session.get('templateChooser'),
     pageTitle: Session.get("pageTitle"),
     pageName: Session.get("pageName"),
     pageStatementLeadIn: Session.get("pageStatementLeadIn"),

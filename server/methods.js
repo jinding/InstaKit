@@ -75,8 +75,7 @@ function updatePageShare(page, loc, bitly) {
 									    name: 'last_name',
 									    resource_uri: '/rest/v1/formfield/7/'}
 								], // end required_fields
-								tags: [{name: 'credo', resource_uri: '/rest/v1/tag/32/'}],
-								type: 'Petition'
+								tags: [{name: 'credo', resource_uri: '/rest/v1/tag/32/'}]
                       		} // end data
                       });		
 		return true; 
@@ -93,13 +92,24 @@ function updatePageForm(page,resource) {
 	// doing this automatically updates the petition page to find this form
 	try {
 	  console.log('in updatePageForm '+resource);
-	  var createPageForm = HTTP.call("POST", "https://act.credoaction.com/rest/v1/petitionform/",
+	  if (page.pageType === 'letter')
+		  var createPageForm = HTTP.call("POST", "https://act.credoaction.com/rest/v1/letterform/",
+		  						 {auth: 'meteor:dingbergalis',
+		  						  headers: {'Content-type': 'application/json'},
+		                          data: {about_text: page.pageImportAboutText, // "Import" text is HTML version
+		                      			 page: resource,
+		                      			 statement_leadin: page.pageImportStatementLeadIn, 
+		                      			 letter_text: page.pageStatementText, // letter_text does not take HTML
+		                      			 thank_you_text: 'thank you'					             
+		                      			} // end data
+		                      });		
+	  else var createPageForm = HTTP.call("POST", "https://act.credoaction.com/rest/v1/petitionform/",
 	  						 {auth: 'meteor:dingbergalis',
 	  						  headers: {'Content-type': 'application/json'},
-	                          data: {about_text: page.pageImportAboutText,
+	                          data: {about_text: page.pageImportAboutText, // "Import" text is HTML version
 	                      			 page: resource,
 	                      			 statement_leadin: page.pageImportStatementLeadIn,
-	                      			 statement_text: page.pageImportStatementText,
+	                      			 statement_text: page.pageImportStatementText, // push in HTML version of text
 	                      			 thank_you_text: 'thank you'					             
 	                      			} // end data
 	                      });		
@@ -195,8 +205,7 @@ function updatePageShareForCreatedPage(page, loc, bitly) {
 									    name: 'last_name',
 									    resource_uri: '/rest/v1/formfield/7/'}
 								], // end required_fields
-								tags: [{name: 'credo', resource_uri: '/rest/v1/tag/32/'}],
-								type: 'Petition'
+								tags: [{name: 'credo', resource_uri: '/rest/v1/tag/32/'}]
                       		} // end data
                       });		
 		return true; 
@@ -215,7 +224,18 @@ function updatePageFormForCreatedPage(page,loc) {
 	// doing this automatically updates the petition page to find this form
 	try {
 	  console.log('in updatePageFormForCreatedPage form uri '+loc);
-	  var updatePageForm = HTTP.call("PUT", loc,
+	  if (page.pageType === 'letter')
+	  	var updatePageForm = HTTP.call("PUT", loc,
+	  						 {auth: 'meteor:dingbergalis',
+	  						  headers: {'Content-type': 'application/json'},
+	                          data: {about_text: page.pageImportAboutText,
+	                      			 page: page.AKpageResourceURI,
+	                      			 statement_leadin: page.pageImportStatementLeadIn,
+	                      			 letter_text: page.pageStatementText, // no HTML for letter_text	             
+	                      			 thank_you_text: 'thank you'
+	                      			} // end data
+	                     	 });		
+	  else var updatePageForm = HTTP.call("PUT", loc,
 	  						 {auth: 'meteor:dingbergalis',
 	  						  headers: {'Content-type': 'application/json'},
 	                          data: {about_text: page.pageImportAboutText,
@@ -321,7 +341,15 @@ Meteor.methods({
   createAKpage: function (page) {
 	  // create new petition page.
 	try {
-	  var createPage = HTTP.call("POST", "https://act.credoaction.com/rest/v1/petitionpage/",
+		if (page.pageType === 'letter') 
+			var createPage = HTTP.call("POST", "https://act.credoaction.com/rest/v1/letterpage/",
+	  						 {auth: 'meteor:dingbergalis',
+	  						  headers: {'Content-type': 'application/json'},
+	                          data: {
+	                      			name: page.pageName       
+	                      		} // end data
+	                      });
+		else var createPage = HTTP.call("POST", "https://act.credoaction.com/rest/v1/petitionpage/",
 	  						 {auth: 'meteor:dingbergalis',
 	  						  headers: {'Content-type': 'application/json'},
 	                          data: {
@@ -351,7 +379,9 @@ Meteor.methods({
   	updatePageFields(page, AK.resource_uri, sp.share_page_url);
   	var pageObj = {};
   	pageObj.AKpage = 'http://act.credoaction.com/sign/' + page.pageName;
-  	pageObj.AKpageEdit = 'https://act.credoaction.com/admin/core/petitionpage/' + AK.id;
+  	if (page.pageType === 'letter') 
+  		pageObj.AKpageEdit = 'https://act.credoaction.com/admin/core/letterpage/' + AK.id;
+  	else pageObj.AKpageEdit = 'https://act.credoaction.com/admin/core/petitionpage/' + AK.id;
   	pageObj.SPpage = sp.share_page_url;
   	pageObj.bitly = bitly;
   	pageObj.pageID = AK.id;
@@ -387,7 +417,9 @@ Meteor.methods({
 
 	  	var pageObj = {};
 	  	pageObj.AKpage = 'http://act.credoaction.com/sign/' + page.pageName;
-	  	pageObj.AKpageEdit = 'https://act.credoaction.com/admin/core/petitionpage/' + page.AKpageID;
+	  	if (page.pageType === 'letter') 
+	  		pageObj.AKpageEdit = 'https://act.credoaction.com/admin/core/letterpage/' + page.AKpageID;
+	  	else pageObj.AKpageEdit = 'https://act.credoaction.com/admin/core/petitionpage/' + page.AKpageID;
 	  	pageObj.SPpage = sp.share_page_url;
 	  	pageObj.bitly = bitly;
 	  	pageObj.pageID = page.AKpageID;
