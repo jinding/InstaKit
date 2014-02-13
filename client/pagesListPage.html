@@ -3,10 +3,11 @@
 <!-- pages list -->
 <template name="pages">
 	<div id="fileLeft">
-		new petition page
+		new page
 		<hr style="color: #FFF;">
 		<ul>
 			<li id="templateChooser_petition"><a href="{{ pathFor 'createPage' template='petition' }}">petition</a></li>
+			<li id="templateChooser_letter"><a href="{{ pathFor 'createPage' template='letter' }}">letter</a></li>
 		</ul>
 		<hr style="color: #FFF; margin-top: 40px;">
 		<p><a href="{{ pathFor 'mailings' }}" id="returnFilePage">mailings</a></p>
