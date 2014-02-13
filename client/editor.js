@@ -128,6 +128,7 @@ function setSessionVarsForPage(obj) {
   Session.set("id", obj._id);
   Session.set("type", obj.type);
   Session.set("pageType", obj.pageType);
+  Session.set('templateChooser', obj.pageType);
   Session.set("pageTitle", obj.pageTitle);
   Session.set("pageName", obj.pageName);
   Session.set("pageStatementLeadIn", obj.pageStatementLeadIn);

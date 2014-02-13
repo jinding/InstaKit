@@ -38,7 +38,7 @@ function makePageFromSession() {
   return {
     id: Session.get("id"),
     type: 'page',
-    pageType: 'petition',
+    pageType: Session.get('templateChooser'),
     pageTitle: Session.get("pageTitle"),
     pageName: Session.get("pageName"),
     pageStatementLeadIn: Session.get("pageStatementLeadIn"),
@@ -421,12 +421,20 @@ Template.pages.events({
     evt.preventDefault();
     Router.go('restore');
   },
-  // compose email chooser functions
+  // create petition page
   'click #templateChooser_petition': function(evt) {
     evt.preventDefault();
     Router.go('createPage', 
                 {}, 
                 {query: {template: 'petition'}}
+              );
+  },
+  // create letter page
+  'click #templateChooser_letter': function(evt) {
+    evt.preventDefault();
+    Router.go('createPage', 
+                {}, 
+                {query: {template: 'letter'}}
               );
   },
   // edit, copy and delete functions
