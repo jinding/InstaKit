@@ -8,6 +8,14 @@ function standardizePageLinks(str) {
   else return str.replace(/{ *LINK *}/i, '{LINK}');
 };
 
+function setImageLinksToCloudfront(str) {
+  if (str.search(/https/i) >= 0) // if https exist in the copy, change to http
+    str = str.replace(/https/i, 'http');
+  if (str.search(/s3.amazonaws.com\/s3.credoaction.com/i) >= 0) // if s3 exists in the copy, change to cloudfront
+    str = str.replace(/s3.amazonaws.com\/s3.credoaction.com/i, 'd2omw6a1nm6pnh.cloudfront.net');
+  return str;
+};
+
 function setSessionVars() {
   Session.set("pageTitle", $('#pageTitle').val());
   Session.set("pageName", $('#pageName').val());
@@ -44,9 +52,9 @@ function makePageFromSession() {
     pageStatementLeadIn: Session.get("pageStatementLeadIn"),
     pageStatementText: Session.get("pageStatementText"),
     pageAboutText: Session.get("pageAboutText"),
-    pageGraphicEmail: Session.get("pageGraphicEmail"),
-    pageGraphicFacebook: Session.get("pageGraphicFacebook"),
-    pageGraphicHomePage: Session.get("pageGraphicHomePage"),
+    pageGraphicEmail: setImageLinksToCloudfront(Session.get("pageGraphicEmail")),
+    pageGraphicFacebook: setImageLinksToCloudfront(Session.get("pageGraphicFacebook")),
+    pageGraphicHomePage: setImageLinksToCloudfront(Session.get("pageGraphicHomePage")),
     pageTAFSL: Session.get("pageTAFSL"),
     pageTAFCopy: standardizePageLinks(Session.get("pageTAFCopy")), // {LINK} is added if not present
     pageFacebookTitle: Session.get("pageFacebookTitle"),
