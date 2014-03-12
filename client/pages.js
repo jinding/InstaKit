@@ -9,11 +9,18 @@ function standardizePageLinks(str) {
 };
 
 function setImageLinksToCloudfront(str) {
-  if (str.search(/https/i) >= 0) // if https exist in the copy, change to http
-    str = str.replace(/https/i, 'http');
+  if (str.search(/ *https/i) >= 0) // if https exist in the copy, change to http
+    str = str.replace(/ *https/i, 'http');
   if (str.search(/s3.amazonaws.com\/s3.credoaction.com/i) >= 0) // if s3 exists in the copy, change to cloudfront
     str = str.replace(/s3.amazonaws.com\/s3.credoaction.com/i, 'd2omw6a1nm6pnh.cloudfront.net');
   return str;
+};
+
+function removeCurlyQuotes(str) { // replace single and double curly quotes with straight quotes
+  var goodQuotes = str
+  .replace(/[\u2018\u2019]/g, "'")
+  .replace(/[\u201C\u201D]/g, '"');
+  return goodQuotes;
 };
 
 function setSessionVars() {
@@ -27,7 +34,7 @@ function setSessionVars() {
   Session.set("pageImportAboutText", Template.pageImportAboutText());
   Session.set("pageFacebookTitle", $('#pageFacebookTitle').val());
   Session.set("pageFacebookCopy", $('#pageFacebookCopy').val());
-  Session.set("pageTwitterCopy", $('#pageTwitterCopy').val());
+  Session.set("pageTwitterCopy", removeCurlyQuotes($('#pageTwitterCopy').val()));
   Session.set("pageTAFSL", $('#pageTAFSL').val());
   Session.set("pageTAFCopy", $('#pageTAFCopy').val());
   Session.set("pageConfEmailSL", $('#pageConfEmailSL').val());

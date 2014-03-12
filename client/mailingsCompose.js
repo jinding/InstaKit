@@ -79,6 +79,13 @@ Template.facebook.events({
   }
 });
 
+function removeCurlyQuotes(str) {
+  var goodQuotes = str
+  .replace(/[\u2018\u2019]/g, "'")
+  .replace(/[\u201C\u201D]/g, '"');
+  return goodQuotes;
+};
+
 function makeEmailFromSession() {
   return {
     id: Session.get("id"),
@@ -93,7 +100,7 @@ function makeEmailFromSession() {
     signature: Session.get("signature"),
     footnotes: Session.get("footnotes"),
     facebook: Session.get("facebook"),
-    twitter: Session.get("twitter"),
+    twitter: removeCurlyQuotes(Session.get("twitter")),
     markdown_data: Session.get("markdown_data"),
     creator: Session.get("creator") || Meteor.user().profile.name,
     savedBy: Meteor.user().profile.name
