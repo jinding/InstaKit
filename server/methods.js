@@ -1,4 +1,3 @@
-
 function createShareProgressPage(page) {
 	try {
 		var sp = HTTP.call('POST', 'https://run.shareprogress.org/api/v1/pages/update',
@@ -7,7 +6,6 @@ function createShareProgressPage(page) {
 					  'key': 'saYLoUzgQUmlYRjyrEhUiQ',
 					  'page_url': 'http://act.credoaction.com/sign/'+page.pageName,
 					  'page_title': page.pageTitle+' | CREDO Action',
-					  'auto_fill': true,
 					  'variants': {
 					  	'facebook': [{ facebook_title: page.pageFacebookTitle,
 					  					facebook_description: page.pageFacebookCopy,
@@ -22,12 +20,13 @@ function createShareProgressPage(page) {
 		if (sp.data.success === true)
 			return sp.data.response[0];
 		else {
-			if (sp.data.message && sp.data.message.variants[0])
+			if (sp.data && sp.data.message && sp.data.message.variants[0])
 				throw new Meteor.Error(500, sp.data.message.variants[0], sp);
 			else throw new Meteor.Error(500, sp.data.message);
 		}
 	} catch (e) {
-		if (sp.data.message && sp.data.message.variants[0])
+		console.log("sp: " + sp);
+		if (sp && sp.data && sp.data.message && sp.data.message.variants[0])
 			throw new Meteor.Error(500, sp.data.message.variants[0], sp);
 		else throw new Meteor.Error(500, 'Error creating share page');
 	}
@@ -368,14 +367,14 @@ Meteor.methods({
 	}
   },
   populateAKpage: function (page,loc) {
-	var sp = createShareProgressPage(page);
-	console.log('shareprogress returns ',sp);
   	var bitly = createShortLink(page);
   	console.log('returned by bitly: '+bitly);
   	var AK = HTTP.call('GET', loc, {auth: 'meteor:dingbergalis'}).data;
   	console.log(AK);
   	updatePageShare(page, loc, bitly);
   	updatePageForm(page, AK.resource_uri);
+	var sp = createShareProgressPage(page);
+	console.log('shareprogress returns ',sp);
   	updatePageFields(page, AK.resource_uri, sp.share_page_url);
   	var pageObj = {};
   	pageObj.AKpage = 'http://act.credoaction.com/sign/' + page.pageName;
