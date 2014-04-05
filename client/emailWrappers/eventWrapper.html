@@ -7,8 +7,63 @@
 		<tr><td style="background:#FF6319;text-align:left; padding-left:12px; line-height:40px;padding-top:5px;color:#FFF;font-weight:bold; vertical-align:middle; height:45px;font-size:17px;font-weight:bold;">
 		    <img src="http://d2omw6a1nm6pnh.cloudfront.net/images/logo-credo-120.png" border="0" alt="CREDO action" style="vertical-align:middle;min-width:120px;">
 		</td></tr>
+		{{#if getValue "headline"}}
+		<!-- headline -->
+		<tr><td style="text-align:left; padding: 15px 12px; font-family: Arial, helvetica, sans-serif;
+			font-size: 18px; line-height: 22px;" valign="top">
+			<strong>{{removeBackslash "headline"}}</strong>
+		</td></tr>
+		{{/if}}
+		{{#if getValue "petition"}}
+		<!-- start petition text table -->
+		<tr><td style="background-color: #e6e4e0; padding: 0px 12px 12px;">
+		<p><strong>{{{removeBackslash "petition" }}}</strong></p>
+		<p style="font-size: 11px; line-height: 15px; color: #ff6319; margin-bottom: 8px;">Click below to RSVP:</p>
+		<!-- start BUTTON: RSVP -->
+		<table style="width: 180px; height: 45px;" cellspacing="0" cellpadding="0">
+		<tr><td style="vertical-align: middle; text-align: center; font-weight: bold; 
+			font-size: 17px; line-height: 40px; background-color: #ff6319;">
+			<a style="text-decoration: none; color: white;" href="{{getValue "link"}}">
+			<img border="0" alt="RSVP &#9658;" src="http://d2omw6a1nm6pnh.cloudfront.net/images/buttons/btn_flat_rsvp.gif" style="vertical-align:middle;min-width:100px;"/></a>
+		</td></tr></table> <!-- end BUTTON: RSVP -->
+		</td></tr>
+		<!-- end petition text table -->
+		{{/if}}
+		<!-- start body of email -->
+		<tr><td style="padding: 0px 12px 0px 12px; font-family: Arial, helvetica, sans-serif; 
+			font-size: 13px; line-height: 18px; text-align:left;">
+		<p>Dear {{{django_string "{{ user.first_name|default:\"Friend\" }}"}}},</p>
+		{{#if getValue "graphic"}}
+		<!-- start image -->
+		<table cellpadding=0 cellborder=0 align=right width=180 style="padding-left:5px; padding-right:0px;">
+		<tr><td style="padding-right:0px;">
+		<a href="{{getValue "link" }}" style="text-decoration:none;">
+		<img src="{{getValue "graphic"}}" alt="{{getValue "graphic_alt_text" }}" align=right border=0>
+		</a>
+		</td></tr>
+		</table>
+		<!-- end image -->
+		{{/if}}
+		{{#markdown}}{{{getValue "markdown_data" }}}{{/markdown}}
+		{{#if getValue "signature"}}<p>{{ getValue "signature"}}<br />
+		<a href="http://www.credoaction.com">CREDO Action from Working Assets</a>
+		</p>{{/if}}
+		<p style="font-size: 11px; line-height: 15px; color: #ff6319; margin-bottom: 8px;">Click below to RSVP:</p>
+		<!-- start BUTTON: TAKE ACTION -->
+		<table style="width: 180px; height: 45px;" cellspacing="0" cellpadding="0">
+		<tr><td style="vertical-align: middle; text-align: center; font-weight: bold; font-size: 17px; line-height: 40px; background-color: #ff6319;">
+			<a style="text-decoration: none; color: white;" href="{{getValue "link"}}">
+			<img border="0" alt="RSVP &#9658;" src="http://d2omw6a1nm6pnh.cloudfront.net/images/buttons/btn_flat_rsvp.gif" style="vertical-align:middle;min-width:100px;"/></a>
+		</td></tr>
+		</table> <!-- end BUTTON: TAKE ACTION -->
+		{{#if getValue "footnotes"}}{{#markdown}}{{{getValue "footnotes" }}}{{/markdown}}{{/if}}
+		</td></tr> <!-- end body of email -->
+		<tr><td><hr size="1" color="#d7d9db" style="height: 1px;"></td></tr>
+		<tr><td style="font-size:12px;padding: 0px 12px;">
+		© 2013 CREDO. All rights reserved.
+		</td></tr>
+	</table> <!-- end inner table -->
 	{{else}}<pre><plaintext>
-	{{/if}}
 {{#if getValue "headline"}}
 <!-- headline -->
 <tr><td style="text-align:left; padding: 15px 12px; font-family: Arial, helvetica, sans-serif;
@@ -46,11 +101,7 @@
 </table>
 <!-- end image -->
 {{/if}}
- {{#if display_setting "visual"}}
-	{{#markdown}}{{{getValue "markdown_data" }}}{{/markdown}}
-{{else}}
 {{{show_html "markdown_data"}}}
-{{/if}}
 {{#if getValue "signature"}}<p>{{ getValue "signature"}}<br />
 <a href="http://www.credoaction.com">CREDO Action from Working Assets</a>
 </p>{{/if}}
@@ -62,15 +113,9 @@
 	<img border="0" alt="RSVP &#9658;" src="http://d2omw6a1nm6pnh.cloudfront.net/images/buttons/btn_flat_rsvp.gif" style="vertical-align:middle;min-width:100px;"/></a>
 </td></tr>
 </table> <!-- end BUTTON: TAKE ACTION -->
-</p>
 {{#if getValue "footnotes"}}{{#markdown}}{{{getValue "footnotes" }}}{{/markdown}}{{/if}}
 </td></tr> <!-- end body of email -->
-<tr><td><hr size="1" color="#d7d9db" style="height: 1px;"></td><tr>
-{{#if display_setting "visual"}}
-	<tr><td style="font-size:12px;padding: 0px 12px;">
-	© 2013 CREDO. All rights reserved.
-	</td></tr>
-	</table> <!-- end inner table -->
-	</div>
-{{/if}}
+<tr><td><hr size="1" color="#d7d9db" style="height: 1px;"></td></tr>
+</plaintext></pre>
+	{{/if}}
 </template>
