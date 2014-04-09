@@ -107,7 +107,8 @@ Template.filePage.events({
     evt.preventDefault();
     Router.go('compose', {_id: this._id});
   },
-  'click .copyButton': function() {
+  'click .copyButton': function(evt) {
+    evt.preventDefault();
     Router.go('compose', 
                 {}, 
                 {query: {copy: this._id}}

@@ -63,7 +63,7 @@ Handlebars.registerHelper("prettifyDate", function(d) {
 // email functions
 function setSessionVarsForEmail(obj) {
   Session.set("id", obj._id);
-  console.log(Session.get("id"));
+  console.log("in setSessionVarsForEmail" + obj._id);
   Session.set("markdown_data", obj.markdown_data);
   Session.set("templateChooser", obj.type);
   Session.set("topper", obj.topper);
@@ -192,13 +192,13 @@ function initSessionVarsForPageCompose() {
   Session.set("saveDialog",false);
 }
 
-
 Router.map(function () {
   this.route('home', {
     path: '/',
     template: 'filePage',
     action: Session.set('emailNotSaved',false)
   });
+
   this.route('mailings', {
     path: '/mailings/',
     template: 'filePage',
@@ -217,6 +217,7 @@ Router.map(function () {
         setSessionVarsForEmail(email);
       } else if (this.params.copy) {
         // create a new email by copying another email
+        console.log("copying mailing " + this.params.copy);
         var email = Files.findOne(this.params.copy);
         setSessionVarsForEmail(email); // copy email vars from selected email
         Session.set("newEmail", true); // but this is a new email, not a current email
@@ -242,6 +243,7 @@ Router.map(function () {
       initSessionVarsForCompose();
     }
   });
+
   this.route('pages', {
     path: '/pages/',
     template: 'pages'
@@ -258,7 +260,7 @@ Router.map(function () {
         setSessionVarsForPage(page);
       } else if (this.params.copy) {
         var page = Files.findOne(this.params.copy);
-        // check for missing email and throw a 404
+       // check for missing email and throw a 404
         setSessionVarsForPage(page); // copy page vars from selected page
         Session.set("newPage", true); // but this is a new page, not a current page
         // clear creator and ID vars, as well as created page vars because this is a new page
