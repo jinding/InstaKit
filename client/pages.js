@@ -35,8 +35,8 @@ function setSessionVars() {
   Session.set("pageFacebookTitle", $('#pageFacebookTitle').val());
   Session.set("pageFacebookCopy", $('#pageFacebookCopy').val());
   Session.set("pageTwitterCopy", removeCurlyQuotes($('#pageTwitterCopy').val()));
-  Session.set("pageTAFSL", $('#pageTAFSL').val());
-  Session.set("pageTAFCopy", $('#pageTAFCopy').val());
+  Session.set("pageTAFSL", removeCurlyQuotes($('#pageTAFSL').val()));
+  Session.set("pageTAFCopy", removeCurlyQuotes($('#pageTAFCopy').val()));
   Session.set("pageConfEmailSL", $('#pageConfEmailSL').val());
   Session.set("pageConfEmailBody", $('#pageConfEmailBody').val());
   Session.set("pageImportConfEmailBody", Template.pageImportConfEmailBody());
