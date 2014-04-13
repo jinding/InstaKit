@@ -209,7 +209,7 @@ Router.map(function () {
     // compose route with an optional ID parameter
     path: '/mailings/compose/:_id?',
     template: 'composePage',
-    before: function () {
+    onBeforeAction: function () {
       if (this.params._id) {
         // edit an existing email
         Session.set("newEmail", false);
@@ -250,7 +250,7 @@ Router.map(function () {
   this.route('createPage', {
     path: '/pages/compose/:_id?',
     template: 'createPage',
-    before: function () {
+    onBeforeAction: function () {
       if (this.params._id) {
         Session.set("newPage", false);
         var page = Files.findOne(this.params._id);
@@ -290,7 +290,7 @@ Router.map(function () {
   this.route('postAPI', {
     path: '/pages/postAPI/:_id?',
     template: 'postAPIpage',
-    before: function() {
+    onBeforeAction: function() {
       var page = Files.findOne(this.params._id);  
       setSessionVarsForPage(page);
     }
@@ -299,10 +299,10 @@ Router.map(function () {
 });
 
 // this hook will run on almost all routes
-Router.before(function () {
+Router.onBeforeAction(function (pause) {
   if (! Meteor.user()) {
     this.render('loginPage');
-    this.stop();
+    pause();
   }
 }, {except: ['login']});
 
@@ -355,16 +355,13 @@ Handlebars.registerHelper("savedAtButtonText", function() {
   }
 });
 
-Handlebars.registerHelper("currentUserName", function() {
-  return Meteor.user().profile.name;
-});
-
 Handlebars.registerHelper("belongsToUser", function(name) {
-  return Meteor.user().profile.name === name ? true : false;
+  return Meteor.user() && Meteor.user().profile.name === name;
 });
 
 Handlebars.registerHelper("isAdmin", function() {
-  var admins = new Array('Jin Ding');
-  return admins.indexOf(Meteor.user().profile.name) >= 0 ? true : false;
+  var admins = ['Jin Ding'];
+
+  return Meteor.user() && admins.indexOf(Meteor.user().profile.name) >= 0;
 });
 
