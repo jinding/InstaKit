@@ -12,10 +12,6 @@ Handlebars.registerHelper("display_setting", function(selection) {
   return Session.equals("display",selection);
 });
 
-Handlebars.registerHelper("django_string", function(str) {
-  return str; // get django strings to display as text
-});
-
 Handlebars.registerHelper("getValue", function(value) {
   return Session.get(value);
 });
