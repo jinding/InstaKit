@@ -24,7 +24,23 @@ Handlebars.registerHelper("sigFirstName", function() {
   return Session.get("signature").split(' ')[0];
 });
 
-Handlebars.registerHelper("show_html", function(field) {
+Handlebars.registerHelper("unformattedHtml", function(wrapper) {
+  // return the HTML code of the template being referenced
+  var div = document.createElement('div');
+  switch (wrapper) {
+    case "blank": UI.insert(UI.render(Template.blankEmailWrapperBody), div); break;
+    case "call": UI.insert(UI.render(Template.callEmailWrapperBody), div); break;
+    case "event": UI.insert(UI.render(Template.eventEmailWrapperBody), div); break;
+    case "mobilize": UI.insert(UI.render(Template.mobilizeEmailWrapperBody), div); break;
+    case "petition": UI.insert(UI.render(Template.petitionEmailWrapperBody), div); break;
+    case "publicComment": UI.insert(UI.render(Template.publicCommentEmailWrapperBody), div); break;
+    case "takeAction": UI.insert(UI.render(Template.takeActionEmailWrapperBody), div); break;
+    default: return "unformatted html not yet set";
+  }
+  return div.innerHTML;
+});
+
+Handlebars.registerHelper("htmlFromMarkdown", function(field) {
   var converter = new Showdown.converter();
   return converter.makeHtml(Session.get(field));
 });

@@ -39,7 +39,7 @@
 </template>
 
 <template name="footnotes">
-	<textarea rows="5" type="text" id="footnotes_text" class="{{highlight "footnotes"}}">{{#if getValue "footnotes"}}{{{getValue "footnotes"}}}{{else}}Footnotes in Markdown.
+	<textarea rows="5" type="text" id="footnotes_text" class="{{highlight "footnotes"}}">{{#if getValue "footnotes"}}{{getValue "footnotes"}}{{else}}Footnotes in Markdown.
 Make sure to escape underscores in visible text like so: "\_" (but not necessary for links){{/if}}</textarea>
 </template>
 
@@ -57,7 +57,7 @@ Make sure to escape underscores in visible text like so: "\_" (but not necessary
 
 <template name="markdown_input">
 	<textarea class="textbox {{highlight "markdown_data"}}" rows="30" type="text" id="markdown_text">
-{{#if getValue "markdown_data"}}{{{getValue "markdown_data"}}}
+{{#if getValue "markdown_data"}}{{getValue "markdown_data"}}
 {{else}}{{#if wrapperStyle "mobilize"}}We have to speak out now to stop it. That's why I started my own campaign on CREDOMobilize.com, which allows activists to start their own petitions. My petition, which is to the U.S. Bureau of Reclamation, says the following:
 
 > *Abandon the proposal to raise the height of the Shasta Dam by 18.5 feet, and prevent cultural harm to the Winnemem Wintu's sacred lands and ecological damage to the McCloud and other rivers of northern California.*
@@ -84,8 +84,8 @@ Link: [{{getValue "link"}}]({{getValue "link"}})
 
 <template name="topper">
 	<textarea rows="4" type="text" id="topper_text" class="{{highlight "topper"}}">
-{{#if getValue "topper"}}{{{getValue "topper"}}}
-{{else}}The email below is from {{getValue "signature"}}, a CREDO activist in Berkeley, California. {{ sigFirstName }} started a petition on [CREDO Mobilize](http://www.credomobilize.com?source=email_topper"), where activists can launch their own campaigns for progressive change. Will you help {{ sigFirstName }} pressure the Bureau of Reclamation to abandon a disastrous proposal to raise the Shasta Dam and flood sacred lands by [signing his petition]({{getValue "link"}}) and sharing it with your friends and family?{{/if}}
+{{#if getValue "topper"}}{{getValue "topper"}}
+{{else}}The email below is from {{getValue "signature"}}, a CREDO activist in Berkeley, California. {{ sigFirstName }} started a petition on [CREDO Mobilize](http://www.credomobilize.com?source=email_topper), where activists can launch their own campaigns for progressive change. Will you help {{ sigFirstName }} pressure the Bureau of Reclamation to abandon a disastrous proposal to raise the Shasta Dam and flood sacred lands by [signing his petition]({{getValue "link"}}) and sharing it with your friends and family?{{/if}}
 	</textarea>
 </template>
 
