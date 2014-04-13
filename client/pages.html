@@ -66,13 +66,13 @@
 
 Here are some ways you can spread the word:
 
-[Email your friends](mailto:?subject={{{django_string "{% include\_tmpl page.followup.taf_subject %}&body={% filter referring\_akid:user.akid|tag\_links:\"source=conf\_email\"|urlencode %}{% include\_tmpl page.followup.taf\_body %}{% endfilter %}"}}}) or forward the message below.
+[Email your friends](mailto:?subject={% include\_tmpl page.followup.taf_subject %}&body={% filter referring\_akid:user.akid|tag\_links:"source=conf\_email"|urlencode %}{% include\_tmpl page.followup.taf\_body %}{% endfilter %}) or forward the message below.
 
 If you are on Facebook, 
-[click here to post the petition to your Wall](http://www.facebook.com/sharer.php?no\_akid=1&u={{{django_string "{{ page.canonical\_url|tag\_links:\"source=share\_email\"|referring_akid:user.akid|urlencode }}"}}}).
+[click here to post the petition to your Wall](http://www.facebook.com/sharer.php?no\_akid=1&u={&#123; page.canonical\_url|tag\_links:"source=share\_email"|referring_akid:user.akid|urlencode &#125;}).
 
 If you have a Twitter account, click here to automatically tweet:  
-[{{{django_string "{% if page.custom\_fields.taf\_tweet %}{{ page.custom\_fields.taf\_tweet }}{% else %} {{page.title}} {{page.canonical\_url}}{% endif %}"}}}](http://twitter.com/intent/tweet?no\_akid=1&text={{{django_string "{% if page.custom\_fields.taf\_tweet %}{{ page.custom_fields.taf\_tweet|urlencode }}{% else %}{{ page.title|urlencode }} {{page.canonical\_url|tag\_links:\"source=tw\_email\"|referring\_akid:user.akid}}{% endif %}"}}})
+[{% if page.custom\_fields.taf\_tweet %}{&#123; page.custom\_fields.taf\_tweet &#125;}{% else %} {&#123;page.title&#125;} {&#123;page.canonical\_url&#125;}{% endif %}](http://twitter.com/intent/tweet?no\_akid=1&text={% if page.custom\_fields.taf\_tweet %}{&#123; page.custom_fields.taf\_tweet|urlencode &#125;}{% else %}{&#123; page.title|urlencode &#125;} {&#123;page.canonical\_url|tag\_links:"source=tw\_email"|referring\_akid:user.akid&#125;}{% endif %})
 
 Thanks for all you do.
 
@@ -82,11 +82,12 @@ Thanks for all you do.
 
 Here’s a sample message to send to your friends:
 
-SUBJECT: {{{django_string "{% include\_tmpl page.followup.taf\_subject escaped %}"}}}
+SUBJECT: {% include\_tmpl page.followup.taf\_subject escaped %}
 
-{{{django_string "{% filter referring\_akid:user.akid|tag\_links:\"source=conf\_email\"|linebreaksbr %}
+{% filter referring\_akid:user.akid|tag\_links:"source=conf\_email"|linebreaksbr %}
 {% include\_tmpl page.followup.taf\_body %}
-{% endfilter %}"}}}
+{% endfilter %}
+
 		{{/if}}</textarea></div>
 	</div>
 </template>
@@ -100,23 +101,6 @@ SUBJECT: {{{django_string "{% include\_tmpl page.followup.taf\_subject escaped %
 		<div class="bodytext_desc">Email 180px</div>
 		<div class="taf_title"><input type="text" id="pageGraphicEmail" class="{{highlight "pageGraphicEmail"}}" value="{{getValue "pageGraphicEmail"}}"></div>
 	</div>
-</template>
-
-<!-- for importing into AK -->
-<template name="pageImportStatementLeadIn">
-	<p>{{getValue "pageStatementLeadIn"}}</p>
-</template>
-
-<template name="pageImportStatementText">
-	{{#markdown}}{{getValue "pageStatementText"}}{{/markdown}}
-</template>
-
-<template name="pageImportAboutText">
-	{{#markdown}}{{{getValue "pageAboutText"}}}{{/markdown}}
-</template>
-
-<template name="pageImportConfEmailBody">
-	{{#markdown}}{{{getValue "pageConfEmailBody"}}}{{/markdown}}
 </template>
 
 <!-- display -->
