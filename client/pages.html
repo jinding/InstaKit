@@ -46,7 +46,7 @@
 	<div class="taf" >
 		<div class="taf_logo"><img src="http://shpg.org/images/icon-twitter.gif"/><br>
 			<span style="color: #FF0000;">{{getValue 'pageTwitterLength'}}</span></div>
-		<div class="taf_copy"><textarea class="textbox {{highlight "pageTwitterCopy"}}" rows="3" type="text" id="pageTwitterCopy">{{#if getValue "pageTwitterCopy"}}{{getValue "pageTwitterCopy"}}{{else}}Include {{{django_string "{LINK}"}}} where you want the short link inserted.{{/if}}</textarea></div>
+		<div class="taf_copy"><textarea class="textbox {{highlight "pageTwitterCopy"}}" rows="3" type="text" id="pageTwitterCopy">{{#if getValue "pageTwitterCopy"}}{{getValue "pageTwitterCopy"}}{{else}}Include {LINK} where you want the short link inserted.{{/if}}</textarea></div>
 	</div>
 </template>
 
@@ -54,7 +54,7 @@
 	<div class="taf" >
 		<div class="taf_logo"><img src="http://shpg.org/images/icon-email.gif"></div>
 		<div class="taf_title"><input type="text" id="pageTAFSL" class="{{highlight "pageTAFSL"}}" value="{{#if getValue "pageTAFSL"}}{{getValue "pageTAFSL"}}{{else}}TAF email subject line{{/if}}"></div>
-		<div class="taf_copy"><textarea class="textbox {{highlight "pageTAFCopy"}}" rows="5" type="text" id="pageTAFCopy">{{#if getValue "pageTAFCopy"}}{{getValue "pageTAFCopy"}}{{else}}TAF email body. Link: {{{ django_string "{LINK}" }}}{{/if}}</textarea></div>
+		<div class="taf_copy"><textarea class="textbox {{highlight "pageTAFCopy"}}" rows="5" type="text" id="pageTAFCopy">{{#if getValue "pageTAFCopy"}}{{getValue "pageTAFCopy"}}{{else}}TAF email body. Link: {LINK}{{/if}}</textarea></div>
 	</div>
 </template>
 
@@ -62,7 +62,7 @@
 	<div class="bodytext" >
 		<div class="bodytext_desc">Conf email</div>
 		<div class="taf_title"><input type="text" id="pageConfEmailSL" class="{{highlight "pageConfEmailSL"}}" value="{{#if getValue "pageConfEmailSL"}}{{getValue "pageConfEmailSL"}}{{else}}Subject line{{/if}}"></div>
-		<div class="taf_copy"><textarea class="textbox {{highlight "pageConfEmailBody"}}" rows="8" type="text" id="pageConfEmailBody">{{#if getValue "pageConfEmailBody"}}{{getValue "pageConfEmailBody"}}{{else}}Thanks for taking action on our petition: {{{django_string "{{ page.title }}"}}}.
+		<div class="taf_copy"><textarea class="textbox {{highlight "pageConfEmailBody"}}" rows="8" type="text" id="pageConfEmailBody">{{#if getValue "pageConfEmailBody"}}{{getValue "pageConfEmailBody"}}{{else}}Thanks for taking action on our petition: {&#123; page.title &#125;}.
 
 Here are some ways you can spread the word:
 
@@ -121,7 +121,7 @@ SUBJECT: {% include\_tmpl page.followup.taf\_subject escaped %}
 
 	<div class="col2 about-text story">
 	{{#if getValue "pageGraphicEmail"}}<div class="story-image1"><img src="{{getValue "pageGraphicEmail"}}" alt="{{getValue "pageTitle"}}" width="180" height="180" /></div>{{/if}}
-	{{#markdown}}{{{getValue "pageAboutText" }}}{{/markdown}}
+	{{#markdown}}{{getValue "pageAboutText" }}{{/markdown}}
 
 	{{#if getValue "pageSharePageLink"}}
 		<p><b>Click here to go to the share page</b>: <a href="{{getValue "pageSharePageLink"}}" target="_blank">{{getValue "pageSharePageLink"}}</a></p>
@@ -147,6 +147,6 @@ SUBJECT: {% include\_tmpl page.followup.taf\_subject escaped %}
 	</div>
 	<div id="confemail">
 		<div id="confemail_sl">Confirmation email: {{getValue "pageConfEmailSL"}}</div>
-		<div id="confemail_body">{{#markdown}}{{{getValue "pageConfEmailBody"}}}{{/markdown}}</div>
+		<div id="confemail_body">{{#markdown}}{{getValue "pageConfEmailBody"}}{{/markdown}}</div>
 	</div>
 </template>
