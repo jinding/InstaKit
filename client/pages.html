@@ -46,7 +46,7 @@
 	<div class="taf" >
 		<div class="taf_logo"><img src="http://shpg.org/images/icon-twitter.gif"/><br>
 			<span style="color: #FF0000;">{{getValue 'pageTwitterLength'}}</span></div>
-		<div class="taf_copy"><textarea class="textbox {{highlight "pageTwitterCopy"}}" rows="3" type="text" id="pageTwitterCopy">{{#if getValue "pageTwitterCopy"}}{{getValue "pageTwitterCopy"}}{{else}}Include {{{django_string "{LINK}"}}} where you want the short link inserted.{{/if}}</textarea></div>
+		<div class="taf_copy"><textarea class="textbox {{highlight "pageTwitterCopy"}}" rows="3" type="text" id="pageTwitterCopy">{{#if getValue "pageTwitterCopy"}}{{getValue "pageTwitterCopy"}}{{else}}Include {LINK} where you want the short link inserted.{{/if}}</textarea></div>
 	</div>
 </template>
 
@@ -54,7 +54,7 @@
 	<div class="taf" >
 		<div class="taf_logo"><img src="http://shpg.org/images/icon-email.gif"></div>
 		<div class="taf_title"><input type="text" id="pageTAFSL" class="{{highlight "pageTAFSL"}}" value="{{#if getValue "pageTAFSL"}}{{getValue "pageTAFSL"}}{{else}}TAF email subject line{{/if}}"></div>
-		<div class="taf_copy"><textarea class="textbox {{highlight "pageTAFCopy"}}" rows="5" type="text" id="pageTAFCopy">{{#if getValue "pageTAFCopy"}}{{getValue "pageTAFCopy"}}{{else}}TAF email body. Link: {{{ django_string "{LINK}" }}}{{/if}}</textarea></div>
+		<div class="taf_copy"><textarea class="textbox {{highlight "pageTAFCopy"}}" rows="5" type="text" id="pageTAFCopy">{{#if getValue "pageTAFCopy"}}{{getValue "pageTAFCopy"}}{{else}}TAF email body. Link: {LINK}{{/if}}</textarea></div>
 	</div>
 </template>
 
@@ -62,17 +62,17 @@
 	<div class="bodytext" >
 		<div class="bodytext_desc">Conf email</div>
 		<div class="taf_title"><input type="text" id="pageConfEmailSL" class="{{highlight "pageConfEmailSL"}}" value="{{#if getValue "pageConfEmailSL"}}{{getValue "pageConfEmailSL"}}{{else}}Subject line{{/if}}"></div>
-		<div class="taf_copy"><textarea class="textbox {{highlight "pageConfEmailBody"}}" rows="8" type="text" id="pageConfEmailBody">{{#if getValue "pageConfEmailBody"}}{{getValue "pageConfEmailBody"}}{{else}}Thanks for taking action on our petition: {{{django_string "{{ page.title }}"}}}.
+		<div class="taf_copy"><textarea class="textbox {{highlight "pageConfEmailBody"}}" rows="8" type="text" id="pageConfEmailBody">{{#if getValue "pageConfEmailBody"}}{{getValue "pageConfEmailBody"}}{{else}}Thanks for taking action on our petition: {&#123; page.title &#125;}.
 
 Here are some ways you can spread the word:
 
-[Email your friends](mailto:?subject={{{django_string "{% include\_tmpl page.followup.taf_subject %}&body={% filter referring\_akid:user.akid|tag\_links:\"source=conf\_email\"|urlencode %}{% include\_tmpl page.followup.taf\_body %}{% endfilter %}"}}}) or forward the message below.
+[Email your friends](mailto:?subject={% include\_tmpl page.followup.taf_subject %}&body={% filter referring\_akid:user.akid|tag\_links:"source=conf\_email"|urlencode %}{% include\_tmpl page.followup.taf\_body %}{% endfilter %}) or forward the message below.
 
 If you are on Facebook, 
-[click here to post the petition to your Wall](http://www.facebook.com/sharer.php?no\_akid=1&u={{{django_string "{{ page.canonical\_url|tag\_links:\"source=share\_email\"|referring_akid:user.akid|urlencode }}"}}}).
+[click here to post the petition to your Wall](http://www.facebook.com/sharer.php?no\_akid=1&u={&#123; page.canonical\_url|tag\_links:"source=share\_email"|referring_akid:user.akid|urlencode &#125;}).
 
 If you have a Twitter account, click here to automatically tweet:  
-[{{{django_string "{% if page.custom\_fields.taf\_tweet %}{{ page.custom\_fields.taf\_tweet }}{% else %} {{page.title}} {{page.canonical\_url}}{% endif %}"}}}](http://twitter.com/intent/tweet?no\_akid=1&text={{{django_string "{% if page.custom\_fields.taf\_tweet %}{{ page.custom_fields.taf\_tweet|urlencode }}{% else %}{{ page.title|urlencode }} {{page.canonical\_url|tag\_links:\"source=tw\_email\"|referring\_akid:user.akid}}{% endif %}"}}})
+[{% if page.custom\_fields.taf\_tweet %}{&#123; page.custom\_fields.taf\_tweet &#125;}{% else %} {&#123;page.title&#125;} {&#123;page.canonical\_url&#125;}{% endif %}](http://twitter.com/intent/tweet?no\_akid=1&text={% if page.custom\_fields.taf\_tweet %}{&#123; page.custom_fields.taf\_tweet|urlencode &#125;}{% else %}{&#123; page.title|urlencode &#125;} {&#123;page.canonical\_url|tag\_links:"source=tw\_email"|referring\_akid:user.akid&#125;}{% endif %})
 
 Thanks for all you do.
 
@@ -82,11 +82,12 @@ Thanks for all you do.
 
 Here’s a sample message to send to your friends:
 
-SUBJECT: {{{django_string "{% include\_tmpl page.followup.taf\_subject escaped %}"}}}
+SUBJECT: {% include\_tmpl page.followup.taf\_subject escaped %}
 
-{{{django_string "{% filter referring\_akid:user.akid|tag\_links:\"source=conf\_email\"|linebreaksbr %}
+{% filter referring\_akid:user.akid|tag\_links:"source=conf\_email"|linebreaksbr %}
 {% include\_tmpl page.followup.taf\_body %}
-{% endfilter %}"}}}
+{% endfilter %}
+
 		{{/if}}</textarea></div>
 	</div>
 </template>
@@ -102,23 +103,6 @@ SUBJECT: {{{django_string "{% include\_tmpl page.followup.taf\_subject escaped %
 	</div>
 </template>
 
-<!-- for importing into AK -->
-<template name="pageImportStatementLeadIn">
-	<p>{{getValue "pageStatementLeadIn"}}</p>
-</template>
-
-<template name="pageImportStatementText">
-	{{#markdown}}{{getValue "pageStatementText"}}{{/markdown}}
-</template>
-
-<template name="pageImportAboutText">
-	{{#markdown}}{{{getValue "pageAboutText"}}}{{/markdown}}
-</template>
-
-<template name="pageImportConfEmailBody">
-	{{#markdown}}{{{getValue "pageConfEmailBody"}}}{{/markdown}}
-</template>
-
 <!-- display -->
 
 <template name="pageCreationDisplay">
@@ -130,14 +114,14 @@ SUBJECT: {{{django_string "{% include\_tmpl page.followup.taf\_subject escaped %
 	{{#if getValue "pageStatementLeadIn"}}<div class="statement-leadin"><p><b>{{getValue "pageStatementLeadIn"}}</b></p></div>{{/if}}
 	<div class="statement-text">{{#markdown}}{{getValue "pageStatementText"}}{{/markdown}}</div>
 	</div> <!-- .form-prompt-box -->
-	{{/if}}
 	</div> <!-- #petition-box -->
+	{{/if}}
 	</div><!-- .col1 -->
 		{{> navBar}}
 
 	<div class="col2 about-text story">
 	{{#if getValue "pageGraphicEmail"}}<div class="story-image1"><img src="{{getValue "pageGraphicEmail"}}" alt="{{getValue "pageTitle"}}" width="180" height="180" /></div>{{/if}}
-	{{#markdown}}{{{getValue "pageAboutText" }}}{{/markdown}}
+	{{#markdown}}{{getValue "pageAboutText" }}{{/markdown}}
 
 	{{#if getValue "pageSharePageLink"}}
 		<p><b>Click here to go to the share page</b>: <a href="{{getValue "pageSharePageLink"}}" target="_blank">{{getValue "pageSharePageLink"}}</a></p>
@@ -163,6 +147,6 @@ SUBJECT: {{{django_string "{% include\_tmpl page.followup.taf\_subject escaped %
 	</div>
 	<div id="confemail">
 		<div id="confemail_sl">Confirmation email: {{getValue "pageConfEmailSL"}}</div>
-		<div id="confemail_body">{{#markdown}}{{{getValue "pageConfEmailBody"}}}{{/markdown}}</div>
+		<div id="confemail_body">{{#markdown}}{{getValue "pageConfEmailBody"}}{{/markdown}}</div>
 	</div>
 </template>

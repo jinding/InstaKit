@@ -12,10 +12,6 @@ Handlebars.registerHelper("display_setting", function(selection) {
   return Session.equals("display",selection);
 });
 
-Handlebars.registerHelper("django_string", function(str) {
-  return str; // get django strings to display as text
-});
-
 Handlebars.registerHelper("getValue", function(value) {
   return Session.get(value);
 });
@@ -28,7 +24,23 @@ Handlebars.registerHelper("sigFirstName", function() {
   return Session.get("signature").split(' ')[0];
 });
 
-Handlebars.registerHelper("show_html", function(field) {
+Handlebars.registerHelper("unformattedHtml", function(wrapper) {
+  // return the HTML code of the template being referenced
+  var div = document.createElement('div');
+  switch (wrapper) {
+    case "blank": UI.insert(UI.render(Template.blankEmailWrapperBody), div); break;
+    case "call": UI.insert(UI.render(Template.callEmailWrapperBody), div); break;
+    case "event": UI.insert(UI.render(Template.eventEmailWrapperBody), div); break;
+    case "mobilize": UI.insert(UI.render(Template.mobilizeEmailWrapperBody), div); break;
+    case "petition": UI.insert(UI.render(Template.petitionEmailWrapperBody), div); break;
+    case "publicComment": UI.insert(UI.render(Template.publicCommentEmailWrapperBody), div); break;
+    case "takeAction": UI.insert(UI.render(Template.takeActionEmailWrapperBody), div); break;
+    default: return "unformatted html not yet set";
+  }
+  return div.innerHTML;
+});
+
+Handlebars.registerHelper("htmlFromMarkdown", function(field) {
   var converter = new Showdown.converter();
   return converter.makeHtml(Session.get(field));
 });
@@ -209,7 +221,7 @@ Router.map(function () {
     // compose route with an optional ID parameter
     path: '/mailings/compose/:_id?',
     template: 'composePage',
-    before: function () {
+    onBeforeAction: function () {
       if (this.params._id) {
         // edit an existing email
         Session.set("newEmail", false);
@@ -252,7 +264,7 @@ Router.map(function () {
   this.route('createPage', {
     path: '/pages/compose/:_id?',
     template: 'createPage',
-    before: function () {
+    onBeforeAction: function () {
       if (this.params._id) {
         Session.set("newPage", false);
         var page = Files.findOne(this.params._id);
@@ -292,7 +304,7 @@ Router.map(function () {
   this.route('postAPI', {
     path: '/pages/postAPI/:_id?',
     template: 'postAPIpage',
-    before: function() {
+    onBeforeAction: function() {
       var page = Files.findOne(this.params._id);  
       setSessionVarsForPage(page);
     }
@@ -301,10 +313,10 @@ Router.map(function () {
 });
 
 // this hook will run on almost all routes
-Router.before(function () {
+Router.onBeforeAction(function (pause) {
   if (! Meteor.user()) {
     this.render('loginPage');
-    this.stop();
+    pause();
   }
 }, {except: ['login']});
 
@@ -357,16 +369,13 @@ Handlebars.registerHelper("savedAtButtonText", function() {
   }
 });
 
-Handlebars.registerHelper("currentUserName", function() {
-  return Meteor.user().profile.name;
-});
-
 Handlebars.registerHelper("belongsToUser", function(name) {
-  return Meteor.user().profile.name === name ? true : false;
+  return Meteor.user() && Meteor.user().profile.name === name;
 });
 
 Handlebars.registerHelper("isAdmin", function() {
-  var admins = new Array('Jin Ding');
-  return admins.indexOf(Meteor.user().profile.name) >= 0 ? true : false;
+  var admins = ['Jin Ding'];
+
+  return Meteor.user() && admins.indexOf(Meteor.user().profile.name) >= 0;
 });
 

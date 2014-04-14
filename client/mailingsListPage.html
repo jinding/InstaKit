@@ -180,23 +180,61 @@
 </template>
 
 <template name="display">
-	<div id="display{{#if display_setting "html"}}_html{{/if}}">
+	{{#if display_setting "visual"}}
+		<div id="display">
+			{{#if wrapperStyle "mobilize"}}
+				{{> mobilizeEmailWrapper}}
+			{{else}} 
+				{{> emailWrapper}}
+			{{/if}}
+		</div>
+	{{else}} <!-- show the unformatted HTML for the chosen template style -->
+		<div id="display_html">
+<pre>
+{{#if wrapperStyle "petition"}}
+	{{unformattedHtml "petition" }}
+{{else}} {{#if wrapperStyle "takeaction"}}
+	{{unformattedHtml "takeAction" }}
+{{else}} {{#if wrapperStyle "public comment"}}
+	{{unformattedHtml "publicComment" }}
+{{else}} {{#if wrapperStyle "call"}}
+	{{unformattedHtml "call" }}
+{{else}} {{#if wrapperStyle "event"}}
+	{{unformattedHtml "event" }}
+{{else}} {{#if wrapperStyle "mobilize"}}
+	{{unformattedHtml "mobilize" }}
+{{else}} {{#if wrapperStyle "blank"}}
+	{{unformattedHtml "blank" }}
+{{/if}}{{/if}}{{/if}}{{/if}}{{/if}}{{/if}}{{/if}}
+</pre>
+		</div>
+	{{/if}}
+</template>
+
+<template name="emailWrapper">
+	<!-- start inner table -->
+	<table width="100%" cellpadding="0" cellspacing="0" style="padding:12px 0px; margin:0 auto; background:#fff; font-family: Arial, helvetica, sans-serif; font-size: 13px; line-height: 18px; text-align:left; height: 45px;">
+		<!-- CREDO logo -->
+		<tr><td style="background:#FF6319;text-align:left; padding-left:12px; line-height:40px;padding-top:5px;color:#FFF;font-weight:bold; vertical-align:middle; height:45px;font-size:17px;font-weight:bold;">
+		    <img src="http://d2omw6a1nm6pnh.cloudfront.net/images/logo-credo-120.png" border="0" alt="CREDO action" style="vertical-align:middle;min-width:120px;">
+		</td></tr>
 		{{#if wrapperStyle "petition"}}
-			{{> petitionEmailWrapper}}
+			{{> petitionEmailWrapperBody}}
 		{{else}} {{#if wrapperStyle "takeaction"}}
-			{{> takeactionEmailWrapper}}
+			{{> takeActionEmailWrapperBody}}
 		{{else}} {{#if wrapperStyle "public comment"}}
-			{{> publicCommentEmailWrapper}}
+			{{> publicCommentEmailWrapperBody}}
 		{{else}} {{#if wrapperStyle "call"}}
-			{{> callEmailWrapper}}
+			{{> callEmailWrapperBody}}
 		{{else}} {{#if wrapperStyle "event"}}
-			{{> eventEmailWrapper}}
-		{{else}} {{#if wrapperStyle "mobilize"}}
-			{{> mobilizeEmailWrapper}}
+			{{> eventEmailWrapperBody}}
 		{{else}} {{#if wrapperStyle "blank"}}
-			{{> blankEmailWrapper}}
-		{{/if}}{{/if}}{{/if}}{{/if}}{{/if}}{{/if}}{{/if}}
-	</div>
+			{{> blankEmailWrapperBody}}
+		{{/if}}{{/if}}{{/if}}{{/if}}{{/if}}{{/if}}
+		<tr><td style="font-size:12px;padding: 0px 12px;">
+		© 2014 CREDO. All rights reserved.
+		</td></tr>
+	</table> <!-- end inner table -->
 </template>
 
 <template name="toolTipsText">

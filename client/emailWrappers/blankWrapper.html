@@ -1,4 +1,7 @@
-<template name="blankEmailWrapper">
-{{#if display_setting "visual"}} {{#markdown}}{{{getValue "markdown_data" }}}{{/markdown}}{{else}}<pre><plaintext>{{{show_html "markdown_data"}}}
-{{/if}}
+<template name="blankEmailWrapperBody">
+<!-- start body of email -->
+<tr><td style="padding: 12px 12px 0px 12px; font-family: Arial, helvetica, sans-serif; 
+font-size: 13px; line-height: 18px; text-align:left;">
+	{{#markdown}}{{getValue "markdown_data" }}{{/markdown}}
+</td></tr>
 </template>

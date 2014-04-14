@@ -24,14 +24,15 @@ function removeCurlyQuotes(str) { // replace single and double curly quotes with
 };
 
 function setSessionVars() {
+  var converter = new Showdown.converter();
   Session.set("pageTitle", $('#pageTitle').val());
   Session.set("pageName", $('#pageName').val());
   Session.set("pageStatementLeadIn", $('#pageStatementLeadIn').val());
-  Session.set("pageImportStatementLeadIn", Template.pageImportStatementLeadIn());
+  Session.set("pageImportStatementLeadIn", converter.makeHtml(Session.get("pageStatementLeadIn")));
   Session.set("pageStatementText", $('#pageStatementText').val());
-  Session.set("pageImportStatementText", Template.pageImportStatementText());
+  Session.set("pageImportStatementText", converter.makeHtml(Session.get("pageStatementText")));
   Session.set("pageAboutText", $('#pageAboutText').val());
-  Session.set("pageImportAboutText", Template.pageImportAboutText());
+  Session.set("pageImportAboutText", converter.makeHtml(Session.get("pageAboutText")));
   Session.set("pageFacebookTitle", $('#pageFacebookTitle').val());
   Session.set("pageFacebookCopy", $('#pageFacebookCopy').val());
   Session.set("pageTwitterCopy", removeCurlyQuotes($('#pageTwitterCopy').val()));
@@ -39,7 +40,7 @@ function setSessionVars() {
   Session.set("pageTAFCopy", removeCurlyQuotes($('#pageTAFCopy').val()));
   Session.set("pageConfEmailSL", $('#pageConfEmailSL').val());
   Session.set("pageConfEmailBody", $('#pageConfEmailBody').val());
-  Session.set("pageImportConfEmailBody", Template.pageImportConfEmailBody());
+  Session.set("pageImportConfEmailBody", converter.makeHtml(Session.get("pageConfEmailBody")));
   Session.set("pageGraphicEmail", $('#pageGraphicEmail').val());
   Session.set("pageGraphicFacebook", $('#pageGraphicFacebook').val());
   Session.set("pageGraphicHomePage", $('#pageGraphicHomePage').val());
@@ -50,6 +51,8 @@ function setSessionVars() {
 
 function makePageFromSession() {
   setSessionVars();
+  var converter = new Showdown.converter();
+
   return {
     id: Session.get("id"),
     type: 'page',
@@ -71,51 +74,16 @@ function makePageFromSession() {
     pageConfEmailBody: Session.get("pageConfEmailBody"),
     creator: Session.get("creator") || Meteor.user().profile.name,
     savedBy: Meteor.user().profile.name,
-    pageImportStatementLeadIn: Session.get("pageImportStatementLeadIn"),
-    pageImportStatementText: Session.get("pageImportStatementText"),
-    pageImportAboutText: Session.get("pageImportAboutText"),
-    pageImportConfEmailBody: Session.get("pageImportConfEmailBody"),
+    pageImportStatementLeadIn: converter.makeHtml(Session.get("pageStatementLeadIn")),
+    pageImportStatementText: converter.makeHtml(Session.get("pageStatementText")),
+    pageImportAboutText: converter.makeHtml(Session.get("pageAboutText")),
+    pageImportConfEmailBody: converter.makeHtml(Session.get("pageConfEmailBody")),
     AKpageURL: Session.get("AKpageURL"),
     AKpageEditURL: Session.get("AKpageEditURL"),
     AKpageBitly: Session.get("AKpageBitly"),
     pageSharePageLink: Session.get("pageSharePageLink"),
     AKpageID: Session.get("AKpageID"),
     AKpageResourceURI: Session.get("AKpageResourceURI")
-  }
-};
-
-function makePageAfterAPI(page,res) {
-  return {
-    id: Session.get("id"),
-    type: 'page',
-    pageType: Session.get('templateChooser'),
-    pageTitle: Session.get("pageTitle"),
-    pageName: Session.get("pageName"),
-    pageStatementLeadIn: Session.get("pageStatementLeadIn"),
-    pageStatementText: Session.get("pageStatementText"),
-    pageAboutText: Session.get("pageAboutText"),
-    pageGraphicEmail: Session.get("pageGraphicEmail"),
-    pageGraphicFacebook: Session.get("pageGraphicFacebook"),
-    pageGraphicHomePage: Session.get("pageGraphicHomePage"),
-    pageTAFSL: Session.get("pageTAFSL"),
-    pageTAFCopy: standardizePageLinks(Session.get("pageTAFCopy")), // {LINK} is added if not present
-    pageFacebookTitle: Session.get("pageFacebookTitle"),
-    pageFacebookCopy: Session.get("pageFacebookCopy"),
-    pageTwitterCopy: standardizePageLinks(Session.get("pageTwitterCopy")), // {LINK} is added if not present
-    pageConfEmailSL: Session.get("pageConfEmailSL"),
-    pageConfEmailBody: Session.get("pageConfEmailBody"),
-    creator: Session.get("creator") || Meteor.user().profile.name,
-    savedBy: Meteor.user().profile.name,
-    pageImportStatementLeadIn: Session.get("pageImportStatementLeadIn"),
-    pageImportStatementText: Session.get("pageImportStatementText"),
-    pageImportAboutText: Session.get("pageImportAboutText"),
-    pageImportConfEmailBody: Session.get("pageImportConfEmailBody"),
-    AKpageURL: res.AKpage,
-    AKpageEditURL: res.AKpageEdit,
-    AKpageBitly: res.bitly,
-    pageSharePageLink: res.SPpage,
-    AKpageID: res.pageID,
-    AKpageResourceURI: res.resource_uri
   }
 };
 
@@ -320,18 +288,15 @@ Template.templatePageName.events({
 Template.templatePageStatement.events({
   'keyup input, keydown input': function() {
     Session.set("pageStatementLeadIn", $('#pageStatementLeadIn').val());
-    Session.set("pageImportStatementLeadIn", Template.pageImportStatementLeadIn());
-  },
+ },
   'keyup textarea, keydown textarea': function() {
     Session.set("pageStatementText", $('#pageStatementText').val());
-    Session.set("pageImportStatementText", Template.pageImportStatementText());
   }
 });
 
 Template.templatePageAboutText.events({
   'keyup textarea, keydown textarea': function() {
     Session.set("pageAboutText", $('#pageAboutText').val());
-    Session.set("pageImportAboutText", Template.pageImportAboutText());
   }
 });
 
@@ -367,11 +332,9 @@ Template.templatePageConfEmail.events({
   'keyup input[type=text], keydown input[type=text]': function() {
     Session.set("pageConfEmailSL", $('#pageConfEmailSL').val());
     Session.set("pageConfEmailBody", $('#pageConfEmailBody').val());
-    Session.set("pageImportConfEmailBody", Template.pageImportConfEmailBody());
 },
   'keyup textarea, keydown textarea': function() {
     Session.set("pageConfEmailBody", $('#pageConfEmailBody').val());
-    Session.set("pageImportConfEmailBody", Template.pageImportConfEmailBody());
   }
 });
 
