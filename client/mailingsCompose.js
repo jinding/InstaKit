@@ -1,8 +1,3 @@
-Template.mobilizeEmailWrapper.facebook_url = function() {
-  var str = Session.get("facebook");
-  return str.slice(-1) === '/' ? str : str + '/';
-}
-
 Template.navBar.buttonText = function() {
   return Session.equals("display", "visual") ? "HTML" : "visual";
 };
