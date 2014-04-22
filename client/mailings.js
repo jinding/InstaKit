@@ -99,6 +99,13 @@ Template.filePage.events({
                 {query: {template: 'blank'}}
               );
   },
+  'click #templateChooser_superpacFundraiser': function(evt) {
+    evt.preventDefault();
+    Router.go('compose', 
+                {}, 
+                {query: {template: 'superpacFundraiser'}}
+              );
+  },
   // edit, copy and delete functions
   'click #logoutButton': function() {
     Meteor.logout();

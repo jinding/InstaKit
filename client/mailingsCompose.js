@@ -265,12 +265,28 @@ Template.navBar.events({
   'click #pluralWerent': function() {
       insertAtCaret('markdown_text',"{% requires\\_value targets.werent %}{{ targets.werent }}");
   },
+  'click #donationsHPC': function() {
+      insertAtCaret('markdown_text',"{% requires\\_value donations.highest\\_previous %}${{ donations.highest\\_previous }}");
+  },
+  'click #donationsAverage': function() {
+      insertAtCaret('markdown_text',"{% requires\\_value donations.average %}${{ donations.average }}");
+  },
+  'click #donationsMostRecent': function() {
+      insertAtCaret('markdown_text',"{% requires\\_value donations.most\\_recent %}${{ donations.most\\_recent }}");
+  },
+  'click #donationsMostRecentDate': function() {
+      insertAtCaret('markdown_text',"{% requires\\_value donations.most\\_recent\\_date %}${{ donations.most\\_recent\\_date }}");
+  },
+  'click #donationsYTD': function() {
+      insertAtCaret('markdown_text',"{% requires\\_value donations.year\\_to\\_date %}${{ donations.year\\_to\\_date }}");
+  },
   'click #insertLink': function() {
       var url = '';
       switch (Session.get("templateChooser")) {
         case 'call': url += 'http://act.credoaction.com/call/'; break;
         case 'mobilize': break; // full url provided by user
         case 'event': break; // full url provided by user
+        case 'superpacFundraiser': break; // full url provided by user
         default: url += 'http://act.credoaction.com/sign/'; // petition, take action and public comment
       }
       url += Session.get('link').replace(/_/g,'\\_');

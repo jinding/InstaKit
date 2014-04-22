@@ -35,6 +35,7 @@ Handlebars.registerHelper("unformattedHtml", function(wrapper) {
     case "petition": UI.insert(UI.render(Template.petitionEmailWrapperBody), div); break;
     case "publicComment": UI.insert(UI.render(Template.publicCommentEmailWrapperBody), div); break;
     case "takeAction": UI.insert(UI.render(Template.takeActionEmailWrapperBody), div); break;
+    case "superpacFundraiser": UI.insert(UI.render(Template.superpacFundraiserEmailWrapperBody), div); break;
     default: return "unformatted html not yet set";
   }
   return div.innerHTML;
@@ -106,6 +107,8 @@ function setSessionVarsForNewEmail() {
   Session.set("graphic_alt_text", "");
   if (Session.equals("templateChooser","mobilize"))
     Session.set("signature", "");
+  else if (Session.equals("templateChooser","superpacFundraiser"))
+    Session.set("signature", "Becky Bond, President");
   else Session.set('signature', Meteor.user().profile.name + ', Campaign Manager');
   Session.set("footnotes", "");
   Session.set("facebook", "");
