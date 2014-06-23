@@ -270,16 +270,7 @@ Template.composePage.events({
       insertAtCaret('markdown_text',"{% requires\\_value donations.year\\_to\\_date %}${{ donations.year\\_to\\_date }}");
   },
   'click #insertLink': function() {
-      var url = '';
-      switch (Session.get("templateChooser")) {
-        case 'call': url += 'http://act.credoaction.com/call/'; break;
-        case 'mobilize': break; // full url provided by user
-        case 'event': break; // full url provided by user
-        case 'superpacFundraiser': break; // full url provided by user
-        default: url += 'http://act.credoaction.com/sign/'; // petition, take action and public comment
-      }
-      url += Session.get('link').replace(/_/g,'\\_');
-      insertAtCaret('markdown_text','[link](' + url + ')');
+      insertAtCaret('markdown_text','[link](' + Session.get('link').replace(/_/g,'\\_') + ')');
   }
 });
 
