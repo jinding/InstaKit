@@ -67,9 +67,15 @@
 		{{/if}}
 			<button id="buttonMakeEmail" style="background-color:#FF6319;">create email</button>
 		</div>
+		<div class="buttonHeader">
+			<button id="toolTips">markdown help</button>
+			<button id="snippets">ak snippets</button>
+		</div>
 		{{> createPageInputs}}
 	</div>
 	<div id="createPageDisplay">
+		{{#if getValue "toolTips"}} {{> toolTipsText }} {{/if}}
+		{{#if getValue "snippets"}} {{> snippetsText }} {{/if}}
 		{{> createPageDisplay }}
 	</div>
   	<div class="clear"></div>

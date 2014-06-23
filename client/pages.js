@@ -91,6 +91,26 @@ Template.createPage.events({
   'keyup input[type=text], keyup textarea': function() {
     Session.set("pageNotSaved",true);
   },
+  'click #createPageDisplay': function() {
+    Session.set("snippets",false);
+    Session.set("toolTips",false);
+  },
+  'click #toolTips': function() {
+      if (Session.get("toolTips")) {
+        Session.set("toolTips",false);
+      } else {
+        Session.set("toolTips",true);
+        Session.set("snippets",false);
+      }
+  },
+  'click #snippets': function() {
+      if (Session.get("snippets")) {
+        Session.set("snippets",false);
+      } else {
+        Session.set("snippets",true);
+        Session.set("toolTips",false);
+      }
+  },  
   'click #buttonMakeEmail': function() {
     var page = makePageFromSession();
     // save page first then create email
@@ -261,8 +281,130 @@ Template.createPage.events({
   },
   'click #buttonBackToPageList': function() {
     Router.go('pages');    
+  },
+  'click #userCity': function() {
+      insertAtCaret('pageAboutText',"{{ user.city|default:\"your city\" }}");
+  },
+  'click #userStateAbbrev': function() {
+      insertAtCaret('pageAboutText',"{{ user.state|default:\"your state\" }}");
+  },
+  'click #userStateName': function() {
+      insertAtCaret('pageAboutText',"{{ user.state\\_name|default:\"your state\" }}");
+  },
+  'click #userZip': function() {
+      insertAtCaret('pageAboutText',"{{ user.zip }}");
+  },
+  'click #targetAbbrev': function() {
+      insertAtCaret('pageAboutText',"{% requires\\_value targets.title\\_last %}{{ targets.title\\_last }}");
+  },
+  'click #targetFullTitle': function() {
+      insertAtCaret('pageAboutText',"{% requires\\_value targets.title\\_full %}{{ targets.title\\_full }}");
+  },
+  'click #targetFullName': function() {
+      insertAtCaret('pageAboutText',"{% requires\\_value targets.full\\_name %}{{ targets.full\\_name }}");
+  },
+  'click #targetLastName': function() {
+      insertAtCaret('pageAboutText',"{% requires\\_value targets.last %}{{ targets.last }}");
+  },
+  'click #pluralThem': function() {
+      insertAtCaret('pageAboutText',"{% requires\\_value targets.count %}{{ targets.them }}");
+  },
+  'click #pluralThey': function() {
+      insertAtCaret('pageAboutText',"{% requires\\_value targets.they %}{{ targets.they }}");
+  },
+  'click #pluralTheir': function() {
+      insertAtCaret('pageAboutText',"{% requires\\_value targets.their %}{{ targets.their }}");
+  },
+  'click #pluralTheirs': function() {
+      insertAtCaret('pageAboutText',"{% requires\\_value targets.theirs %}{{ targets.theirs }}");
+  },
+  'click #pluralPeople': function() {
+      insertAtCaret('pageAboutText',"{{ targets.count|pluralize:\"person,people\" }}");
+  },
+  'click #pluralS': function() {
+      insertAtCaret('pageAboutText',"{{ targets.s }}");
+  },
+  'click #pluralAre': function() {
+      insertAtCaret('pageAboutText',"{% requires\\_value targets.are %}{{ targets.are }}");
+  },
+  'click #pluralArent': function() {
+      insertAtCaret('pageAboutText',"{% requires\\_value targets.arent %}{{ targets.arent }}");
+  },
+  'click #pluralHave': function() {
+      insertAtCaret('pageAboutText',"{% requires\\_value targets.have %}{{ targets.have }}");
+  },
+  'click #pluralHavent': function() {
+      insertAtCaret('pageAboutText',"{% requires\\_value targets.havent %}{{ targets.havent }}");
+  },
+  'click #pluralDo': function() {
+      insertAtCaret('pageAboutText',"{% requires\\_value targets.do %}{{ targets.do }}");
+  },
+  'click #pluralDont': function() {
+      insertAtCaret('pageAboutText',"{% requires\\_value targets.dont %}{{ targets.dont }}");
+  },
+  'click #pluralWere': function() {
+      insertAtCaret('pageAboutText',"{% requires\\_value targets.were %}{{ targets.were }}");
+  },
+  'click #pluralWerent': function() {
+      insertAtCaret('pageAboutText',"{% requires\\_value targets.werent %}{{ targets.werent }}");
+  },
+  'click #donationsHPC': function() {
+      insertAtCaret('pageAboutText',"{% requires\\_value donations.highest\\_previous %}${{ donations.highest\\_previous }}");
+  },
+  'click #donationsAverage': function() {
+      insertAtCaret('pageAboutText',"{% requires\\_value donations.average %}${{ donations.average }}");
+  },
+  'click #donationsMostRecent': function() {
+      insertAtCaret('pageAboutText',"{% requires\\_value donations.most\\_recent %}${{ donations.most\\_recent }}");
+  },
+  'click #donationsMostRecentDate': function() {
+      insertAtCaret('pageAboutText',"{% requires\\_value donations.most\\_recent\\_date %}${{ donations.most\\_recent\\_date }}");
+  },
+  'click #donationsYTD': function() {
+      insertAtCaret('pageAboutText',"{% requires\\_value donations.year\\_to\\_date %}${{ donations.year\\_to\\_date }}");
+  },
+  'click #insertLink': function() {
+      var url = 'http://act.credoaction.com/sign/' + Session.get('pageName').replace(/_/g,'\\_');
+      insertAtCaret('pageAboutText','[link](' + url + ')');
   }
-});
+}); 
+
+
+function insertAtCaret(areaId,text) {
+    var txtarea = document.getElementById(areaId);
+    var scrollPos = txtarea.scrollTop;
+    var strPos = 0;
+    var br = ((txtarea.selectionStart || txtarea.selectionStart == '0') ? 
+      "ff" : (document.selection ? "ie" : false ) );
+    if (br == "ie") { 
+      txtarea.focus();
+      var range = document.selection.createRange();
+      range.moveStart ('character', -txtarea.value.length);
+      strPos = range.text.length;
+    }
+    else if (br == "ff") strPos = txtarea.selectionStart;
+
+    var front = (txtarea.value).substring(0,strPos);  
+    var back = (txtarea.value).substring(strPos,txtarea.value.length); 
+    var str=front+text+back;
+    txtarea.value=str;
+    Session.set("markdown_data",str);
+    strPos = strPos + text.length;
+    if (br == "ie") { 
+      txtarea.focus();
+      var range = document.selection.createRange();
+      range.moveStart ('character', -txtarea.value.length);
+      range.moveStart ('character', strPos);
+      range.moveEnd ('character', 0);
+      range.select();
+    }
+    else if (br == "ff") {
+      txtarea.selectionStart = strPos;
+      txtarea.selectionEnd = strPos;
+      txtarea.focus();
+    }
+    txtarea.scrollTop = scrollPos;
+}
 
 Template.postAPIpage.events({
   'click #buttonBackToPageList': function() {
