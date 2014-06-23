@@ -59,49 +59,24 @@
 		{{#if getValue "saveDialog"}}{{> saveDialog}}{{/if}}
 		<div id="composeLeft">
 			<div class="buttonHeader">
-			{{#if getValue "emailNotSaved" }}
-				<button id="buttonSave" style="background-color: #01E;">save {{getValue "templateChooser"}} email</button>
-				<button id="buttonBackToFilePage">discard changes</button>
-			{{else}}
-				<button id="buttonBackToFilePage">back to mailings</button>
-			{{/if}}
+				{{#if getValue "emailNotSaved" }}
+					<button id="buttonSave" style="background-color: #01E;">save email</button>
+					<button id="buttonBackToFilePage">discard changes</button>
+				{{else}}
+					<button id="buttonBackToFilePage">back to mailings</button>
+				{{/if}}
+				<button id="buttonDisplay">show {{buttonText}}</button>
+				<button id="toolTips">markdown help</button>
+				<button id="snippets">ak snippets</button>
 			</div>
 			{{> templateOptions }}
 		</div>
-		{{> navBar}}
 		<div id="composeRight">
+			{{#if getValue "toolTips"}} {{> toolTipsText }} {{/if}}
+			{{#if getValue "snippets"}} {{> snippetsText }} {{/if}}
 			{{> display }}
 		</div>
 		<div class="clear"></div>
-	</div>
-</template>
-
-<template name="navBar">
-	<div class="slideout 
-	{{#if getValue "showNavBar"}}
-		{{#if getValue "toolTips"}}open-all
-			{{else}}{{#if getValue "snippets"}}open-all
-				{{else}}open-part
-			{{/if}}{{/if}}
-		{{else}}closed{{/if}}">
-		<div class="composeNavButton">«</div>
-		<div class="composeNav 
-		{{#if getValue "showNavBar"}}
-			{{#if getValue "toolTips"}}open-all toolTips
-			{{else}}{{#if getValue "snippets"}}open-all snippets
-				{{else}}open-part{{/if}}{{/if}}
-		{{else}}closed
-		{{/if}}">
-			<div class="composeNavOptions" id="buttonDisplay">show {{buttonText}}</div>
-			<hr style="width: 40px; margin: 0px; padding: 0px; color: #FFF;">
-			<div class="composeNavOptions" id="toolTips">markdown help
-				{{#if getValue "toolTips"}} {{> toolTipsText }} {{/if}}
-			</div>
-			<hr style="width: 40px; margin: 0px; padding: 0px; color: #FFF;">
-			<div class="composeNavOptions" id="snippets">ak snippets
-				{{#if getValue "snippets"}} {{> snippetsText }} {{/if}}
-			</div>
-		</div>
 	</div>
 </template>
 
@@ -287,6 +262,7 @@
 </template>
 
 <template name="snippetsText">
+  <div class="tipsTextBox">
 	<ul>
 		<li><span class="snippetsText" id="insertLink">page URL</span></li>
 		<li><span class="snippetsText" id="userCity">user city</span></li>
@@ -316,5 +292,6 @@
 		<li><span class="snippetsText" id="donationsMostRecentDate">Donations most recent date</span></li>
 		<li><span class="snippetsText" id="donationsYTD">Donations year to date</span></li>
 	</ul>
+  </div>
 </template>
 
