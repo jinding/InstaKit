@@ -1,4 +1,4 @@
-Template.navBar.buttonText = function() {
+Template.composePage.buttonText = function() {
   return Session.equals("display", "visual") ? "HTML" : "visual";
 };
 
@@ -163,7 +163,7 @@ Template.composePage.events({
   }
 });
 
-Template.navBar.events({
+Template.composePage.events({
   'click #buttonDisplay': function(evt) {
     if (Session.equals("display","visual")) {
       Session.set("display","html");
@@ -171,17 +171,6 @@ Template.navBar.events({
       Session.set("display","visual");  
     }
     evt.preventDefault();
-  },
-  'click .composeNavButton': function() {
-    if (Session.get("showNavBar")) {
-      Session.set("showNavBar",false);
-      Session.set("snippets",false);
-      Session.set("toolTips",false);
-    } else {
-      Session.set("showNavBar",true);
-      Session.set("snippets",false);
-      Session.set("toolTips",false);
-    }
   },
   'click #toolTips': function() {
       if (Session.get("toolTips")) {

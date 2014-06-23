@@ -112,114 +112,55 @@ button.sortButton {
 	border-radius:3px;
 	padding: 0px 1em;
 }
+
 #confirmPopup p, .errorPopup p { color: #fff;}
 .errorPopup { background-color: #D11; width: 300px; text-align: center; font-weight: bold; border: #D11;}
 
 /* COMPOSE PAGE */
 #main { width: 100%; margin: 6px auto; }
-#composeLeft { float: left; width: 550px; margin: 12px 12px 0px 20px; }
-#composeRight { margin-left: 574px; padding: 0px 12px; margin-right: 22px; min-height: 500px;}
+#composeLeft { float: left; width: 650px; margin: 12px 12px 0px 20px; }
+#composeRight { margin-left: 674px; padding: 0px 12px; margin-right: 22px; min-height: 500px;}
 .composePageInputs {
-  width: 550px;
+  width: 650px;
   padding-top: 12px;
   float: left;
 }
 .composePageInputLabel {  width: 106px; float: left; margin: 4px 4px 4px 0px; padding-top: 6px; }
-.composePageInputText { width: 426px; float: right; margin: 4px 4px 4px 0px;}
+.composePageInputText { width: 526px; float: right; margin: 4px 4px 4px 0px;}
 .unchanged { outline: none; box-shadow: 0 0 10px #FF6319; }
 #composeLeft input {
-  width: 416px;     
+  width: 516px;     
   vertical-align: top;
   margin-left: 0px;
 }
-#composeLeft textarea { width: 536px; }
+#composeLeft textarea { width: 636px; }
 
 /* slideout menu */
-
-.slideout {
-  position: fixed;
-  top: 236px; /* 270px; */
-  right: 0px; 
-  -webkit-transition-duration: 0.5s;
-  -moz-transition-duration: 0.5s;
-  -o-transition-duration: 0.5s;
-  transition-duration: 0.5s;
-}
-.composeNavButton {
+.tipsTextBox { 
+	z-index: 1001;
+	position: fixed;
+	left: 680px;
+	margin-left: 0px;
+	top: 18px;
 	margin-top: 0px;
 	background-color: #999;
-	cursor: default;	
-	-moz-border-radius:3px 0px 0px 3px;
-	-webkit-border-radius: 3px 0px 0px 3px;
-	border-radius:3px 0px 0px 3px;
-	z-index: 101;
-	color: #FFF;
-	text-align: center;
-	padding-top: 22px;
-	width: 38px; /* 28px; */
-	height:50px;
-	font-size: 20px;
-	opacity: 0.95;
-	-webkit-transition-duration: 0.5s;
-	-moz-transition-duration: 0.5s;
-	-o-transition-duration: 0.5s;
-	transition-duration: 0.5s;
-}
-.composeNav {
-	position: fixed;
-	top: 206px;
-	right: -142px; /* -282 */
-	-webkit-transition-duration: 0.5s;
-	-moz-transition-duration: 0.5s;
-	-o-transition-duration: 0.5s;
-	transition-duration: 0.5s;
-	width: 110px; /* 250 */ 
-	margin: 0px;
-	padding: 8px 12px 8px 20px;
-	color: #FFF;
-	background-color: #999;
-	cursor: default;	
-	-moz-border-radius: 6px 0px 0px 6px;
-	-webkit-border-radius: 6px 0px 0px 6px;
-	border-radius: 6px 0px 0px 6px;
-	z-index: 100;
-	opacity: 0.95;
-}
-.composeNav ul {
-	list-style-type: circle;
-	padding: 0px;
-	margin: 0px 0px 0px 18px;
-}
-.composeNav li {
-	padding: 5px 0px 0px 0px; 
-	cursor: pointer;
-}
-.composeNavOptions {
-	margin: 10px auto;
-	cursor: pointer;
+	color: #fff;
+	border: solid 3px #999999;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	border-radius:3px;
+	padding: 0px 1em;
 }
 
-.slideout.open-part, .slideout.open-all { transform: translateX(0px);}
-.slideout.open-part { width: 180px; }
-.slideout.open-all { width: 320px; }
-.slideout.closed { top: 236px; right: 0px; }
-.composeNav.closed { right: -142; width: 110px; }
-.composeNav.open-part { right: 0px; width: 110px; }
-.composeNav.open-all { right: 0px; width: 250px; }
-
-.composeNav.open-all.toolTips { top: 108px;}
-.composeNav.open-all.snippets { top: 6px;}
-
-
-#display { }
 .clear { clear: both; }
 .snippetsText { text-decoration: underline; cursor: default; }
 
 /* display */
+#display { }
 #display table, #display td, #display p {
 	color:#4a4744;
 	font-size:13px;
-	line-height:18px;
+	line-height:150%;
 	font-family:arial,helvetica,sans-serif;
 	text-align:left;
 	padding: 0px;
