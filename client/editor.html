@@ -32,7 +32,7 @@
 			</tr>
 		{{#each fileList}}
 			<tr>
-				<td><a href="{{ pathFor 'compose' }}" class="editButton">[{{notes}}]{{#if headline}}{{headline}}{{else}}{{pageTitle}}{{/if}}</a></td>
+				<td><a href="{{ pathFor 'compose' }}" class="editButton">{{#if notes}}<em>{{notes}}</em> | {{/if}}{{#if headline}}{{headline}}{{else}}{{pageTitle}}{{/if}}</a></td>
 				<td>{{type}}</td>
 				<td>{{creator}}</td>
 				<td>{{savedBy}}</td>
