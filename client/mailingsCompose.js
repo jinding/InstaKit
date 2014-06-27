@@ -2,6 +2,12 @@ Template.composePage.buttonText = function() {
   return Session.equals("display", "visual") ? "HTML" : "visual";
 };
 
+Template.notes.events({
+  'keyup input[type=text]': function() {
+    Session.set("notes", $('#notes_text').val());
+  }
+});
+
 Template.headline.events({
   'keyup input[type=text]': function() {
     Session.set("headline", $('#headline_text').val());
@@ -85,6 +91,7 @@ function makeEmailFromSession() {
   return {
     id: Session.get("id"),
     type: Session.get("templateChooser"),
+    notes: Session.get("notes"),
     headline: Session.get("headline"),
     topper: Session.get("topper"),
     statement_leadin: Session.get("statement_leadin"),

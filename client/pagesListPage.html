@@ -27,7 +27,7 @@
 			</tr>
 		{{#each fileList}}
 			<tr>
-				<td><a href="{{ pathFor 'createPage' }}" class="editButton">{{pageTitle}}</a></td>
+				<td><a href="{{ pathFor 'createPage' }}" class="editButton">[{{notes}}] {{pageTitle}}</a></td>
 				<td>{{pageType}}</td>
 				<td>{{creator}}</td>
 				<td>{{savedBy}}</td>
@@ -97,6 +97,7 @@
 </template>
 
 <template name="createPageInputs">
+	{{> templatePageNotes }}
 	{{> templatePageTitle }}
 	{{> templatePageName }}
 	{{> templatePageStatement }}

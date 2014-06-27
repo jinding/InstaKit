@@ -26,6 +26,7 @@ function removeCurlyQuotes(str) { // replace single and double curly quotes with
 function setSessionVars() {
   var converter = new Showdown.converter();
   Session.set("pageTitle", $('#pageTitle').val());
+  Session.set("notes", $('#pageNotes').val());
   Session.set("pageName", $('#pageName').val());
   Session.set("pageStatementLeadIn", $('#pageStatementLeadIn').val());
   Session.set("pageImportStatementLeadIn", converter.makeHtml(Session.get("pageStatementLeadIn")));
@@ -57,6 +58,7 @@ function makePageFromSession() {
     id: Session.get("id"),
     type: 'page',
     pageType: Session.get('templateChooser'),
+    notes: Session.get("notes"),
     pageTitle: Session.get("pageTitle"),
     pageName: Session.get("pageName"),
     pageStatementLeadIn: Session.get("pageStatementLeadIn"),

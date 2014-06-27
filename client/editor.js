@@ -80,6 +80,7 @@ function setSessionVarsForEmail(obj) {
   Session.set("markdown_data", obj.markdown_data);
   Session.set("templateChooser", obj.type);
   Session.set("topper", obj.topper);
+  Session.set("notes", obj.notes);
   Session.set("headline", obj.headline);
   Session.set("statement_leadin", obj.statement_leadin);
   Session.set("petition", obj.petition);
@@ -99,6 +100,7 @@ function setSessionVarsForNewEmail() {
   // clear the other email session data
   Session.set("markdown_data", "");
   Session.set("topper", "");
+  Session.set("notes", "");
   Session.set("headline", "");
   Session.set("statement_leadin", "");
   Session.set("petition", "");
@@ -121,6 +123,7 @@ function setSessionVarsForEmailFromPage(obj) {
   if (obj.pageType === 'letter')
     Session.set('templateChooser', 'takeaction')
   else Session.set("templateChooser", obj.pageType);
+  Session.set("notes", obj.notes);
   Session.set("headline", obj.pageTitle);
   Session.set("statement_leadin", obj.pageStatementLeadIn);
   Session.set("petition", obj.pageStatementText);
@@ -146,6 +149,7 @@ function setSessionVarsForPage(obj) {
   Session.set("type", obj.type);
   Session.set("pageType", obj.pageType);
   Session.set('templateChooser', obj.pageType);
+  Session.set("notes", obj.notes);
   Session.set("pageTitle", obj.pageTitle);
   Session.set("pageName", obj.pageName);
   Session.set("pageStatementLeadIn", obj.pageStatementLeadIn);
@@ -175,6 +179,7 @@ function setSessionVarsForNewPage() {
   // template type is set in the link event handler so not necessary here
   // clear the other email session data
   Session.set("type", "page");
+  Session.set("notes", "");
   Session.set("pageTitle", "");
   Session.set("pageName", "");
   Session.set("pageStatementLeadIn", "");
