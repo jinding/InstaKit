@@ -129,9 +129,13 @@ function setSessionVarsForEmailFromPage(obj) {
   Session.set("petition", obj.pageStatementText);
   Session.set("link", obj.AKpageURL);
   Session.set("graphic", obj.pageGraphicEmail);
+  Session.set("graphic_alt_text", "");
+  Session.set("footnotes", "");
   Session.set('signature', Meteor.user().profile.name + ', Campaign Manager');
+  Session.set("facebook", "");
   var twitter = obj.pageTwitterCopy.replace(/{ *LINK *}/i, obj.AKpageBitly);
   Session.set("twitter", 'https://twitter.com/intent/tweet?&text='+encodeURIComponent(twitter));
+  Session.set("creator", Meteor.user().profile.name);
 }
 
 function initSessionVarsForCompose() {
