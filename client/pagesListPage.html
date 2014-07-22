@@ -8,6 +8,7 @@
 		<ul>
 			<li id="templateChooser_petition"><a href="{{ pathFor 'createPage' template='petition' }}">petition</a></li>
 			<li id="templateChooser_letter"><a href="{{ pathFor 'createPage' template='letter' }}">letter</a></li>
+			<li id="templateChooser_event"><a href="{{ pathFor 'createPage' template='event' }}">event</a></li>
 		</ul>
 		<hr style="color: #FFF; margin-top: 40px;">
 		<p><a href="{{ pathFor 'mailings' }}" id="returnFilePage">mailings</a></p>
@@ -51,49 +52,53 @@
 
 <!-- compose page templates -->
 <template name="createPage">
-  <div id="createPage">
-	<div class="createPageInputs">
-		<div class="buttonHeader">
-		{{#if getValue "pageNotSaved" }}
-			<button id="buttonSavePage" style="background-color: #01E;">save page</button>
-			<button id="buttonBackToPageList">discard changes</button>
-		{{else}}
-			<button id="buttonBackToPageList">back to pages</button>
-		{{/if}}
-		{{#if getValue 'AKpageID' }}
-			<button id="buttonAPIupdate">update AK page</button>
-		{{else}}
-			<button id="buttonAPI">push to AK</button>
-		{{/if}}
-			<button id="buttonMakeEmail" style="background-color:#FF6319;">create email</button>
+	{{#if wrapperStyle "event"}}
+		{{> createEvent }}
+	{{ else }}
+		<div id="createPage">
+			<div class="createPageInputs">
+				<div class="buttonHeader">
+				{{#if getValue "pageNotSaved" }}
+					<button id="buttonSavePage" style="background-color: #01E;">save page</button>
+					<button id="buttonBackToPageList">discard changes</button>
+				{{else}}
+					<button id="buttonBackToPageList">back to pages</button>
+				{{/if}}
+				{{#if getValue 'AKpageID' }}
+					<button id="buttonAPIupdate">update AK page</button>
+				{{else}}
+					<button id="buttonAPI">push to AK</button>
+				{{/if}}
+					<button id="buttonMakeEmail" style="background-color:#FF6319;">create email</button>
+				</div>
+				<div class="buttonHeader">
+					<button id="toolTips">markdown help</button>
+					<button id="snippets">ak snippets</button>
+				</div>
+				{{> createPageInputs}}
+			</div>
+			<div id="createPageDisplay">
+				{{#if getValue "toolTips"}} {{> toolTipsText }} {{/if}}
+				{{#if getValue "snippets"}} {{> snippetsText }} {{/if}}
+				{{> createPageDisplay }}
+			</div>
+		  	<div class="clear"></div>
+			{{#if getValue "apiError"}}
+				<div class="errorPopup">
+					<p>ERROR</p>
+					<p>{{getValue "apiError"}}</p>
+					<button class="buttonAPIok" style="background-color: #01E;">ok</button>
+		  		</div>
+		  	{{else}} {{#if getValue "apiSuccess"}}
+				<div class="errorPopup" style="background-color: #13D333;">
+					<p>SUCCESS</p>
+					<p>{{getValue "apiSuccess"}}</p>
+					<button class="buttonAPIok" style="background-color: #01E;">ok</button>
+		  		</div>
+			{{/if}}
+		  	{{/if}}
 		</div>
-		<div class="buttonHeader">
-			<button id="toolTips">markdown help</button>
-			<button id="snippets">ak snippets</button>
-		</div>
-		{{> createPageInputs}}
-	</div>
-	<div id="createPageDisplay">
-		{{#if getValue "toolTips"}} {{> toolTipsText }} {{/if}}
-		{{#if getValue "snippets"}} {{> snippetsText }} {{/if}}
-		{{> createPageDisplay }}
-	</div>
-  	<div class="clear"></div>
-	{{#if getValue "apiError"}}
-		<div class="errorPopup">
-			<p>ERROR</p>
-			<p>{{getValue "apiError"}}</p>
-			<button class="buttonAPIok" style="background-color: #01E;">ok</button>
-  		</div>
-  	{{else}} {{#if getValue "apiSuccess"}}
-		<div class="errorPopup" style="background-color: #13D333;">
-			<p>SUCCESS</p>
-			<p>{{getValue "apiSuccess"}}</p>
-			<button class="buttonAPIok" style="background-color: #01E;">ok</button>
-  		</div>
 	{{/if}}
-  	{{/if}}
-  </div>
 </template>
 
 <template name="createPageInputs">

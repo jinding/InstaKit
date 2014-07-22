@@ -434,6 +434,81 @@ Meteor.methods({
         else
         	throw new Meteor.Error(500, "Unknown error updating page", e.response.data);
 	}
+  },
+  eventCreateUmbrella: function(eventUmbrella) {
+  	try {
+  		// REMEMBER TO CHANGE THIS BACK TO CREDO FROM ROBOTIC DOGS AND USER AUTH
+  		var createEventUmbrella = HTTP.call("POST", "https://roboticdogs.actionkit.com/rest/v1/campaign/",
+	  						 {auth: 'jin:maddy78',
+	  						  headers: {'Content-type': 'application/json'},
+	                          data: {
+	                      			name: eventUmbrella.pageName,
+	                      			title: eventUmbrella.pageTitle,
+	                      			default_event_size: eventUmbrella.eventDefaultSize,
+	                      			max_event_size: eventUmbrella.eventMaxSize,
+	                      			default_title: eventUmbrella.eventDefaultTitle,
+	                      			starts_at: eventUmbrella.eventStartDate + " " + eventUmbrella.eventStartTime
+	                      		} // end data
+	                      });
+  		console.log(createEventUmbrella.headers.location);
+   		return createEventUmbrella.headers.location;
+
+  	} catch (e) {
+		console.log(e.response);
+		if (e.response.statusCode && e.response.statusCode === 400)
+			if (e.response.data && e.response.data.petitionpage && e.response.data.petitionpage.name[0])
+	        	throw new Meteor.Error(e.response.statusCode, e.response.data.petitionpage.name[0], e.response);
+	        else throw new Meteor.Error(e.response.statusCode, e.response.content, e.response);
+        else
+        	throw new Meteor.Error(500, "Unknown error creating event umbrella", e.response.data);
+
+  	}
+  },
+  eventCreateHostPage: function(loc, eventUmbrella) {
+  	try {
+  		// REMEMBER TO CHANGE THIS BACK TO CREDO FROM ROBOTIC DOGS AND USER AUTH
+  		var AK = HTTP.call('GET', loc, {auth: 'jin:maddy78'}).data;
+
+  		console.log(AK.resource_uri);
+  		
+  		// REMEMBER TO CHANGE THIS BACK TO CREDO FROM ROBOTIC DOGS AND USER AUTH
+  		var createEventHostPage = HTTP.call("POST", "https://roboticdogs.actionkit.com/rest/v1/eventcreatepage/",
+	  						 {auth: 'jin:maddy78',
+	  						  headers: {'Content-type': 'application/json'},
+	                          data: {
+	                          		campaign: AK.resource_uri,
+	                          		list: "/rest/v1/campaign/1/",
+	                      			name: eventUmbrella.pageName + "_host",
+	                      			title: eventUmbrella.pageTitle + " - Host",
+	                      			required_fields: [
+	                      			 	{   id: 2,
+											name: 'zip',
+											resource_uri: '/rest/v1/formfield/2/'},
+										{   id: 3,
+										    name: 'address1',
+										    resource_uri: '/rest/v1/formfield/3/'},
+										{   id: 6,
+										    name: 'first_name',
+										    resource_uri: '/rest/v1/formfield/6/'},
+										{   id: 7,
+										    name: 'last_name',
+										    resource_uri: '/rest/v1/formfield/7/'}
+									], // end required_fields
+	                      		} // end data
+	                      });
+  		console.log(createEventHostPage.headers.location);
+ 		return createEventHostPage.headers.location;
+
+  	} catch (e) {
+		console.log(e.response);
+		if (e.response.statusCode && e.response.statusCode === 400)
+			if (e.response.data && e.response.data.petitionpage && e.response.data.petitionpage.name[0])
+	        	throw new Meteor.Error(e.response.statusCode, e.response.data.petitionpage.name[0], e.response);
+	        else throw new Meteor.Error(e.response.statusCode, e.response.content, e.response);
+        else
+        	throw new Meteor.Error(500, "Unknown error creating event umbrella", e.response.data);
+
+  	}
   }
 });
 

@@ -177,6 +177,14 @@ function setSessionVarsForPage(obj) {
   Session.set('pageSharePageLink', obj.pageSharePageLink);
   Session.set('AKpageID',obj.AKpageID);
   Session.set('AKpageResourceURI', obj.AKpageResourceURI);
+
+  // event variables
+  Session.set("eventDefaultTitle", obj.eventDefaultTitle);
+  Session.set("eventDefaultSize", obj.eventDefaultSize);
+  Session.set("eventMaxSize", obj.eventMaxSize);
+  Session.set("eventStartDate", obj.eventStartDate);
+  Session.set("eventStartTime", obj.eventStartTime);
+
 }
 
 function setSessionVarsForNewPage() {
@@ -206,6 +214,15 @@ function setSessionVarsForNewPage() {
   Session.set('pageSharePageLink', "");
   Session.set('AKpageID',"");
   Session.set('AKpageResourceURI', "");
+}
+
+function setSessionVarsForNewEvent() {
+  // additional variables to be initialized for new events
+  Session.set("eventDefaultTitle", "");
+  Session.set("eventDefaultSize", "");
+  Session.set("eventMaxSize", "");
+  Session.set("eventStartDate", "");
+  Session.set("eventStartTime", "");
 }
 
 function initSessionVarsForPageCompose() {
@@ -303,6 +320,7 @@ Router.map(function () {
         // default to petition page type if no query parameter for template set
         Session.set('templateChooser', this.params.template || 'petition');
         setSessionVarsForNewPage();
+        if (this.params.template == 'event') { setSessionVarsForNewEvent(); }
       } 
       initSessionVarsForPageCompose();
     }
