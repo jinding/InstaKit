@@ -496,8 +496,19 @@ Meteor.methods({
 									], // end required_fields
 	                      		} // end data
 	                      });
-  		console.log(createEventHostPage.headers.location);
- 		return createEventHostPage.headers.location;
+  		console.log("eventHost URL " + createEventHostPage.headers.location);
+ 		var eventHostURL = HTTP.call('GET', createEventHostPage.headers.location, {auth: 'jin:maddy78'}).data;
+  		var createEventHostForm = HTTP.call("POST", "https://roboticdogs.actionkit.com/rest/v1/eventcreateform/",
+	  						 {auth: 'jin:maddy78',
+	  						  headers: {'Content-type': 'application/json'},
+	                          data: {
+	                          		page: eventHostURL.resource_uri,
+	                          		thank_you_text: "Thanks for hosting"
+	                      		} // end data
+	                      });
+  		console.log("eventHostForm URL " + createEventHostForm.headers.location);
+
+ 		return createEventHostPage.headers.location + " " + createEventHostForm.headers.location;
 
   	} catch (e) {
 		console.log(e.response);
@@ -507,6 +518,55 @@ Meteor.methods({
 	        else throw new Meteor.Error(e.response.statusCode, e.response.content, e.response);
         else
         	throw new Meteor.Error(500, "Unknown error creating event umbrella", e.response.data);
+
+  	}
+  },
+  eventCreateSubEvent: function(subEvent) {
+  	try {
+  		// REMEMBER TO CHANGE THIS BACK TO CREDO FROM ROBOTIC DOGS AND USER AUTH
+  		var AK = HTTP.call('GET', subEvent.eventUmbrellaCampaignURL, {auth: 'jin:maddy78'}).data;
+
+  		console.log(AK.resource_uri);
+  		console.log('https://roboticdogs.actionkit.com/rest/v1/user/?email=' + subEvent.subEventHostEmail);
+
+		var host = HTTP.call('GET', 
+			'https://roboticdogs.actionkit.com/rest/v1/user/?email=' + subEvent.subEventHostEmail,
+			{auth: 'jin:maddy78'}).data;
+		console.log(host.objects[0].resource_uri);  
+
+  		// REMEMBER TO CHANGE THIS BACK TO CREDO FROM ROBOTIC DOGS AND USER AUTH
+  		var createSubEvent = HTTP.call("POST", "https://roboticdogs.actionkit.com/rest/v1/event/",
+	  						 {auth: 'jin:maddy78',
+	  						  headers: {'Content-type': 'application/json'},
+	                          data: {
+	                          		campaign: AK.resource_uri,
+	                          		creator: host.objects[0].resource_uri,
+	                      			title: subEvent.subEventTitle,
+	                      			max_attendees: subEvent.subEventMaxAttendees,
+	                      			venue: subEvent.subEventVenue,
+	                      			directions: subEvent.subEventDirections,
+	                      			public_description: subEvent.subEventPublicDescription,
+	                      			note_to_attendees: subEvent.subEventNoteToAttendees,
+	                      			starts_at: subEvent.subEventStartsAt,
+	                      			address1: subEvent.subEventAddress1,
+	                      			address2: subEvent.subEventAddress2,
+	                      			city: subEvent.subEventCity,
+	                      			state: subEvent.subEventState,
+	                      			zip: subEvent.subEventZip,
+	                      			host_is_confirmed: "true"
+	                      		} // end data
+	                      });
+  		console.log(createSubEvent.headers.location);
+ 		return createSubEvent.headers.location;
+
+  	} catch (e) {
+		console.log(e.response);
+		if (e.response.statusCode && e.response.statusCode === 400)
+			if (e.response.data && e.response.data.petitionpage && e.response.data.petitionpage.name[0])
+	        	throw new Meteor.Error(e.response.statusCode, e.response.data.petitionpage.name[0], e.response);
+	        else throw new Meteor.Error(e.response.statusCode, e.response.content, e.response);
+        else
+        	throw new Meteor.Error(500, "Unknown error creating sub event", e.response.data);
 
   	}
   }

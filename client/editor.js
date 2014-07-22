@@ -340,6 +340,15 @@ Router.map(function () {
     }
   });
 
+  this.route('createSubEvents', {
+    path: '/pages/createSubEvents/:_id?',
+    template: 'createSubEvents',
+    onBeforeAction: function() {
+      var eventUmbrella = Files.findOne(this.params._id);
+      console.log('hello');
+    }
+  })
+
 });
 
 // this hook will run on almost all routes

@@ -287,5 +287,10 @@ button.sortButton {
 .bodytext textarea { width: 484px;}
 .bodytext input { width: 415px; vertical-align: middle; }
  
+.bodytext_desc.event { width: 165px; }
+.taf_copy.event input { width: 415px; }
 
+/* events */
+
+#subEventForm { border: 2px gray solid; border-radius: 2px; width:700px; margin: 0px auto; padding: 10px 12px;}
 
