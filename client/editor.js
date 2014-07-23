@@ -245,6 +245,7 @@ function setSessionVarsForNewSubEvent(obj) {
   Session.set("subEventDirections", "");
   Session.set("subEventPublicDescription", "");
   Session.set("subEventNoteToAttendees", "");
+  Session.set("subEventCreatedMsg","");
 }
 
 function initSessionVarsForPageCompose() {
