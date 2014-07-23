@@ -438,8 +438,8 @@ Meteor.methods({
   eventCreateUmbrella: function(eventUmbrella) {
   	try {
   		// REMEMBER TO CHANGE THIS BACK TO CREDO FROM ROBOTIC DOGS AND USER AUTH
-  		var createEventUmbrella = HTTP.call("POST", "https://roboticdogs.actionkit.com/rest/v1/campaign/",
-	  						 {auth: 'jin:maddy78',
+  		var createEventUmbrella = HTTP.call("POST", "https://act.credoaction.com/rest/v1/campaign/",
+	  						 {auth: 'meteor:dingbergalis',
 	  						  headers: {'Content-type': 'application/json'},
 	                          data: {
 	                      			name: eventUmbrella.pageName,
@@ -467,13 +467,13 @@ Meteor.methods({
   eventCreateHostPage: function(loc, eventUmbrella) {
   	try {
    		// REMEMBER TO CHANGE THIS BACK TO CREDO FROM ROBOTIC DOGS AND USER AUTH
-  		var eventUmbrellaURI = loc.replace('https://roboticdogs.actionkit.com','');
+  		var eventUmbrellaURI = loc.replace('https://act.credoaction.com','');
 
   		console.log(eventUmbrellaURI);
 
   		// REMEMBER TO CHANGE THIS BACK TO CREDO FROM ROBOTIC DOGS AND USER AUTH
-  		var createEventHostPage = HTTP.call("POST", "https://roboticdogs.actionkit.com/rest/v1/eventcreatepage/",
-	  						 {auth: 'jin:maddy78',
+  		var createEventHostPage = HTTP.call("POST", "https://act.credoaction.com/rest/v1/eventcreatepage/",
+	  						 {auth: 'meteor:dingbergalis',
 	  						  headers: {'Content-type': 'application/json'},
 	                          data: {
 	                          		campaign: eventUmbrellaURI,
@@ -497,9 +497,9 @@ Meteor.methods({
 	                      		} // end data
 	                      });
   		console.log("eventHost URL " + createEventHostPage.headers.location);
- 		var eventHostURL = createEventHostPage.headers.location.replace('https://roboticdogs.actionkit.com','');
-  		var createEventHostForm = HTTP.call("POST", "https://roboticdogs.actionkit.com/rest/v1/eventcreateform/",
-	  						 {auth: 'jin:maddy78',
+ 		var eventHostURL = createEventHostPage.headers.location.replace('https://act.credoaction.com','');
+  		var createEventHostForm = HTTP.call("POST", "https://act.credoaction.com/rest/v1/eventcreateform/",
+	  						 {auth: 'meteor:dingbergalis',
 	  						  headers: {'Content-type': 'application/json'},
 	                          data: {
 	                          		page: eventHostURL,
@@ -524,13 +524,13 @@ Meteor.methods({
   eventCreateSignupPage: function(eventUmbrella) {
  	try {
    		// REMEMBER TO CHANGE THIS BACK TO CREDO FROM ROBOTIC DOGS AND USER AUTH
-  		var eventUmbrellaURI = eventUmbrella.eventUmbrellaCampaignURL.replace('https://roboticdogs.actionkit.com','');
+  		var eventUmbrellaURI = eventUmbrella.eventUmbrellaCampaignURL.replace('https://act.credoaction.com','');
 
   		console.log(eventUmbrellaURI);
   		
   		// REMEMBER TO CHANGE THIS BACK TO CREDO FROM ROBOTIC DOGS AND USER AUTH
-  		var createEventSignupPage = HTTP.call("POST", "https://roboticdogs.actionkit.com/rest/v1/eventsignuppage/",
-	  						 {auth: 'jin:maddy78',
+  		var createEventSignupPage = HTTP.call("POST", "https://act.credoaction.com/rest/v1/eventsignuppage/",
+	  						 {auth: 'meteor:dingbergalis',
 	  						  headers: {'Content-type': 'application/json'},
 	                          data: {
 	                          		campaign: eventUmbrellaURI,
@@ -554,9 +554,9 @@ Meteor.methods({
 	                      		} // end data
 	                      });
   		console.log("eventSignup URL " + createEventSignupPage.headers.location);
-  		var eventSignupURL = createEventSignupPage.headers.location.replace('https://roboticdogs.actionkit.com','');
-  		var createEventSignupForm = HTTP.call("POST", "https://roboticdogs.actionkit.com/rest/v1/eventsignupform/",
-	  						 {auth: 'jin:maddy78',
+  		var eventSignupURL = createEventSignupPage.headers.location.replace('https://act.credoaction.com','');
+  		var createEventSignupForm = HTTP.call("POST", "https://act.credoaction.com/rest/v1/eventsignupform/",
+	  						 {auth: 'meteor:dingbergalis',
 	  						  headers: {'Content-type': 'application/json'},
 	                          data: {
 	                          		page: eventSignupURL,
@@ -582,17 +582,17 @@ Meteor.methods({
   eventCreateSubEvent: function(subEvent) {
   	try {
   		// REMEMBER TO CHANGE THIS BACK TO CREDO FROM ROBOTIC DOGS AND USER AUTH
-  		var eventUmbrellaURI = subEvent.eventUmbrellaCampaignURL.replace('https://roboticdogs.actionkit.com','');
+  		var eventUmbrellaURI = subEvent.eventUmbrellaCampaignURL.replace('https://act.credoaction.com','');
 
 		var host = HTTP.call('GET', 
-			'https://roboticdogs.actionkit.com/rest/v1/user/?email=' + subEvent.subEventHostEmail,
-			{auth: 'jin:maddy78'}).data;
+			'https://act.credoaction.com/rest/v1/user/?email=' + subEvent.subEventHostEmail,
+			{auth: 'meteor:dingbergalis'}).data;
 
 		console.log(host.objects[0].resource_uri);  
 
   		// REMEMBER TO CHANGE THIS BACK TO CREDO FROM ROBOTIC DOGS AND USER AUTH
-  		var createSubEvent = HTTP.call("POST", "https://roboticdogs.actionkit.com/rest/v1/event/",
-	  						 {auth: 'jin:maddy78',
+  		var createSubEvent = HTTP.call("POST", "https://act.credoaction.com/rest/v1/event/",
+	  						 {auth: 'meteor:dingbergalis',
 	  						  headers: {'Content-type': 'application/json'},
 	                          data: {
 	                          		campaign: eventUmbrellaURI,
@@ -613,15 +613,15 @@ Meteor.methods({
 	                      		} // end data
 	                      });
   		console.log(createSubEvent.headers.location);
-  		console.log('event: ' + createSubEvent.headers.location.replace('https://roboticdogs.actionkit.com',''));
-  		console.log('page: ' + subEvent.eventUmbrellaHostURL.replace('https://roboticdogs.actionkit.com',''));
+  		console.log('event: ' + createSubEvent.headers.location.replace('https://act.credoaction.com',''));
+  		console.log('page: ' + subEvent.eventUmbrellaHostURL.replace('https://act.credoaction.com',''));
 
-  		var createHostSignup = HTTP.call("POST", "https://roboticdogs.actionkit.com/rest/v1/eventsignup/",
-	  						 {auth: 'jin:maddy78',
+  		var createHostSignup = HTTP.call("POST", "https://act.credoaction.com/rest/v1/eventsignup/",
+	  						 {auth: 'meteor:dingbergalis',
 	  						  headers: {'Content-type': 'application/json'},
 	                          data: {
-	                          		event: createSubEvent.headers.location.replace('https://roboticdogs.actionkit.com',''),
-	                          		page: subEvent.eventUmbrellaHostURL.replace('https://roboticdogs.actionkit.com',''),
+	                          		event: createSubEvent.headers.location.replace('https://act.credoaction.com',''),
+	                          		page: subEvent.eventUmbrellaHostURL.replace('https://act.credoaction.com',''),
 	                          		role: "host",
 	                          		status: "active",
 	                          		user: host.objects[0].resource_uri

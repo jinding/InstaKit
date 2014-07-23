@@ -227,6 +227,7 @@ function setSessionVarsForNewEvent() {
   Session.set("eventStartTime", "");
   Session.set("eventUmbrellaCampaignURL", "");
   Session.set("eventUmbrellaHostURL", "");
+  Session.set("eventUmbrellaSignupPageURL", "");
   Session.set('subEventCreatedMsg', "");
 }
 
@@ -338,6 +339,7 @@ Router.map(function () {
         Session.set('AKpageResourceURI', "");
         Session.set("eventUmbrellaCampaignURL", "");
         Session.set("eventUmbrellaHostURL", "");
+        Session.set("eventUmbrellaSignupPageURL", "");
         Session.set('subEventCreatedMsg', "");
       } else {
         Session.set("newPage", true);

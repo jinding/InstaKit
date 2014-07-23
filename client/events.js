@@ -97,9 +97,12 @@ Template.createEvent.events({
       if (err) {
         Session.set('saveError', err.error);
       } else {
-        console.log('page saved: ' + res.id);
-        console.log(this._id);
-        Session.set('id', this._id);
+        console.log('upsert id ' + res.insertedId);
+        if (!Session.get('id')) { 
+          Session.set('id', res.insertedId); 
+          eventUmbrella = makeEventUmbrellaFromSession();
+          console.log('event page id ' + eventUmbrella.id);
+        }
         Session.set("pageNotSaved",false);
         Session.set("saveDialog",false);
         if (goodEventUmbrellaFields(eventUmbrella)) {
@@ -108,12 +111,13 @@ Template.createEvent.events({
                 Session.set('apiError', err2.reason);
             } else {
                 console.log('event umbrella created successfully');
-                console.log(res2);
+                console.log('eventUmbrellaCampaignURL: ', res2);
                 Session.set('eventUmbrellaCampaignURL', res2);
                 Meteor.call('eventCreateHostPage', res2, eventUmbrella, function (err3, res3) {
                   if (err3) {
                       Session.set('apiError', err3.reason);
                   } else {
+                    console.log('eventUmbrellaHostURL: ', res3);
                     Session.set('eventUmbrellaHostURL', res3);
                     console.log("Event host page created successfully");
                     eventUmbrella = makeEventUmbrellaFromSession();
@@ -122,6 +126,7 @@ Template.createEvent.events({
                           Session.set('apiError', err4.reason);
                       } else {
                         Session.set('eventUmbrellaSignupPageURL', res4);
+                        console.log('eventUmbrellaSignupPageURL: ', res4);
                         console.log('Event signup page created successfully');
                         eventUmbrella = makeEventUmbrellaFromSession();
                         Meteor.call('saveFile', eventUmbrella, function (err5, res5) {
