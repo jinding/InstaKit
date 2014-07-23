@@ -35,7 +35,8 @@
 				<td style="min-width: 115px;">{{prettifyDate when}}</td>
 				<td style="padding-right:0px;"><input type="button" name="copyButton" class="copyButton tableButton" value="copy" style="background-color:#13D333;"></td>
 				<td style="padding-right:0px;">{{#if belongsToUser creator }}<input type="button" name="deleteButton" class="deleteButton tableButton" value="delete" style="background-color:#FF0000;">{{else}}{{#if isAdmin}}<input type="button" name="deleteButton" class="deleteButton tableButton" value="admin delete">{{/if}}{{/if}}</td>
-				<td style="padding-right:0px;">{{#if AKpageID}}<input type="button" name="apiButton" class="apiButton tableButton" value="created page info" >{{/if}}</td>
+				<td style="padding-right:0px;">{{#if eventUmbrellaCampaignURL }}<input type="button" name="createSubEventButton" class="createSubEventButton tableButton" value="create sub events">
+					{{else}}{{#if AKpageID}}<input type="button" name="apiButton" class="apiButton tableButton" value="created page info" >{{/if}}{{/if}}</td>
 				<td style="padding-right:0px;"><input type="button" name="emailButton" class="emailButton tableButton" value="new email" style="background-color:#FF6319;" ></td>
 			</tr>
 		{{/each}}

@@ -84,6 +84,9 @@ Template.createEvent.events({
       }
     });
   },
+  'click #buttonEventCreateSubEvents': function() {
+    Router.go('createSubEvents', {_id: Session.get('id')});
+  },
   'click .buttonErrorOK': function() {
     Session.set('apiError',"");
     Session.set('apiSuccess',"");

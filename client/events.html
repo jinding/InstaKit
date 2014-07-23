@@ -1,31 +1,39 @@
 <template name="createEvent">
 	<div id="createPage">
-		<h1>Step 1: Create the umbrella event page in AK</h1>
-		{{> templatePageNotes }}
-		{{> templatePageTitle }}
-		{{> templatePageName }}
-		{{> templateEventDefaultTitle }}
-		{{> templateEventDefaultSize }}
-		{{> templateEventMaxSize }}
-		{{> templateEventStartDate }}
-		{{> templateEventStartTime }}
-		<button id="buttonEventBackToPages">Back to pages</button>
-		<button id="buttonEventSaveEventUmbrella">Save</button>
-		<button id="buttonEventCreateUmbrella">Next</button>
-  		<div class="clear"></div>
-		{{#if getValue "apiError"}}
-			<div class="errorPopup">
-				<p>ERROR</p>
-				<p>{{getValue "apiError"}}</p>
-				<button class="buttonErrorOK" style="background-color: #01E;">ok</button>
-	  		</div>
-	  	{{else}} {{#if getValue "apiSuccess"}}
-			<div class="errorPopup" style="background-color: #13D333;">
-				<p>SUCCESS</p>
-				<p>{{getValue "apiSuccess"}}</p>
-				<button class="buttonErrorOK" style="background-color: #01E;">ok</button>
-	  		</div>
-		{{/if}} {{/if}}
+		{{#if getValue "eventUmbrellaCampaignURL" }}
+			<div class="eventMsgBox">
+				This event umbrella campaign has already been created.
+			</div>
+			<button id="buttonEventBackToPages">Back to pages</button>
+			<button id="buttonEventCreateSubEvents">Create sub events</button>
+		{{else}}
+			<h1>Step 1: Create the umbrella event page in AK</h1>
+			{{> templatePageNotes }}
+			{{> templatePageTitle }}
+			{{> templatePageName }}
+			{{> templateEventDefaultTitle }}
+			{{> templateEventDefaultSize }}
+			{{> templateEventMaxSize }}
+			{{> templateEventStartDate }}
+			{{> templateEventStartTime }}
+			<button id="buttonEventBackToPages">Back to pages</button>
+			<button id="buttonEventSaveEventUmbrella">Save</button>
+			<button id="buttonEventCreateUmbrella">Next</button>
+	  		<div class="clear"></div>
+			{{#if getValue "apiError"}}
+				<div class="errorPopup">
+					<p>ERROR</p>
+					<p>{{getValue "apiError"}}</p>
+					<button class="buttonErrorOK" style="background-color: #01E;">ok</button>
+		  		</div>
+		  	{{else}} {{#if getValue "apiSuccess"}}
+				<div class="errorPopup" style="background-color: #13D333;">
+					<p>SUCCESS</p>
+					<p>{{getValue "apiSuccess"}}</p>
+					<button class="buttonErrorOK" style="background-color: #01E;">ok</button>
+		  		</div>
+			{{/if}} {{/if}}
+		{{/if}}
 	</div>
 </template>
 
@@ -70,7 +78,7 @@
 	<div id="createPage">
 		<h1>Step 2: Create sub events for event campaign {{getValue "pageTitle"}}</h1>
 		{{#if getValue "subEventCreatedMsg"}}
-			<div id="subEventMsgBox">
+			<div class="eventMsgBox">
 				{{ getValue "subEventCreatedMsg" }}
 			</div>
 		{{/if}}

@@ -225,6 +225,9 @@ function setSessionVarsForNewEvent() {
   Session.set("eventMaxSize", "");
   Session.set("eventStartDate", "");
   Session.set("eventStartTime", "");
+  Session.set("eventUmbrellaCampaignURL", "");
+  Session.set("eventUmbrellaHostURL", "");
+  Session.set('subEventCreatedMsg', "");
 }
 
 function initSessionVarsForPageCompose() {
@@ -298,6 +301,8 @@ Router.map(function () {
     onBeforeAction: function () {
       if (this.params._id) {
         Session.set("newPage", false);
+        Session.set('subEventCreatedMsg', "");
+
         var page = Files.findOne(this.params._id);
         // check for missing page and throw a 404
         setSessionVarsForPage(page);
@@ -315,6 +320,7 @@ Router.map(function () {
         Session.set('pageSharePageLink', "");
         Session.set('AKpageID',"");
         Session.set('AKpageResourceURI', "");
+        Session.set('subEventCreatedMsg', "");
       } else {
         Session.set("newPage", true);
         Session.set("creator", "");

@@ -641,6 +641,9 @@ Template.pages.events({
       Session.set("fileSort","savedByAsc");
     }
   },
+  'click .createSubEventButton': function() {
+    Router.go('createSubEvents', {_id: this._id});    
+  }
 });
 
 Template.savePageDialog.events({
