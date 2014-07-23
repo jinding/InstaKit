@@ -169,7 +169,7 @@ Template.createSubEvents.events({
         } else {
           console.log('subevent created');
           Session.set("pageNotSaved",false);
-          Session.set("subEventCreatedMsg", "Sub event " + subEvent.subEventTitle + " has been created.");
+          Session.set("subEventCreatedMsg", "Sub event " + subEvent.subEventTitle + " at " + subEvent.subEventVenue + " has been created.");
         }
       });
     } else {

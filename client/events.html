@@ -1,3 +1,5 @@
+<!-- ============================ CREATE EVENT UMBRELLA CAMPAIGN ============================ -->
+
 <template name="createEvent">
 	<div id="createPage" class="eventPage">
 		{{#if getValue "eventUmbrellaCampaignURL" }}
@@ -82,7 +84,8 @@
 	</div>
 </template>
 
-<!-- CREATE SUBEVENTS -->
+
+<!-- ============================ CREATE SUBEVENTS ============================ -->
 
 <template name="createSubEvents">
 	<div id="createPage" class="eventPage">
@@ -169,7 +172,7 @@
 
 <template name="templateSubEventAddress2">
 	<div class="eventInputs">
-		<div class="bodytext_desc event">Address2</div>
+		<div class="bodytext_desc event">Address2 (optional)</div>
 		<div class="taf_title event"><input type="text" id="subEventAddress2" class="{{highlight "subEventAddress2"}}" value="{{getValue "subEventAddress2"}}"></div>
 	</div>
 </template>
