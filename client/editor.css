@@ -293,4 +293,5 @@ button.sortButton {
 /* events */
 
 #subEventForm { border: 2px gray solid; border-radius: 2px; width:700px; margin: 0px auto; padding: 10px 12px;}
+#subEventMsgBox { border: 2px red solid; width:700px; margin: 10px auto; padding: 10px 12px; }
 

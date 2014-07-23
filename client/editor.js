@@ -184,6 +184,8 @@ function setSessionVarsForPage(obj) {
   Session.set("eventMaxSize", obj.eventMaxSize);
   Session.set("eventStartDate", obj.eventStartDate);
   Session.set("eventStartTime", obj.eventStartTime);
+  Session.set("eventUmbrellaCampaignURL", obj.eventUmbrellaCampaignURL);
+  Session.set("eventUmbrellaHostURL", obj.eventUmbrellaHostURL);
 
 }
 
@@ -345,7 +347,7 @@ Router.map(function () {
     template: 'createSubEvents',
     onBeforeAction: function() {
       var eventUmbrella = Files.findOne(this.params._id);
-      console.log('hello');
+      setSessionVarsForPage(eventUmbrella);
     }
   })
 

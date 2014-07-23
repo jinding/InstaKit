@@ -68,11 +68,14 @@
 
 <template name="createSubEvents">
 	<div id="createPage">
-		<h1>Event campaign: {{getValue "pageTitle"}}</h1>
-		<p>Max event size: {{getValue "eventMaxSize"}}</p>
-
+		<h1>Step 2: Create sub events for event campaign {{getValue "pageTitle"}}</h1>
+		{{#if getValue "subEventCreatedMsg"}}
+			<div id="subEventMsgBox">
+				{{ getValue "subEventCreatedMsg" }}
+			</div>
+		{{/if}}
 		<div id="subEventForm">
-			<h1>SubEvent details</h1>
+			<h1>Sub event details</h1>
 			{{> templateSubEventTitle }}
 			{{> templateSubEventStartsAt }}
 			{{> templateSubEventMaxAttendees }}
