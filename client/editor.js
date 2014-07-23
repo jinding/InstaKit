@@ -186,6 +186,7 @@ function setSessionVarsForPage(obj) {
   Session.set("eventStartTime", obj.eventStartTime);
   Session.set("eventUmbrellaCampaignURL", obj.eventUmbrellaCampaignURL);
   Session.set("eventUmbrellaHostURL", obj.eventUmbrellaHostURL);
+  Session.set("eventUmbrellaSignupPageURL", obj.eventUmbrellaSignupPageURL);
 
 }
 
