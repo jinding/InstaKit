@@ -19,13 +19,14 @@
 				<button id="buttonEventCreateSubEvents" style="background-color:#13D333;">Create sub events</button>
 			</div>
 		{{else}}
-			<h1>Step 1: Create the umbrella event page in AK</h1>
+			<h1>Step 1: Create the umbrella event campaign</h1>
+			<p>Note: all fields are mandatory except for "notes"</p>
 			{{> templatePageNotes }}
 			{{> templatePageTitle }}
 			{{> templatePageName }}
 			{{> templateEventDefaultTitle }}
 			{{> templateEventDefaultSize }}
-			{{> templateEventMaxSize }}
+<!--			{{> templateEventMaxSize }} -->
 			{{> templateEventStartDate }}
 			{{> templateEventStartTime }}
 			<button id="buttonEventBackToPages">Back to pages</button>
@@ -51,14 +52,14 @@
 
 <template name="templateEventDefaultTitle">
 	<div class="eventInputs">
-		<div class="bodytext_desc event">Default event title</div>
+		<div class="bodytext_desc event">Default sub event title</div>
 		<div class="taf_title event"><input type="text" id="eventDefaultTitle" class="{{highlight "eventDefaultTitle"}}" value="{{getValue "eventDefaultTitle"}}"></div>
 	</div>
 </template>
 
 <template name="templateEventDefaultSize">
 	<div class="eventInputs">
-		<div class="bodytext_desc event">Default event size</div>
+		<div class="bodytext_desc event">Default sub event max attendees</div>
 		<div class="taf_title event"><input type="text" id="eventDefaultSize" class="{{highlight "eventDefaultSize"}}" value="{{getValue "eventDefaultSize"}}"></div>
 	</div>
 </template>
@@ -200,14 +201,14 @@
 
 <template name="templateSubEventDirections">
 	<div class="eventInputs">
-		<div class="bodytext_desc event">Directions (optional)</div>
+		<div class="bodytext_desc event">Directions (no HTML) (optional)</div>
 		<div class="taf_copy event"><textarea class="textbox {{highlight "subEventDirections"}}" rows="3" type="text" id="subEventDirections">{{getValue "subEventDirections"}}</textarea></div>
 	</div>
 </template>
 
 <template name="templateSubEventPublicDescription">
 	<div class="eventInputs">
-		<div class="bodytext_desc event">Public description (optional)</div>
+		<div class="bodytext_desc event">Public description (no HTML) (optional)</div>
 		<div class="taf_copy event"><textarea class="textbox {{highlight "subEventPublicDescription"}}" rows="3" type="text" id="subEventPublicDescription">{{getValue "subEventPublicDescription"}}</textarea></div>
 	</div>
 </template>

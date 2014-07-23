@@ -64,7 +64,7 @@ function makeEventUmbrellaFromSession() {
 };
 
 function goodEventUmbrellaFields(event) {
-  return event.pageTitle && event.pageName && event.eventDefaultTitle && event.eventDefaultSize && event.eventMaxSize && event.eventStartDate && event.eventStartTime;
+  return event.pageTitle && event.pageName && event.eventDefaultTitle && event.eventDefaultSize && event.eventStartDate && event.eventStartTime;
 }
 
 Template.createEvent.events({

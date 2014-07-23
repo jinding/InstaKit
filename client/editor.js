@@ -235,7 +235,7 @@ function setSessionVarsForNewSubEvent(obj) {
   Session.set("subEventTitle", obj.eventDefaultTitle);
   Session.set("subEventMaxAttendees", obj.eventDefaultSize);
   Session.set("subEventStartsAt", obj.eventStartDate + " " + obj.eventStartTime);
-  Session.set("subEventHostEmail", "");
+  Session.set("subEventHostEmail", Meteor.user().profile.name.substr(0,1)+Meteor.user().profile.name.split(" ")[1]+"@credoaction.com");
   Session.set("subEventVenue", "");
   Session.set("subEventAddress1", "");
   Session.set("subEventAddress2", "");

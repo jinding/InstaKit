@@ -445,8 +445,9 @@ Meteor.methods({
 	                      			name: eventUmbrella.pageName,
 	                      			title: eventUmbrella.pageTitle,
 	                      			default_event_size: eventUmbrella.eventDefaultSize,
-	                      			max_event_size: eventUmbrella.eventMaxSize,
+	                      			max_event_size: "2500",
 	                      			default_title: eventUmbrella.eventDefaultTitle,
+	                      			public_create_page: false,
 	                      			starts_at: eventUmbrella.eventStartDate + " " + eventUmbrella.eventStartTime
 	                      		} // end data
 	                      });
@@ -560,7 +561,7 @@ Meteor.methods({
 	  						  headers: {'Content-type': 'application/json'},
 	                          data: {
 	                          		page: eventSignupURL,
-	                          		signup_text: "Signup for our event!",
+//	                          		signup_text: "Signup for our event!",
 	                          		thank_you_text: "Thanks for signing up"
 	                      		} // end data
 	                      });
@@ -609,7 +610,7 @@ Meteor.methods({
 	                      			city: subEvent.subEventCity,
 	                      			state: subEvent.subEventState,
 	                      			zip: subEvent.subEventZip,
-	                      			host_is_confirmed: "true"
+	                      			host_is_confirmed: true
 	                      		} // end data
 	                      });
   		console.log(createSubEvent.headers.location);
