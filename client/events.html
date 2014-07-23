@@ -1,17 +1,115 @@
+<!-- ============================ CREATE EVENT UMBRELLA CAMPAIGN ============================ -->
+
 <template name="createEvent">
-	<div id="createPage">
-		<h1>Step 1: Create the umbrella event page in AK</h1>
-		{{> templatePageNotes }}
-		{{> templatePageTitle }}
-		{{> templatePageName }}
-		{{> templateEventDefaultTitle }}
-		{{> templateEventDefaultSize }}
-		{{> templateEventMaxSize }}
-		{{> templateEventStartDate }}
-		{{> templateEventStartTime }}
-		<button id="buttonEventBackToPages">Back to pages</button>
-		<button id="buttonEventSaveEventUmbrella">Save</button>
-		<button id="buttonEventCreateUmbrella">Next</button>
+	<div id="createPage" class="eventPage">
+		{{#if getValue "eventUmbrellaSignupPageURL" }}
+			<div class="eventMsgBox">
+				<p style="color: red;"><strong>This event umbrella campaign has already been created.</strong></p>
+
+				<table style="margin: 10px 0px 20px;">
+					<tr><td>Notes</td><td>{{ getValue "notes" }}</td></tr>
+					<tr><td>Event campaign title</td><td>{{ getValue "pageTitle" }}</td></tr>
+					<tr><td>Event campaign short URL</td><td>{{ getValue "pageName" }}</td></tr>
+					<tr><td>Default sub event title</td><td>{{ getValue "eventDefaultTitle" }}</td></tr>
+					<tr><td>Default sub event size</td><td>{{ getValue "eventDefaultSize" }}</td></tr>
+					<tr><td>Sub event max size</td><td>{{ getValue "eventMaxSize" }}</td></tr>
+					<tr><td>Default sub event start time</td><td>{{ getValue "eventStartDate" }} {{ getValue "eventStartTime" }}</td></tr>
+				</table>
+				<button id="buttonEventBackToPages">Back to pages</button>
+				<button id="buttonEventCreateSubEvents" style="background-color:#13D333;">Create sub events</button>
+			</div>
+		{{else}}
+			<h1>Step 1: Create the umbrella event page in AK</h1>
+			{{> templatePageNotes }}
+			{{> templatePageTitle }}
+			{{> templatePageName }}
+			{{> templateEventDefaultTitle }}
+			{{> templateEventDefaultSize }}
+			{{> templateEventMaxSize }}
+			{{> templateEventStartDate }}
+			{{> templateEventStartTime }}
+			<button id="buttonEventBackToPages">Back to pages</button>
+			<button id="buttonEventSaveEventUmbrella">Save</button>
+			<button id="buttonEventCreateUmbrella" style="background-color:#13D333;">Next</button>
+	  		<div class="clear"></div>
+			{{#if getValue "apiError"}}
+				<div class="errorPopup">
+					<p>ERROR</p>
+					<p>{{getValue "apiError"}}</p>
+					<button class="buttonErrorOK" style="background-color: #01E;">ok</button>
+		  		</div>
+		  	{{else}} {{#if getValue "apiSuccess"}}
+				<div class="errorPopup" style="background-color: #13D333;">
+					<p>SUCCESS</p>
+					<p>{{getValue "apiSuccess"}}</p>
+					<button class="buttonErrorOK" style="background-color: #01E;">ok</button>
+		  		</div>
+			{{/if}} {{/if}}
+		{{/if}}
+	</div>
+</template>
+
+<template name="templateEventDefaultTitle">
+	<div class="eventInputs">
+		<div class="bodytext_desc event">Default event title</div>
+		<div class="taf_title event"><input type="text" id="eventDefaultTitle" class="{{highlight "eventDefaultTitle"}}" value="{{getValue "eventDefaultTitle"}}"></div>
+	</div>
+</template>
+
+<template name="templateEventDefaultSize">
+	<div class="eventInputs">
+		<div class="bodytext_desc event">Default event size</div>
+		<div class="taf_title event"><input type="text" id="eventDefaultSize" class="{{highlight "eventDefaultSize"}}" value="{{getValue "eventDefaultSize"}}"></div>
+	</div>
+</template>
+
+<template name="templateEventMaxSize">
+	<div class="eventInputs">
+		<div class="bodytext_desc event">Max event size</div>
+		<div class="taf_title event"><input type="text" id="eventMaxSize" class="{{highlight "eventMaxSize"}}" value="{{getValue "eventMaxSize"}}"></div>
+	</div>
+</template>
+
+<template name="templateEventStartDate">
+	<div class="eventInputs">
+		<div class="bodytext_desc event">Start date (YYYY-MM-DD)</div>
+		<div class="taf_title event"><input type="text" id="eventStartDate" class="{{highlight "eventStartDate"}}" value="{{getValue "eventStartDate"}}"></div>
+	</div>
+</template>
+
+<template name="templateEventStartTime">
+	<div class="eventInputs">
+		<div class="bodytext_desc event">Start time (HH:MM:SS)</div>
+		<div class="taf_title event"><input type="text" id="eventStartTime" class="{{highlight "eventStartTime"}}" value="{{getValue "eventStartTime"}}"></div>
+	</div>
+</template>
+
+
+<!-- ============================ CREATE SUBEVENTS ============================ -->
+
+<template name="createSubEvents">
+	<div id="createPage" class="eventPage">
+		<h1>Step 2: Create sub events for event campaign "{{getValue "pageTitle"}}"</h1>
+		{{#if getValue "subEventCreatedMsg"}}
+			<div class="eventMsgBox">
+				{{ getValue "subEventCreatedMsg" }}
+			</div>
+		{{/if}}
+			{{> templateSubEventTitle }}
+			{{> templateSubEventStartsAt }}
+			{{> templateSubEventMaxAttendees }}
+			{{> templateSubEventHostEmail }}
+			{{> templateSubEventVenue }}
+			{{> templateSubEventAddress1 }}
+			{{> templateSubEventAddress2 }}
+			{{> templateSubEventCity }}
+			{{> templateSubEventState }}
+			{{> templateSubEventZip }}
+			{{> templateSubEventDirections }}
+			{{> templateSubEventPublicDescription }}
+			{{> templateSubEventNoteToAttendees}}
+			<button id="buttonEventBackToPages">Back to pages</button>
+			<button id="buttonEventCreateSubEvent" style="background-color:#13D333;">Create SubEvent</button>
   		<div class="clear"></div>
 		{{#if getValue "apiError"}}
 			<div class="errorPopup">
@@ -29,38 +127,95 @@
 	</div>
 </template>
 
-<template name="templateEventDefaultTitle">
-	<div class="bodytext" >
-		<div class="bodytext_desc">Default event title</div>
-		<div class="taf_title"><input type="text" id="eventDefaultTitle" class="{{highlight "eventDefaultTitle"}}" value="{{getValue "eventDefaultTitle"}}"></div>
+
+<template name="templateSubEventTitle">
+	<div class="eventInputs">
+		<div class="bodytext_desc event">Title</div>
+		<div class="taf_title event"><input type="text" id="subEventTitle" class="{{highlight "subEventTitle"}}" value="{{getValue "subEventTitle"}}"></div>
 	</div>
 </template>
 
-<template name="templateEventDefaultSize">
-	<div class="bodytext" >
-		<div class="bodytext_desc">Default event size</div>
-		<div class="taf_title"><input type="text" id="eventDefaultSize" class="{{highlight "eventDefaultSize"}}" value="{{getValue "eventDefaultSize"}}"></div>
+<template name="templateSubEventMaxAttendees">
+	<div class="eventInputs">
+		<div class="bodytext_desc event">Max attendees</div>
+		<div class="taf_title event"><input type="text" id="subEventMaxAttendees" class="{{highlight "subEventMaxAttendees"}}" value="{{getValue "subEventMaxAttendees"}}"></div>
 	</div>
 </template>
 
-<template name="templateEventMaxSize">
-	<div class="bodytext" >
-		<div class="bodytext_desc">Max event size</div>
-		<div class="taf_title"><input type="text" id="eventMaxSize" class="{{highlight "eventMaxSize"}}" value="{{getValue "eventMaxSize"}}"></div>
+<template name="templateSubEventStartsAt">
+	<div class="eventInputs">
+		<div class="bodytext_desc event">Starts at (YYYY-MM-DD HH:MM:SS)</div>
+		<div class="taf_title event"><input type="text" id="subEventStartsAt" class="{{highlight "subEventStartsAt"}}" value="{{getValue "subEventStartsAt"}}"></div>
 	</div>
 </template>
 
-<template name="templateEventStartDate">
-	<div class="bodytext" >
-		<div class="bodytext_desc">Start date (YYYY-MM-DD)</div>
-		<div class="taf_title"><input type="text" id="eventStartDate" class="{{highlight "eventStartDate"}}" value="{{getValue "eventStartDate"}}"></div>
+<template name="templateSubEventHostEmail">
+	<div class="eventInputs">
+		<div class="bodytext_desc event">Host email address</div>
+		<div class="taf_title event"><input type="text" id="subEventHostEmail" class="{{highlight "subEventHostEmail"}}" value="{{getValue "subEventHostEmail"}}"></div>
 	</div>
 </template>
 
-<template name="templateEventStartTime">
-	<div class="bodytext" >
-		<div class="bodytext_desc">Start time (HH:MM:SS)</div>
-		<div class="taf_title"><input type="text" id="eventStartTime" class="{{highlight "eventStartTime"}}" value="{{getValue "eventStartTime"}}"></div>
+<template name="templateSubEventVenue">
+	<div class="eventInputs">
+		<div class="bodytext_desc event">Venue</div>
+		<div class="taf_title event"><input type="text" id="subEventVenue" class="{{highlight "subEventVenue"}}" value="{{getValue "subEventVenue"}}"></div>
+	</div>
+</template>
+
+<template name="templateSubEventAddress1">
+	<div class="eventInputs">
+		<div class="bodytext_desc event">Address1</div>
+		<div class="taf_title event"><input type="text" id="subEventAddress1" class="{{highlight "subEventAddress1"}}" value="{{getValue "subEventAddress1"}}"></div>
+	</div>
+</template>
+
+<template name="templateSubEventAddress2">
+	<div class="eventInputs">
+		<div class="bodytext_desc event">Address2 (optional)</div>
+		<div class="taf_title event"><input type="text" id="subEventAddress2" class="{{highlight "subEventAddress2"}}" value="{{getValue "subEventAddress2"}}"></div>
+	</div>
+</template>
+
+<template name="templateSubEventCity">
+	<div class="eventInputs">
+		<div class="bodytext_desc event">City</div>
+		<div class="taf_title event"><input type="text" id="subEventCity" class="{{highlight "subEventCity"}}" value="{{getValue "subEventCity"}}"></div>
+	</div>
+</template>
+
+<template name="templateSubEventState">
+	<div class="eventInputs">
+		<div class="bodytext_desc event">State (2 letter abbreviation)</div>
+		<div class="taf_title event"><input type="text" id="subEventState" class="{{highlight "subEventState"}}" value="{{getValue "subEventState"}}"></div>
+	</div>
+</template>
+
+<template name="templateSubEventZip">
+	<div class="eventInputs">
+		<div class="bodytext_desc event">Zip</div>
+		<div class="taf_title event"><input type="text" id="subEventZip" class="{{highlight "subEventZip"}}" value="{{getValue "subEventZip"}}"></div>
+	</div>
+</template>
+
+<template name="templateSubEventDirections">
+	<div class="eventInputs">
+		<div class="bodytext_desc event">Directions (optional)</div>
+		<div class="taf_copy event"><textarea class="textbox {{highlight "subEventDirections"}}" rows="3" type="text" id="subEventDirections">{{getValue "subEventDirections"}}</textarea></div>
+	</div>
+</template>
+
+<template name="templateSubEventPublicDescription">
+	<div class="eventInputs">
+		<div class="bodytext_desc event">Public description (optional)</div>
+		<div class="taf_copy event"><textarea class="textbox {{highlight "subEventPublicDescription"}}" rows="3" type="text" id="subEventPublicDescription">{{getValue "subEventPublicDescription"}}</textarea></div>
+	</div>
+</template>
+
+<template name="templateSubEventNoteToAttendees">
+	<div class="eventInputs">
+		<div class="bodytext_desc event">Note to attendees (optional)</div>
+		<div class="taf_copy event"><textarea class="textbox {{highlight "subEventNoteToAttendees"}}" rows="3" type="text" id="subEventNoteToAttendees">{{getValue "subEventNoteToAttendees"}}</textarea></div>
 	</div>
 </template>
 

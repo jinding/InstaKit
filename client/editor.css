@@ -287,5 +287,13 @@ button.sortButton {
 .bodytext textarea { width: 484px;}
 .bodytext input { width: 415px; vertical-align: middle; }
  
+/* events */
+#createPage.eventPage { margin-top: 20px;}
 
+.bodytext_desc.event { width: 200px; }
+.taf_copy.event textarea { width: 500px; }
+.taf_title.event input { width: 500px; margin-left: 0px;}
 
+#subEventForm { border: 2px gray solid; border-radius: 2px; width:700px; margin: 0px auto; padding: 10px 12px;}
+.eventMsgBox { border: 2px red solid; margin: 10px 0px; padding: 10px 12px; width: 700px;}
+.eventInputs { margin: 10px;}

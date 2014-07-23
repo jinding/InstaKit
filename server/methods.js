@@ -438,8 +438,8 @@ Meteor.methods({
   eventCreateUmbrella: function(eventUmbrella) {
   	try {
   		// REMEMBER TO CHANGE THIS BACK TO CREDO FROM ROBOTIC DOGS AND USER AUTH
-  		var createEventUmbrella = HTTP.call("POST", "https://roboticdogs.actionkit.com/rest/v1/campaign/",
-	  						 {auth: 'jin:maddy78',
+  		var createEventUmbrella = HTTP.call("POST", "https://act.credoaction.com/rest/v1/campaign/",
+	  						 {auth: 'meteor:dingbergalis',
 	  						  headers: {'Content-type': 'application/json'},
 	                          data: {
 	                      			name: eventUmbrella.pageName,
@@ -466,17 +466,17 @@ Meteor.methods({
   },
   eventCreateHostPage: function(loc, eventUmbrella) {
   	try {
-  		// REMEMBER TO CHANGE THIS BACK TO CREDO FROM ROBOTIC DOGS AND USER AUTH
-  		var AK = HTTP.call('GET', loc, {auth: 'jin:maddy78'}).data;
+   		// REMEMBER TO CHANGE THIS BACK TO CREDO FROM ROBOTIC DOGS AND USER AUTH
+  		var eventUmbrellaURI = loc.replace('https://act.credoaction.com','');
 
-  		console.log(AK.resource_uri);
-  		
+  		console.log(eventUmbrellaURI);
+
   		// REMEMBER TO CHANGE THIS BACK TO CREDO FROM ROBOTIC DOGS AND USER AUTH
-  		var createEventHostPage = HTTP.call("POST", "https://roboticdogs.actionkit.com/rest/v1/eventcreatepage/",
-	  						 {auth: 'jin:maddy78',
+  		var createEventHostPage = HTTP.call("POST", "https://act.credoaction.com/rest/v1/eventcreatepage/",
+	  						 {auth: 'meteor:dingbergalis',
 	  						  headers: {'Content-type': 'application/json'},
 	                          data: {
-	                          		campaign: AK.resource_uri,
+	                          		campaign: eventUmbrellaURI,
 	                          		list: "/rest/v1/campaign/1/",
 	                      			name: eventUmbrella.pageName + "_host",
 	                      			title: eventUmbrella.pageTitle + " - Host",
@@ -496,7 +496,18 @@ Meteor.methods({
 									], // end required_fields
 	                      		} // end data
 	                      });
-  		console.log(createEventHostPage.headers.location);
+  		console.log("eventHost URL " + createEventHostPage.headers.location);
+ 		var eventHostURL = createEventHostPage.headers.location.replace('https://act.credoaction.com','');
+  		var createEventHostForm = HTTP.call("POST", "https://act.credoaction.com/rest/v1/eventcreateform/",
+	  						 {auth: 'meteor:dingbergalis',
+	  						  headers: {'Content-type': 'application/json'},
+	                          data: {
+	                          		page: eventHostURL,
+	                          		thank_you_text: "Thanks for hosting"
+	                      		} // end data
+	                      });
+  		console.log("eventHostForm URL " + createEventHostForm.headers.location);
+
  		return createEventHostPage.headers.location;
 
   	} catch (e) {
@@ -506,7 +517,128 @@ Meteor.methods({
 	        	throw new Meteor.Error(e.response.statusCode, e.response.data.petitionpage.name[0], e.response);
 	        else throw new Meteor.Error(e.response.statusCode, e.response.content, e.response);
         else
-        	throw new Meteor.Error(500, "Unknown error creating event umbrella", e.response.data);
+        	throw new Meteor.Error(500, "Unknown error creating event host page", e.response.data);
+
+  	}
+  },
+  eventCreateSignupPage: function(eventUmbrella) {
+ 	try {
+   		// REMEMBER TO CHANGE THIS BACK TO CREDO FROM ROBOTIC DOGS AND USER AUTH
+  		var eventUmbrellaURI = eventUmbrella.eventUmbrellaCampaignURL.replace('https://act.credoaction.com','');
+
+  		console.log(eventUmbrellaURI);
+  		
+  		// REMEMBER TO CHANGE THIS BACK TO CREDO FROM ROBOTIC DOGS AND USER AUTH
+  		var createEventSignupPage = HTTP.call("POST", "https://act.credoaction.com/rest/v1/eventsignuppage/",
+	  						 {auth: 'meteor:dingbergalis',
+	  						  headers: {'Content-type': 'application/json'},
+	                          data: {
+	                          		campaign: eventUmbrellaURI,
+	                          		list: "/rest/v1/campaign/1/",
+	                      			name: eventUmbrella.pageName + "_attend",
+	                      			title: eventUmbrella.pageTitle + " - Attend",
+	                      			required_fields: [
+	                      			 	{   id: 2,
+											name: 'zip',
+											resource_uri: '/rest/v1/formfield/2/'},
+										{   id: 3,
+										    name: 'address1',
+										    resource_uri: '/rest/v1/formfield/3/'},
+										{   id: 6,
+										    name: 'first_name',
+										    resource_uri: '/rest/v1/formfield/6/'},
+										{   id: 7,
+										    name: 'last_name',
+										    resource_uri: '/rest/v1/formfield/7/'}
+									], // end required_fields
+	                      		} // end data
+	                      });
+  		console.log("eventSignup URL " + createEventSignupPage.headers.location);
+  		var eventSignupURL = createEventSignupPage.headers.location.replace('https://act.credoaction.com','');
+  		var createEventSignupForm = HTTP.call("POST", "https://act.credoaction.com/rest/v1/eventsignupform/",
+	  						 {auth: 'meteor:dingbergalis',
+	  						  headers: {'Content-type': 'application/json'},
+	                          data: {
+	                          		page: eventSignupURL,
+	                          		signup_text: "Signup for our event!",
+	                          		thank_you_text: "Thanks for signing up"
+	                      		} // end data
+	                      });
+	    console.log("eventSignupForm URL " + createEventSignupForm.headers.location);
+
+ 		return createEventSignupPage.headers.location;
+
+  	} catch (e) {
+		console.log(e.response);
+		if (e.response.statusCode && e.response.statusCode === 400)
+			if (e.response.data && e.response.data.petitionpage && e.response.data.petitionpage.name[0])
+	        	throw new Meteor.Error(e.response.statusCode, e.response.data.petitionpage.name[0], e.response);
+	        else throw new Meteor.Error(e.response.statusCode, e.response.content, e.response);
+        else
+        	throw new Meteor.Error(500, "Unknown error creating event signup page", e.response.data);
+
+  	}
+  }, 
+  eventCreateSubEvent: function(subEvent) {
+  	try {
+  		// REMEMBER TO CHANGE THIS BACK TO CREDO FROM ROBOTIC DOGS AND USER AUTH
+  		var eventUmbrellaURI = subEvent.eventUmbrellaCampaignURL.replace('https://act.credoaction.com','');
+
+		var host = HTTP.call('GET', 
+			'https://act.credoaction.com/rest/v1/user/?email=' + subEvent.subEventHostEmail,
+			{auth: 'meteor:dingbergalis'}).data;
+
+		console.log(host.objects[0].resource_uri);  
+
+  		// REMEMBER TO CHANGE THIS BACK TO CREDO FROM ROBOTIC DOGS AND USER AUTH
+  		var createSubEvent = HTTP.call("POST", "https://act.credoaction.com/rest/v1/event/",
+	  						 {auth: 'meteor:dingbergalis',
+	  						  headers: {'Content-type': 'application/json'},
+	                          data: {
+	                          		campaign: eventUmbrellaURI,
+	                          		creator: host.objects[0].resource_uri,
+	                      			title: subEvent.subEventTitle,
+	                      			max_attendees: subEvent.subEventMaxAttendees,
+	                      			venue: subEvent.subEventVenue,
+	                      			directions: subEvent.subEventDirections,
+	                      			public_description: subEvent.subEventPublicDescription,
+	                      			note_to_attendees: subEvent.subEventNoteToAttendees,
+	                      			starts_at: subEvent.subEventStartsAt,
+	                      			address1: subEvent.subEventAddress1,
+	                      			address2: subEvent.subEventAddress2,
+	                      			city: subEvent.subEventCity,
+	                      			state: subEvent.subEventState,
+	                      			zip: subEvent.subEventZip,
+	                      			host_is_confirmed: "true"
+	                      		} // end data
+	                      });
+  		console.log(createSubEvent.headers.location);
+  		console.log('event: ' + createSubEvent.headers.location.replace('https://act.credoaction.com',''));
+  		console.log('page: ' + subEvent.eventUmbrellaHostURL.replace('https://act.credoaction.com',''));
+
+  		var createHostSignup = HTTP.call("POST", "https://act.credoaction.com/rest/v1/eventsignup/",
+	  						 {auth: 'meteor:dingbergalis',
+	  						  headers: {'Content-type': 'application/json'},
+	                          data: {
+	                          		event: createSubEvent.headers.location.replace('https://act.credoaction.com',''),
+	                          		page: subEvent.eventUmbrellaHostURL.replace('https://act.credoaction.com',''),
+	                          		role: "host",
+	                          		status: "active",
+	                          		user: host.objects[0].resource_uri
+	                      		} // end data
+	                      });
+  		console.log(createHostSignup.headers.location);
+
+ 		return createSubEvent.headers.location;
+
+  	} catch (e) {
+		console.log(e.response);
+		if (e.response.statusCode && e.response.statusCode === 400)
+			if (e.response.data && e.response.data.petitionpage && e.response.data.petitionpage.name[0])
+	        	throw new Meteor.Error(e.response.statusCode, e.response.data.petitionpage.name[0], e.response);
+	        else throw new Meteor.Error(e.response.statusCode, e.response.content, e.response);
+        else
+        	throw new Meteor.Error(500, "Unknown error creating sub event", e.response.data);
 
   	}
   }

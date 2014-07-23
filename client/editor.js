@@ -184,6 +184,8 @@ function setSessionVarsForPage(obj) {
   Session.set("eventMaxSize", obj.eventMaxSize);
   Session.set("eventStartDate", obj.eventStartDate);
   Session.set("eventStartTime", obj.eventStartTime);
+  Session.set("eventUmbrellaCampaignURL", obj.eventUmbrellaCampaignURL);
+  Session.set("eventUmbrellaHostURL", obj.eventUmbrellaHostURL);
 
 }
 
@@ -223,6 +225,27 @@ function setSessionVarsForNewEvent() {
   Session.set("eventMaxSize", "");
   Session.set("eventStartDate", "");
   Session.set("eventStartTime", "");
+  Session.set("eventUmbrellaCampaignURL", "");
+  Session.set("eventUmbrellaHostURL", "");
+  Session.set("eventUmbrellaSignupPageURL", "");
+  Session.set('subEventCreatedMsg', "");
+}
+
+function setSessionVarsForNewSubEvent(obj) {
+  Session.set("subEventTitle", obj.eventDefaultTitle);
+  Session.set("subEventMaxAttendees", obj.eventDefaultSize);
+  Session.set("subEventStartsAt", obj.eventStartDate + " " + obj.eventStartTime);
+  Session.set("subEventHostEmail", "");
+  Session.set("subEventVenue", "");
+  Session.set("subEventAddress1", "");
+  Session.set("subEventAddress2", "");
+  Session.set("subEventCity", "");
+  Session.set("subEventState", "");
+  Session.set("subEventZip", "");
+  Session.set("subEventDirections", "");
+  Session.set("subEventPublicDescription", "");
+  Session.set("subEventNoteToAttendees", "");
+  Session.set("subEventCreatedMsg","");
 }
 
 function initSessionVarsForPageCompose() {
@@ -296,6 +319,8 @@ Router.map(function () {
     onBeforeAction: function () {
       if (this.params._id) {
         Session.set("newPage", false);
+        Session.set('subEventCreatedMsg', "");
+
         var page = Files.findOne(this.params._id);
         // check for missing page and throw a 404
         setSessionVarsForPage(page);
@@ -313,6 +338,10 @@ Router.map(function () {
         Session.set('pageSharePageLink', "");
         Session.set('AKpageID',"");
         Session.set('AKpageResourceURI', "");
+        Session.set("eventUmbrellaCampaignURL", "");
+        Session.set("eventUmbrellaHostURL", "");
+        Session.set("eventUmbrellaSignupPageURL", "");
+        Session.set('subEventCreatedMsg', "");
       } else {
         Session.set("newPage", true);
         Session.set("creator", "");
@@ -339,6 +368,16 @@ Router.map(function () {
       setSessionVarsForPage(page);
     }
   });
+
+  this.route('createSubEvents', {
+    path: '/pages/createSubEvents/:_id?',
+    template: 'createSubEvents',
+    onBeforeAction: function() {
+      var eventUmbrella = Files.findOne(this.params._id);
+      setSessionVarsForPage(eventUmbrella);
+      setSessionVarsForNewSubEvent(eventUmbrella);
+    }
+  })
 
 });
 
@@ -402,6 +441,10 @@ Handlebars.registerHelper("savedAtButtonText", function() {
 Handlebars.registerHelper("belongsToUser", function(name) {
   return Meteor.user() && Meteor.user().profile.name === name;
 });
+
+Handlebars.registerHelper("isNotEvent", function(pageType) {
+  return pageType !== 'event';
+})
 
 Handlebars.registerHelper("isAdmin", function() {
   var admins = ['Jin Ding'];
