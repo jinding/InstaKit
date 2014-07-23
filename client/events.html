@@ -1,5 +1,5 @@
 <template name="createEvent">
-	<div id="createPage">
+	<div id="createPage" class="eventPage">
 		{{#if getValue "eventUmbrellaCampaignURL" }}
 			<div class="eventMsgBox">
 				This event umbrella campaign has already been created.
@@ -75,7 +75,7 @@
 <!-- CREATE SUBEVENTS -->
 
 <template name="createSubEvents">
-	<div id="createPage">
+	<div id="createPage" class="eventPage">
 		<h1>Step 2: Create sub events for event campaign "{{getValue "pageTitle"}}"</h1>
 		{{#if getValue "subEventCreatedMsg"}}
 			<div class="eventMsgBox">

@@ -288,6 +288,7 @@ button.sortButton {
 .bodytext input { width: 415px; vertical-align: middle; }
  
 /* events */
+#createPage.eventPage { margin-top: 20px;}
 
 .bodytext_desc.event { width: 200px; }
 .taf_copy.event textarea { width: 500px; }
