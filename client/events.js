@@ -152,6 +152,9 @@ Template.createEvent.events({
 // ============================ subEvent functions ============================ //
 
 Template.createSubEvents.events({
+  'click #buttonEventBackToPages': function() {
+    Router.go('pages');
+  },
   'click .buttonErrorOK': function() {
     Session.set('apiError',"");
     Session.set('apiSuccess',"");
