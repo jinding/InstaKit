@@ -12,12 +12,6 @@ Template.templateEventDefaultSize.events({
   }
 });
 
-Template.templateEventMaxSize.events({
-  'keyup input[type=text]': function() {
-    Session.set("eventMaxSize", $('#eventMaxSize').val());
-  }
-});
-
 Template.templateEventStartDate.events({
   'keyup input[type=text]': function() {
     Session.set("eventStartDate", $('#eventStartDate').val());
@@ -36,7 +30,6 @@ function setEventSessionVars() {
   Session.set("pageName", $('#pageName').val());
   Session.set("eventDefaultTitle", $('#eventDefaultTitle').val());
   Session.set("eventDefaultSize", $('#eventDefaultSize').val());
-  Session.set("eventMaxSize", $('#eventMaxSize').val());
   Session.set("eventStartDate", $('#eventStartDate').val());
   Session.set("eventStartTime", $('#eventStartTime').val());
 }
@@ -52,7 +45,6 @@ function makeEventUmbrellaFromSession() {
     pageName: Session.get("pageName"),
     eventDefaultTitle: Session.get("eventDefaultTitle"),
     eventDefaultSize: Session.get("eventDefaultSize"),
-    eventMaxSize: Session.get("eventMaxSize"),
     eventStartDate: Session.get("eventStartDate"),
     eventStartTime: Session.get("eventStartTime"),
     creator: Session.get("creator") || Meteor.user().profile.name,

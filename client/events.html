@@ -10,10 +10,9 @@
 					<tr><td>Notes</td><td>{{ getValue "notes" }}</td></tr>
 					<tr><td>Event campaign title</td><td>{{ getValue "pageTitle" }}</td></tr>
 					<tr><td>Event campaign short URL</td><td>{{ getValue "pageName" }}</td></tr>
-					<tr><td>Default sub event title</td><td>{{ getValue "eventDefaultTitle" }}</td></tr>
-					<tr><td>Default sub event size</td><td>{{ getValue "eventDefaultSize" }}</td></tr>
-					<tr><td>Sub event max size</td><td>{{ getValue "eventMaxSize" }}</td></tr>
-					<tr><td>Default sub event start time</td><td>{{ getValue "eventStartDate" }} {{ getValue "eventStartTime" }}</td></tr>
+					<tr><td>Sub event default title</td><td>{{ getValue "eventDefaultTitle" }}</td></tr>
+					<tr><td>Sub event default size</td><td>{{ getValue "eventDefaultSize" }}</td></tr>
+					<tr><td>Sub event default start time</td><td>{{ getValue "eventStartDate" }} {{ getValue "eventStartTime" }}</td></tr>
 				</table>
 				<button id="buttonEventBackToPages">Back to pages</button>
 				<button id="buttonEventCreateSubEvents" style="background-color:#13D333;">Create sub events</button>
@@ -26,7 +25,6 @@
 			{{> templatePageName }}
 			{{> templateEventDefaultTitle }}
 			{{> templateEventDefaultSize }}
-<!--			{{> templateEventMaxSize }} -->
 			{{> templateEventStartDate }}
 			{{> templateEventStartTime }}
 			<button id="buttonEventBackToPages">Back to pages</button>
@@ -39,35 +37,22 @@
 					<p>{{getValue "apiError"}}</p>
 					<button class="buttonErrorOK" style="background-color: #01E;">ok</button>
 		  		</div>
-		  	{{else}} {{#if getValue "apiSuccess"}}
-				<div class="errorPopup" style="background-color: #13D333;">
-					<p>SUCCESS</p>
-					<p>{{getValue "apiSuccess"}}</p>
-					<button class="buttonErrorOK" style="background-color: #01E;">ok</button>
-		  		</div>
-			{{/if}} {{/if}}
+		  	{{/if}}
 		{{/if}}
 	</div>
 </template>
 
 <template name="templateEventDefaultTitle">
 	<div class="eventInputs">
-		<div class="bodytext_desc event">Default sub event title</div>
+		<div class="bodytext_desc event">Sub event default title</div>
 		<div class="taf_title event"><input type="text" id="eventDefaultTitle" class="{{highlight "eventDefaultTitle"}}" value="{{getValue "eventDefaultTitle"}}"></div>
 	</div>
 </template>
 
 <template name="templateEventDefaultSize">
 	<div class="eventInputs">
-		<div class="bodytext_desc event">Default sub event max attendees</div>
+		<div class="bodytext_desc event">Sub event default max attendees</div>
 		<div class="taf_title event"><input type="text" id="eventDefaultSize" class="{{highlight "eventDefaultSize"}}" value="{{getValue "eventDefaultSize"}}"></div>
-	</div>
-</template>
-
-<template name="templateEventMaxSize">
-	<div class="eventInputs">
-		<div class="bodytext_desc event">Max event size</div>
-		<div class="taf_title event"><input type="text" id="eventMaxSize" class="{{highlight "eventMaxSize"}}" value="{{getValue "eventMaxSize"}}"></div>
 	</div>
 </template>
 
@@ -110,7 +95,7 @@
 			{{> templateSubEventPublicDescription }}
 			{{> templateSubEventNoteToAttendees}}
 			<button id="buttonEventBackToPages">Back to pages</button>
-			<button id="buttonEventCreateSubEvent" style="background-color:#13D333;">Create SubEvent</button>
+			<button id="buttonEventCreateSubEvent" style="background-color:#13D333;">Create sub event</button>
   		<div class="clear"></div>
 		{{#if getValue "apiError"}}
 			<div class="errorPopup">
@@ -118,13 +103,7 @@
 				<p>{{getValue "apiError"}}</p>
 				<button class="buttonErrorOK" style="background-color: #01E;">ok</button>
 	  		</div>
-	  	{{else}} {{#if getValue "apiSuccess"}}
-			<div class="errorPopup" style="background-color: #13D333;">
-				<p>SUCCESS</p>
-				<p>{{getValue "apiSuccess"}}</p>
-				<button class="buttonErrorOK" style="background-color: #01E;">ok</button>
-	  		</div>
-		{{/if}} {{/if}}
+	  	{{/if}}
 	</div>
 </template>
 
