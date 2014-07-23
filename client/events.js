@@ -190,7 +190,7 @@ function setSubEventSessionVars() {
   Session.set("subEventDirections", $('#subEventDirections').val());
   Session.set("subEventPublicDescription", $('#subEventPublicDescription').val());
   Session.set("subEventNoteToAttendees", $('#subEventNoteToAttendees').val());
-}
+};
 
 function makeSubEventFromSession() {
   setSubEventSessionVars();
@@ -221,4 +221,84 @@ function makeSubEventFromSession() {
 function goodSubEventFields(event) {
   return event.subEventTitle && event.subEventMaxAttendees && event.subEventStartsAt && event.subEventHostEmail
     && event.subEventVenue && event.subEventAddress1 && event.subEventCity && event.subEventState && event.subEventZip;
-}
+};
+
+Template.templateSubEventTitle.events({
+  'keyup input[type=text]': function() {
+    Session.set("subEventTitle", $('#subEventTitle').val());
+  }
+});
+
+Template.templateSubEventMaxAttendees.events({
+  'keyup input[type=text]': function() {
+    Session.set("subEventMaxAttendees", $('#subEventMaxAttendees').val());
+  }
+});
+
+Template.templateSubEventHostEmail.events({
+  'keyup input[type=text]': function() {
+    Session.set("subEventHostEmail", $('#subEventHostEmail').val());
+  }
+});
+
+Template.templateSubEventHostEmail.events({
+  'keyup input[type=text]': function() {
+    Session.set("subEventHostEmail", $('#subEventHostEmail').val());
+  }
+});
+
+Template.templateSubEventStartsAt.events({
+  'keyup input[type=text]': function() {
+    Session.set("subEventStartsAt", $('#subEventStartsAt').val());
+  }
+});
+
+Template.templateSubEventVenue.events({
+  'keyup input[type=text]': function() {
+    Session.set("subEventVenue", $('#subEventVenue').val());
+  }
+});
+
+Template.templateSubEventAddress1.events({
+  'keyup input[type=text]': function() {
+    Session.set("subEventAddress1", $('#subEventAddress1').val());
+  }
+});
+
+Template.templateSubEventAddress2.events({
+  'keyup input[type=text]': function() {
+    Session.set("subEventAddress2", $('#subEventAddress2').val());
+  }
+});
+
+Template.templateSubEventCity.events({
+  'keyup input[type=text]': function() {
+    Session.set("subEventCity", $('#subEventCity').val());
+  }
+});
+
+Template.templateSubEventZip.events({
+  'keyup input[type=text]': function() {
+    Session.set("subEventZip", $('#subEventZip').val());
+  }
+});
+
+Template.templateSubEventDirections.events({
+  'keyup input[type=text]': function() {
+    Session.set("subEventDirections", $('#subEventDirections').val());
+  }
+});
+
+Template.templateSubEventPublicDescription.events({
+  'keyup input[type=text]': function() {
+    Session.set("subEventPublicDescription", $('#subEventPublicDescription').val());
+  }
+});
+
+Template.templateSubEventNoteToAttendees.events({
+  'keyup input[type=text]': function() {
+    Session.set("subEventNoteToAttendees", $('#subEventNoteToAttendees').val());
+  }
+});
+
+

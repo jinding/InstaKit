@@ -230,6 +230,22 @@ function setSessionVarsForNewEvent() {
   Session.set('subEventCreatedMsg', "");
 }
 
+function setSessionVarsForNewSubEvent(obj) {
+  Session.set("subEventTitle", obj.eventDefaultTitle);
+  Session.set("subEventMaxAttendees", obj.eventDefaultSize);
+  Session.set("subEventStartsAt", obj.eventStartDate + " " + obj.eventStartTime);
+  Session.set("subEventHostEmail", "");
+  Session.set("subEventVenue", "");
+  Session.set("subEventAddress1", "");
+  Session.set("subEventAddress2", "");
+  Session.set("subEventCity", "");
+  Session.set("subEventState", "");
+  Session.set("subEventZip", "");
+  Session.set("subEventDirections", "");
+  Session.set("subEventPublicDescription", "");
+  Session.set("subEventNoteToAttendees", "");
+}
+
 function initSessionVarsForPageCompose() {
   Session.set("showNavBar",false);
   Session.set("snippets",false);
@@ -356,6 +372,7 @@ Router.map(function () {
     onBeforeAction: function() {
       var eventUmbrella = Files.findOne(this.params._id);
       setSessionVarsForPage(eventUmbrella);
+      setSessionVarsForNewSubEvent(eventUmbrella);
     }
   })
 
