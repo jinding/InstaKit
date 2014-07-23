@@ -2,10 +2,20 @@
 	<div id="createPage" class="eventPage">
 		{{#if getValue "eventUmbrellaCampaignURL" }}
 			<div class="eventMsgBox">
-				This event umbrella campaign has already been created.
+				<p style="color: red;"><strong>This event umbrella campaign has already been created.</strong></p>
+
+				<table style="margin: 10px 0px 20px;">
+					<tr><td>Notes</td><td>{{ getValue "notes" }}</td></tr>
+					<tr><td>Event campaign title</td><td>{{ getValue "pageTitle" }}</td></tr>
+					<tr><td>Event campaign short URL</td><td>{{ getValue "pageName" }}</td></tr>
+					<tr><td>Default sub event title</td><td>{{ getValue "eventDefaultTitle" }}</td></tr>
+					<tr><td>Default sub event size</td><td>{{ getValue "eventDefaultSize" }}</td></tr>
+					<tr><td>Sub event max size</td><td>{{ getValue "eventMaxSize" }}</td></tr>
+					<tr><td>Default sub event start time</td><td>{{ getValue "eventStartDate" }} {{ getValue "eventStartTime" }}</td></tr>
+				</table>
+				<button id="buttonEventBackToPages">Back to pages</button>
+				<button id="buttonEventCreateSubEvents" style="background-color:#13D333;">Create sub events</button>
 			</div>
-			<button id="buttonEventBackToPages">Back to pages</button>
-			<button id="buttonEventCreateSubEvents">Create sub events</button>
 		{{else}}
 			<h1>Step 1: Create the umbrella event page in AK</h1>
 			{{> templatePageNotes }}
@@ -187,21 +197,21 @@
 
 <template name="templateSubEventDirections">
 	<div class="eventInputs">
-		<div class="bodytext_desc event">Directions (opt)</div>
+		<div class="bodytext_desc event">Directions (optional)</div>
 		<div class="taf_copy event"><textarea class="textbox {{highlight "subEventDirections"}}" rows="3" type="text" id="subEventDirections">{{getValue "subEventDirections"}}</textarea></div>
 	</div>
 </template>
 
 <template name="templateSubEventPublicDescription">
 	<div class="eventInputs">
-		<div class="bodytext_desc event">Public description (opt)</div>
+		<div class="bodytext_desc event">Public description (optional)</div>
 		<div class="taf_copy event"><textarea class="textbox {{highlight "subEventPublicDescription"}}" rows="3" type="text" id="subEventPublicDescription">{{getValue "subEventPublicDescription"}}</textarea></div>
 	</div>
 </template>
 
 <template name="templateSubEventNoteToAttendees">
 	<div class="eventInputs">
-		<div class="bodytext_desc event">Note to attendees (opt)</div>
+		<div class="bodytext_desc event">Note to attendees (optional)</div>
 		<div class="taf_copy event"><textarea class="textbox {{highlight "subEventNoteToAttendees"}}" rows="3" type="text" id="subEventNoteToAttendees">{{getValue "subEventNoteToAttendees"}}</textarea></div>
 	</div>
 </template>
