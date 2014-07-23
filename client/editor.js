@@ -320,6 +320,8 @@ Router.map(function () {
         Session.set('pageSharePageLink', "");
         Session.set('AKpageID',"");
         Session.set('AKpageResourceURI', "");
+        Session.set("eventUmbrellaCampaignURL", "");
+        Session.set("eventUmbrellaHostURL", "");
         Session.set('subEventCreatedMsg', "");
       } else {
         Session.set("newPage", true);
