@@ -37,7 +37,7 @@
 				<td style="padding-right:0px;">{{#if belongsToUser creator }}<input type="button" name="deleteButton" class="deleteButton tableButton" value="delete" style="background-color:#FF0000;">{{else}}{{#if isAdmin}}<input type="button" name="deleteButton" class="deleteButton tableButton" value="admin delete">{{/if}}{{/if}}</td>
 				<td style="padding-right:0px;">{{#if eventUmbrellaCampaignURL }}<input type="button" name="createSubEventButton" class="createSubEventButton tableButton" value="create sub events">
 					{{else}}{{#if AKpageID}}<input type="button" name="apiButton" class="apiButton tableButton" value="created page info" >{{/if}}{{/if}}</td>
-				<td style="padding-right:0px;"><input type="button" name="emailButton" class="emailButton tableButton" value="new email" style="background-color:#FF6319;" ></td>
+				<td style="padding-right:0px;">{{#if isNotEvent pageType}}<input type="button" name="emailButton" class="emailButton tableButton" value="new email" style="background-color:#FF6319;" >{{/if}}</td>
 			</tr>
 		{{/each}}
 		</table>

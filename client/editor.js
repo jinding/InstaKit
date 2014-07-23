@@ -420,6 +420,10 @@ Handlebars.registerHelper("belongsToUser", function(name) {
   return Meteor.user() && Meteor.user().profile.name === name;
 });
 
+Handlebars.registerHelper("isNotEvent", function(pageType) {
+  return pageType !== 'event';
+})
+
 Handlebars.registerHelper("isAdmin", function() {
   var admins = ['Jin Ding'];
 
