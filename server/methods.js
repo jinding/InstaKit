@@ -435,6 +435,9 @@ Meteor.methods({
         	throw new Meteor.Error(500, "Unknown error updating page", e.response.data);
 	}
   },
+
+  // -----------------------  EVENTS ---------------------------- //
+
   eventCreateUmbrella: function(eventUmbrella) {
   	try {
   		// REMEMBER TO CHANGE THIS BACK TO CREDO FROM ROBOTIC DOGS AND USER AUTH
@@ -566,6 +569,23 @@ Meteor.methods({
 	                      		} // end data
 	                      });
 	    console.log("eventSignupForm URL " + createEventSignupForm.headers.location);
+
+		var addPageFields = HTTP.call("POST", 'https://act.credoaction.com/rest/v1/pagefollowup/',
+									{auth: 'meteor:dingbergalis',
+									 headers: {'Content-type': 'application/json'},
+									 data: {
+		                  			page: eventSignupURL,
+		              			 	email_body: eventUmbrella.pageImportConfEmailBody,
+		              			 	email_subject: eventUmbrella.pageConfEmailSL,
+		              			 	send_email: true,
+		              			 	send_taf: true,
+//		              			 	taf_body: updateTAFCopyForAK(page.pageTAFCopy),
+//		              			 	taf_subject: page.pageTAFSL,
+		              			 	url: '/cms/thanks/'+eventUmbrella.pageName+'_attend'
+									 } // end data
+									} // end auth
+								);
+		console.log(addPageFields.headers.location);
 
  		return createEventSignupPage.headers.location;
 

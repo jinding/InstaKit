@@ -29,6 +29,7 @@
 			{{> templateEventDefaultSize }}
 			{{> templateEventStartDate }}
 			{{> templateEventStartTime }}
+			{{> templateEventConfEmail }}
 			<button id="buttonEventBackToPages">Back to pages</button>
 			<button id="buttonEventSaveEventUmbrella">Save</button>
 			<button id="buttonEventCreateUmbrella" style="background-color:#13D333;">Next</button>
@@ -69,6 +70,31 @@
 	<div class="eventInputs">
 		<div class="bodytext_desc event">Start time (HH:MM:SS)</div>
 		<div class="taf_title event"><input type="text" id="eventStartTime" class="{{highlight "eventStartTime"}}" value="{{getValue "eventStartTime"}}"></div>
+	</div>
+</template>
+
+<template name="templateEventConfEmail">
+	<div class="eventInputs" >
+		<div class="bodytext_desc event">Conf email subject line</div>
+		<div class="taf_title event"><input type="text" id="pageConfEmailSL" class="{{highlight "pageConfEmailSL"}}" value="{{#if getValue "pageConfEmailSL"}}{{getValue "pageConfEmailSL"}}{{else}}Thanks for RSVPing{{/if}}"></div>
+	</div>
+	<div class="eventInputs" >
+		<div class="bodytext_desc event">Conf email body</div>
+		<div class="taf_copy event"><textarea class="textbox {{highlight "pageConfEmailBody"}}" rows="8" type="text" id="pageConfEmailBody">{{#if getValue "pageConfEmailBody"}}{{getValue "pageConfEmailBody"}}{{else}}{&#123; user.first_name|default:"Friend" &#125;},
+
+Thanks for signing up for our event: {&#123; page.title &#125;}.
+
+Here are the details for the event:
+WHAT: {&#123; action.event.title &#125;}
+WHERE: {&#123; action.event.venue &#125;}, {&#123; action.event.address1 &#125;}, {&#123; action.event.city &#125;}
+WHEN: {&#123; action.event.starts_at|date:"l, F j" &#125;} - {&#123; action.event.starts_at|date:"f A" &#125;}
+
+<a href="http://act.credoaction.com/event/{{getValue "pageName"}}_attend/tools/">http://act.credoaction.com/event/{{getValue "pageName"}}_attend/tools/</a>
+
+Thank you for your activism.
+-- CREDO Action</p>
+
+		{{/if}}</textarea></div>
 	</div>
 </template>
 

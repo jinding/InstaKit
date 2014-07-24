@@ -24,7 +24,19 @@ Template.templateEventStartTime.events({
   }
 });
 
+Template.templateEventConfEmail.events({
+  'keyup input[type=text], keydown input[type=text]': function() {
+    Session.set("pageConfEmailSL", $('#pageConfEmailSL').val());
+    Session.set("pageConfEmailBody", $('#pageConfEmailBody').val());
+},
+  'keyup textarea, keydown textarea': function() {
+    Session.set("pageConfEmailBody", $('#pageConfEmailBody').val());
+  }
+});
+
+
 function setEventSessionVars() {
+  var converter = new Showdown.converter();
   Session.set("pageTitle", $('#pageTitle').val());
   Session.set("notes", $('#pageNotes').val());
   Session.set("pageName", $('#pageName').val());
@@ -32,9 +44,14 @@ function setEventSessionVars() {
   Session.set("eventDefaultSize", $('#eventDefaultSize').val());
   Session.set("eventStartDate", $('#eventStartDate').val());
   Session.set("eventStartTime", $('#eventStartTime').val());
+  Session.set("pageConfEmailSL", $('#pageConfEmailSL').val());
+  Session.set("pageConfEmailBody", $('#pageConfEmailBody').val());
+  Session.set("pageImportConfEmailBody", Session.get("pageConfEmailBody"));
+//  Session.set("pageImportConfEmailBody", converter.makeHtml(Session.get("pageConfEmailBody")));
 }
 
 function makeEventUmbrellaFromSession() {
+  var converter = new Showdown.converter();
   setEventSessionVars();
   return {
     id: Session.get("id"),
@@ -47,6 +64,10 @@ function makeEventUmbrellaFromSession() {
     eventDefaultSize: Session.get("eventDefaultSize"),
     eventStartDate: Session.get("eventStartDate"),
     eventStartTime: Session.get("eventStartTime"),
+    pageConfEmailSL: Session.get("pageConfEmailSL"),
+    pageConfEmailBody: Session.get("pageConfEmailBody"),
+    pageImportConfEmailBody: Session.get("pageConfEmailBody"),
+//    pageImportConfEmailBody: converter.makeHtml(Session.get("pageConfEmailBody")),
     creator: Session.get("creator") || Meteor.user().profile.name,
     savedBy: Meteor.user().profile.name,
     eventUmbrellaCampaignURL: Session.get("eventUmbrellaCampaignURL"),
