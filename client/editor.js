@@ -91,6 +91,7 @@ function setSessionVarsForEmail(obj) {
   Session.set("footnotes", obj.footnotes);
   Session.set("facebook", obj.facebook);
   Session.set("twitter", obj.twitter);
+  Session.set("refcode", obj.refcode);
   Session.set("creator", obj.creator);
   Session.set("when", obj.when);
 }
@@ -104,7 +105,9 @@ function setSessionVarsForNewEmail() {
   Session.set("headline", "");
   Session.set("statement_leadin", "");
   Session.set("petition", "");
-  Session.set("link", "");
+  if (Session.equals("templateChooser", "superpacFundraiser"))
+    Session.set("link","https://secure.actblue.com/contribute/page/savethesenate");
+  else Session.set("link", "");
   Session.set("graphic", "");
   Session.set("graphic_alt_text", "");
   if (Session.equals("templateChooser","mobilize"))
@@ -115,6 +118,7 @@ function setSessionVarsForNewEmail() {
   Session.set("footnotes", "");
   Session.set("facebook", "");
   Session.set("twitter", "");
+  Session.set("refcode", "");
   Session.set("creator", "");
 }
 

@@ -10,12 +10,12 @@
 <!-- start body of email -->
 <tr><td style="padding: 0px 12px 0px 12px; font-family: Arial, helvetica, sans-serif; 
 	font-size: 13px; line-height: 18px; text-align:left;">
-<p>Dear {&#123; user.first_name|default:"Friend" &#125;},</p>
+<p>{&#123; user.first_name|default:"Friend" &#125;} --</p>
 {{#if getValue "graphic"}}
 <!-- start image -->
 <table cellpadding=0 cellborder=0 align=right width=180 style="padding-left:5px; padding-right:0px;">
 <tr><td style="padding-right:0px;">
-<a href="{{getValue "link" }}" style="text-decoration:none;">
+<a href="{{getValue "link" }}{{#if getValue "refcode"}}?refcode={{getValue "refcode"}}{{/if}}" style="text-decoration:none;">
 <img src="{{getValue "graphic"}}" alt="{{getValue "graphic_alt_text" }}" align=right border=0>
 </a>
 </td></tr>
@@ -31,7 +31,7 @@
 <tr><td style="vertical-align: middle; text-align: center; font-weight: bold; font-size: 17px; 
 	line-height: 40px; background-color: #ff6319;">
 	<a style="text-decoration: none; color: white;" 
-	href="{{getValue "link" }}"> 
+	href="{{getValue "link" }}{{#if getValue "refcode"}}?refcode={{getValue "refcode"}}{{/if}}"> 
 	<img border="0" alt="Take action now &#9658;" 
 	src="http://d2omw6a1nm6pnh.cloudfront.net/images/buttons/btn_flat_take_action_now.png" 
 	style="vertical-align:middle;min-width:160px;"/></a>

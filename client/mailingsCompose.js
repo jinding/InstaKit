@@ -80,6 +80,12 @@ Template.facebook.events({
   }
 });
 
+Template.refcode.events({
+  'keyup input[type=text]': function() {
+    Session.set("refcode", $('#refcode').val());
+  }
+});
+
 function removeCurlyQuotes(str) {
   var goodQuotes = str
   .replace(/[\u2018\u2019]/g, "'")
@@ -104,6 +110,7 @@ function makeEmailFromSession() {
     facebook: Session.get("facebook"),
     twitter: removeCurlyQuotes(Session.get("twitter")),
     markdown_data: Session.get("markdown_data"),
+    refcode: Session.get("refcode"),
     creator: Session.get("creator") || Meteor.user().profile.name,
     savedBy: Meteor.user().profile.name
   }
@@ -278,6 +285,37 @@ Template.composePage.events({
   },
   'click #insertLink': function() {
       insertAtCaret('markdown_text','[link](' + Session.get('link').replace(/_/g,'\\_') + ')');
+  },
+  'click #superpacAskBlock': function() {
+      var askBlock = '<table width=\"80%\" align=\"center\" style=\"background-color: #ECEDF0; text-align: center; margin:0 auto;\">\n\
+<tr><td style=\"text-align:center;padding:0px 10px;\">\n\n\
+  <p><center><em>If you\'ve saved your payment information with ActBlue Express, your donation will go through immediately:</em></center></p>\n\n\
+{% if donations.highest\_previous %} {% if donations.highest\_previous < 30 %}\n\n\
+  <p><center><strong><a href=\"https://secure.actblue.com/contribute/page/savethesenate?express_lane=true&amount=5&refcode=ie_actblue_campaignRefCode_d_express5\">Express Donate: $5</a></strong></center></p>\n\
+  <p><center><strong><a href=\"https://secure.actblue.com/contribute/page/savethesenate?express_lane=true&amount=15&refcode=ie_actblue_campaignRefCode_d_express15\">Express Donate: $15</a></strong></center></p>\n\
+  <p><center><strong><a href=\"https://secure.actblue.com/contribute/page/savethesenate?express_lane=true&amount=50&refcode=ie_actblue_campaignRefCode_d_express50\">Express Donate: $50</a></strong></center></p>\n\
+  <p><center><strong><a href=\"https://secure.actblue.com/contribute/page/savethesenate?express_lane=true&amount=100&refcode=ie_actblue_campaignRefCode_d_express100\">Express Donate: $100</a></strong></center></p>\n\n\
+{% else %} {% if donations.highest_previous < 100 %}\n\n\
+  <p><center><strong><a href=\"https://secure.actblue.com/contribute/page/savethesenate?express_lane=true&amount=15&refcode=ie_actblue_campaignRefCode_d_express15\">Express Donate: $15</a></strong></center></p>\n\
+  <p><center><strong><a href=\"https://secure.actblue.com/contribute/page/savethesenate?express_lane=true&amount=50&refcode=ie_actblue_campaignRefCode_d_express50\">Express Donate: $50</a></strong></center></p>\n\
+  <p><center><strong><a href=\"https://secure.actblue.com/contribute/page/savethesenate?express_lane=true&amount=100&refcode=ie_actblue_campaignRefCode_d_express100\">Express Donate: $100</a></strong></center></p>\n\
+  <p><center><strong><a href=\"https://secure.actblue.com/contribute/page/savethesenate?express_lane=true&amount=250&refcode=ie_actblue_campaignRefCode_d_express250\">Express Donate: $250</a></strong></center></p>\n\n\
+{% else %}\n\n\
+  <p><center><strong><a href=\"https://secure.actblue.com/contribute/page/savethesenate?express_lane=true&amount=50&refcode=ie_actblue_campaignRefCode_d_express50\">Express Donate: $50</a></strong></center></p>\n\
+  <p><center><strong><a href=\"https://secure.actblue.com/contribute/page/savethesenate?express_lane=true&amount=100&refcode=ie_actblue_campaignRefCode_d_express100\">Express Donate: $100</a></strong></center></p>\n\
+  <p><center><strong><a href=\"https://secure.actblue.com/contribute/page/savethesenate?express_lane=true&amount=250&refcode=ie_actblue_campaignRefCode_d_express250\">Express Donate: $250</a></strong></center></p>\n\
+  <p><center><strong><a href=\"https://secure.actblue.com/contribute/page/savethesenate?express_lane=true&amount=500&refcode=ie_actblue_campaignRefCode_d_express500\">Express Donate: $500</a></strong></center></p>\n\n\
+{% endif %} {% endif %}\n\n\
+  <p><center><strong><a href=\"https://secure.actblue.com/contribute/page/savethesenate?refcode=ie_actblue_campaignRefCode_d_express_other\">Or donate another amount.</a></strong></center></p>\n\n\
+{% else %}\n\n\
+<p><center><strong><a href=\"https://secure.actblue.com/contribute/page/savethesenate?express_lane=true&amount=3&refcode=ie_actblue_campaignRefCode_a_express3\">Express Donate: $3</a></strong></center></p>\n\
+<p><center><strong><a href=\"https://secure.actblue.com/contribute/page/savethesenate?express_lane=true&amount=15&refcode=ie_actblue_campaignRefCode_a_express15\">Express Donate: $15</a></strong></center></p>\n\
+<p><center><strong><a href=\"https://secure.actblue.com/contribute/page/savethesenate?express_lane=true&amount=50&refcode=ie_actblue_campaignRefCode_a_express50\">Express Donate: $50</a></strong></center></p>\n\
+<p><center><strong><a href=\"https://secure.actblue.com/contribute/page/savethesenate?express_lane=true&amount=100&refcode=ie_actblue_campaignRefCode_a_express100\">Express Donate: $100</a></strong></center></p>\n\
+<p><center><strong><a href=\"https://secure.actblue.com/contribute/page/savethesenate?refcode=ie_actblue_campaignRefCode_a_express_other\">Or donate another amount.</a></strong></center></p>\n\n\
+{% endif %}\n\n\
+</td></tr></table>\n\n';
+      insertAtCaret('markdown_text',askBlock.replace(/campaignRefCode/g, Session.get('refcode')));
   }
 });
 

@@ -22,7 +22,7 @@
 
 <template name="link">
 	<div class="composePageInputLabel"><label for="link_text">Page full URL:</label></div>
-	<div class="composePageInputText"><input type="text" id="link_text" class="{{highlight "link"}}" value="{{#if getValue "link"}}{{getValue "link"}}{{else}}{{#if wrapperStyle "call"}}http://act.credoaction.com/call/{{else}}{{#if wrapperStyle "event"}}http://act.credoaction.com/event/{{else}}{{#if wrapperStyle "mobilize"}}http://www.credomobilize.com/petitions/?source=CREDO{{else}}{{#if wrapperStyle "superpacFundraiser"}}https://secure.actblue.com/contribute/page/{{else}}http://act.credoaction.com/sign/{{/if}}{{/if}}{{/if}}{{/if}}{{/if}}"></div>
+	<div class="composePageInputText"><input type="text" id="link_text" class="{{highlight "link"}}" value="{{#if getValue "link"}}{{getValue "link"}}{{else}}{{#if wrapperStyle "call"}}http://act.credoaction.com/call/{{else}}{{#if wrapperStyle "event"}}http://act.credoaction.com/event/{{else}}{{#if wrapperStyle "mobilize"}}http://www.credomobilize.com/petitions/?source=CREDO{{else}}{{#if wrapperStyle "superpacFundraiser"}}https://secure.actblue.com/contribute/page/savethesenate{{else}}http://act.credoaction.com/sign/{{/if}}{{/if}}{{/if}}{{/if}}{{/if}}"></div>
 	<div class="clear"></div>
 </template>
 
@@ -81,28 +81,11 @@ Link: [{{getValue "link"}}]({{getValue "link"}})
 **Where:**  
 {{else}}{{#if wrapperStyle "blank"}}Email body text in Markdown
 Make sure to escape underscores like so: "\_"
-{{else}}{{#if wrapperStyle "superpacFundraiser"}}
-Link: [{{getValue "link"}}]({{getValue "link"}})
-
-ExpressLane ask block (be sure to update amounts and refcodes):
-
->**Chip in to fund CREDO SuperPAC's campaign.**
-
->Because you've saved your payment information with ActBlue Express, your donation will go through immediately:
-
->[Express Donate: $5]({{getValue "link"}}?express_lane=true&amount=5&refcode=)
-
->[Express Donate: $10]({{getValue "link"}}?express_lane=true&amount=10&refcode=)
-
->[Express Donate: $25]({{getValue "link"}}?express_lane=true&amount=25&refcode=)
-
->[Or donate another amount.]({{getValue "link"}}?refcode=)
-
 {{else}}Email body text in Markdown
 Make sure to escape underscores like so: "\_"
 
 Link: [{{getValue "link"}}]({{getValue "link"}})
-{{/if}}{{/if}}{{/if}}{{/if}}{{/if}}</textarea>
+{{/if}}{{/if}}{{/if}}{{/if}}</textarea>
 </template>
 
 <template name="topper">
@@ -112,4 +95,9 @@ Link: [{{getValue "link"}}]({{getValue "link"}})
 	</textarea>
 </template>
 
+<template name="refcode">
+	<div class="composePageInputLabel"><label for="refcode">Refcode:</label></div>
+	<div class="composePageInputText"><input type="text" id="refcode" class="{{highlight "refcode"}}" value="{{#if getValue "refcode"}}{{getValue "refcode"}}{{else}}ie_actblue_DATE_CAMPAIGN_(version){{/if}}"></div>
+	<div class="clear"></div>
+</template>
 
