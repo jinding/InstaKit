@@ -58,8 +58,8 @@ function updatePageShare(page, loc, bitly) {
 									'taf_facebook_copy': page.pageFacebookCopy,
 									'taf_tweet': updateTwitterForAK(page.pageTwitterCopy,bitly)
                       			}, // end fields
-                      			one_click: true,
-                      			recognize: 'once',
+                      			one_click: false,
+                      			recognize: 'never',
                       			required_fields: [
                       			 	{   id: 2,
 										name: 'zip',
@@ -188,8 +188,8 @@ function updatePageShareForCreatedPage(page, loc, bitly) {
 									'taf_facebook_copy': page.pageFacebookCopy,
 									'taf_tweet': updateTwitterForAK(page.pageTwitterCopy,bitly)
                       			}, // end fields
-                      			one_click: true,
-                      			recognize: 'once',
+                      			one_click: false,
+                      			recognize: 'never',
                       			required_fields: [
                       			 	{   id: 2,
 										name: 'zip',
