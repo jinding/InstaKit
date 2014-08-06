@@ -450,7 +450,7 @@ Meteor.methods({
 	                      			default_event_size: eventUmbrella.eventDefaultSize,
 	                      			max_event_size: "2500",
 	                      			default_title: eventUmbrella.eventDefaultTitle,
-	                      			public_create_page: false,
+	                      			public_create_page: true,
 	                      			starts_at: eventUmbrella.eventStartDate + " " + eventUmbrella.eventStartTime
 	                      		} // end data
 	                      });
