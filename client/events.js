@@ -36,7 +36,6 @@ Template.templateEventConfEmail.events({
 
 
 function setEventSessionVars() {
-  var converter = new Showdown.converter();
   Session.set("pageTitle", $('#pageTitle').val());
   Session.set("notes", $('#pageNotes').val());
   Session.set("pageName", $('#pageName').val());
@@ -47,11 +46,9 @@ function setEventSessionVars() {
   Session.set("pageConfEmailSL", $('#pageConfEmailSL').val());
   Session.set("pageConfEmailBody", $('#pageConfEmailBody').val());
   Session.set("pageImportConfEmailBody", Session.get("pageConfEmailBody"));
-//  Session.set("pageImportConfEmailBody", converter.makeHtml(Session.get("pageConfEmailBody")));
 }
 
 function makeEventUmbrellaFromSession() {
-  var converter = new Showdown.converter();
   setEventSessionVars();
   return {
     id: Session.get("id"),
@@ -67,7 +64,6 @@ function makeEventUmbrellaFromSession() {
     pageConfEmailSL: Session.get("pageConfEmailSL"),
     pageConfEmailBody: Session.get("pageConfEmailBody"),
     pageImportConfEmailBody: Session.get("pageConfEmailBody"),
-//    pageImportConfEmailBody: converter.makeHtml(Session.get("pageConfEmailBody")),
     creator: Session.get("creator") || Meteor.user().profile.name,
     savedBy: Meteor.user().profile.name,
     eventUmbrellaCampaignURL: Session.get("eventUmbrellaCampaignURL"),
@@ -181,13 +177,21 @@ Template.createSubEvents.events({
     var subEvent = makeSubEventFromSession();
     console.log(subEvent);
     if (goodSubEventFields(subEvent)) {
+      Meteor.call('saveFile', subEvent, function (err, res) {
+        if (err) {
+          Session.set('saveError', err.error);
+        } else {
+          console.log('subevent saved');
+        }
+      });
       Meteor.call('eventCreateSubEvent', subEvent, function (err, res) {
         if (err) {
           Session.set('saveError', err.reason);
         } else {
           console.log('subevent created');
           Session.set("pageNotSaved",false);
-          Session.set("subEventCreatedMsg", "Sub event " + subEvent.subEventTitle + " at " + subEvent.subEventVenue + " has been created.");
+          Session.set("subEventCreatedMsg", "Sub event " + subEvent.subEventTitle + " at " + subEvent.subEventVenue + " has been created. Create a new sub event below.");
+          getSubEventSessionVars(subEvent);
         }
       });
     } else {
@@ -217,10 +221,21 @@ function makeSubEventFromSession() {
   setSubEventSessionVars();
   return {
     id: Session.get("id"),
-    type: 'subEvent',
-    pageType: 'subEvent',
+    type: 'page',
+    pageType: Session.get('templateChooser'),
+    notes: Session.get("notes"),
+    pageTitle: Session.get("pageTitle"),
+    pageName: Session.get("pageName"),
+    eventDefaultTitle: Session.get("eventDefaultTitle"),
+    eventDefaultSize: Session.get("eventDefaultSize"),
+    eventStartDate: Session.get("eventStartDate"),
+    eventStartTime: Session.get("eventStartTime"),
+    pageConfEmailSL: Session.get("pageConfEmailSL"),
+    pageConfEmailBody: Session.get("pageConfEmailBody"),
+    pageImportConfEmailBody: Session.get("pageConfEmailBody"),
     eventUmbrellaCampaignURL: Session.get("eventUmbrellaCampaignURL"),
     eventUmbrellaHostURL: Session.get("eventUmbrellaHostURL"),
+    eventUmbrellaSignupPageURL: Session.get("eventUmbrellaSignupPageURL"),
     subEventTitle: Session.get("subEventTitle"),
     subEventMaxAttendees: Session.get("subEventMaxAttendees"),
     subEventHostEmail: Session.get("subEventHostEmail"),
@@ -238,6 +253,22 @@ function makeSubEventFromSession() {
     savedBy: Meteor.user().profile.name
   }
 };
+
+function getSubEventSessionVars(obj) {
+  Session.set("subEventTitle", obj.subEventTitle);
+  Session.set("subEventMaxAttendees", obj.subEventMaxAttendees);
+  Session.set("subEventStartsAt", obj.subEventStartsAt);
+  Session.set("subEventHostEmail", obj.subEventHostEmail);
+  Session.set("subEventVenue", obj.subEventVenue);
+  Session.set("subEventAddress1", obj.subEventAddress1);
+  Session.set("subEventAddress2", obj.subEventAddress2);
+  Session.set("subEventCity", obj.subEventCity);
+  Session.set("subEventState", obj.subEventState);
+  Session.set("subEventZip", obj.subEventZip);
+  Session.set("subEventDirections", obj.subEventDirections);
+  Session.set("subEventPublicDescription", obj.subEventPublicDescription);
+  Session.set("subEventNoteToAttendees", obj.subEventNoteToAttendees);
+}
 
 function goodSubEventFields(event) {
   return event.subEventTitle && event.subEventMaxAttendees && event.subEventStartsAt && event.subEventHostEmail

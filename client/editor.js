@@ -240,7 +240,19 @@ function setSessionVarsForNewSubEvent(obj) {
   Session.set("subEventTitle", obj.eventDefaultTitle);
   Session.set("subEventMaxAttendees", obj.eventDefaultSize);
   Session.set("subEventStartsAt", obj.eventStartDate + " " + obj.eventStartTime);
-  Session.set("subEventHostEmail", Meteor.user().profile.name.substr(0,1)+Meteor.user().profile.name.split(" ")[1]+"@credoaction.com");
+  Session.set("subEventHostEmail", obj.subEventHostEmail || Meteor.user().profile.name.substr(0,1)+Meteor.user().profile.name.split(" ")[1]+"@credoaction.com");
+
+  Session.set("subEventVenue", obj.subEventVenue);
+  Session.set("subEventAddress1", obj.subEventAddress1);
+  Session.set("subEventAddress2", obj.subEventAddress2);
+  Session.set("subEventCity", obj.subEventCity);
+  Session.set("subEventState", obj.subEventState);
+  Session.set("subEventZip", obj.subEventZip);
+  Session.set("subEventDirections", obj.subEventDirections);
+  Session.set("subEventPublicDescription", obj.subEventPublicDescription);
+  Session.set("subEventNoteToAttendees", obj.subEventNoteToAttendees);
+
+/*
   Session.set("subEventVenue", "");
   Session.set("subEventAddress1", "");
   Session.set("subEventAddress2", "");
@@ -250,6 +262,7 @@ function setSessionVarsForNewSubEvent(obj) {
   Session.set("subEventDirections", "");
   Session.set("subEventPublicDescription", "");
   Session.set("subEventNoteToAttendees", "");
+*/
   Session.set("subEventCreatedMsg","");
 }
 
