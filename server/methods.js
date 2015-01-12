@@ -69,7 +69,10 @@ function updatePageShare(page, loc, bitly) {
 									    resource_uri: '/rest/v1/formfield/6/'},
 									{   id: 7,
 									    name: 'last_name',
-									    resource_uri: '/rest/v1/formfield/7/'}
+									    resource_uri: '/rest/v1/formfield/7/'},
+									{   id: 11,
+									    name: 'name',
+									    resource_uri: '/rest/v1/formfield/11/'}
 								], // end required_fields
 								tags: [{name: 'credo', resource_uri: '/rest/v1/tag/32/'}]
                       		} // end data
@@ -196,7 +199,10 @@ function updatePageShareForCreatedPage(page, loc, bitly) {
 									    resource_uri: '/rest/v1/formfield/6/'},
 									{   id: 7,
 									    name: 'last_name',
-									    resource_uri: '/rest/v1/formfield/7/'}
+									    resource_uri: '/rest/v1/formfield/7/'},
+									{   id: 11,
+									    name: 'name',
+									    resource_uri: '/rest/v1/formfield/11/'}
 								], // end required_fields
 								tags: [{name: 'credo', resource_uri: '/rest/v1/tag/32/'}]
                       		} // end data
@@ -487,7 +493,10 @@ Meteor.methods({
 										    resource_uri: '/rest/v1/formfield/6/'},
 										{   id: 7,
 										    name: 'last_name',
-										    resource_uri: '/rest/v1/formfield/7/'}
+										    resource_uri: '/rest/v1/formfield/7/'},
+										{   id: 11,
+										    name: 'name',
+										    resource_uri: '/rest/v1/formfield/11/'}
 									], // end required_fields
 	                      		} // end data
 	                      });
@@ -541,7 +550,10 @@ Meteor.methods({
 										    resource_uri: '/rest/v1/formfield/6/'},
 										{   id: 7,
 										    name: 'last_name',
-										    resource_uri: '/rest/v1/formfield/7/'}
+										    resource_uri: '/rest/v1/formfield/7/'},
+										{   id: 11,
+										    name: 'name',
+										    resource_uri: '/rest/v1/formfield/11/'}
 									], // end required_fields
 	                      		} // end data
 	                      });
