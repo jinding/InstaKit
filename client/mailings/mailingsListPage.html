@@ -5,18 +5,18 @@
 		new mailing
 		<hr style="color: #FFF;">
 		<ul>
-			<li id="templateChooser_petition"><a href="{{ pathFor 'compose' template='petition' }}">petition</a></li>
-			<li id="templateChooser_takeaction"><a href="{{ pathFor 'compose' template='takeaction' }}">take action</a></li>
-			<li id="templateChooser_publicComment"><a href="{{ pathFor 'compose' template='public comment' }}">public comment</a></li>
-			<li id="templateChooser_call"><a href="{{ pathFor 'compose' template='call' }}">call</a></li>
-			<li id="templateChooser_event"><a href="{{ pathFor 'compose' template='event' }}">event</a></li>
-			<li id="templateChooser_mobilize"><a href="{{ pathFor 'compose' template='mobilize' }}">mobilize</a></li>
-			<li id="templateChooser_blank"><a href="{{ pathFor 'compose' template='blank' }}">blank</a></li>
-			<li id="templateChooser_superpacFundraiser"><a href="{{ pathFor 'compose' template='superpacFundraiser' }}">superpac fundraiser</a></li>
+			<li id="templateChooser_petition"><a href="{{ pathFor route='compose' template='petition' }}">petition</a></li>
+			<li id="templateChooser_takeaction"><a href="{{ pathFor route='compose' template='takeaction' }}">take action</a></li>
+			<li id="templateChooser_publicComment"><a href="{{ pathFor route='compose' template='public comment' }}">public comment</a></li>
+			<li id="templateChooser_call"><a href="{{ pathFor route='compose' template='call' }}">call</a></li>
+			<li id="templateChooser_event"><a href="{{ pathFor route='compose' template='event' }}">event</a></li>
+			<li id="templateChooser_mobilize"><a href="{{ pathFor route='compose' template='mobilize' }}">mobilize</a></li>
+			<li id="templateChooser_blank"><a href="{{ pathFor route='compose' template='blank' }}">blank</a></li>
+			<li id="templateChooser_superpacFundraiser"><a href="{{ pathFor route='compose' template='superpacFundraiser' }}">superpac fundraiser</a></li>
 		</ul>
 		<hr style="color: #FFF; margin-top: 40px;">
-		<p><a href="{{ pathFor 'pages' }}" id="returnFilePage">pages</a></p>
-		{{# if isAdmin}}<p><a href="{{pathfor 'restore'}}" id="restoreLink">admin undelete</a></p>
+		<p><a href="{{ pathFor route='pages' }}" id="returnFilePage">pages</a></p>
+		{{# if isAdmin}}<p><a href="{{pathfor route='restore'}}" id="restoreLink">admin undelete</a></p>
 		{{/if}}
 		<p id="logoutButton" style="cursor: pointer;">logout</p>
 	</div>
@@ -32,7 +32,7 @@
 			</tr>
 		{{#each fileList}}
 			<tr>
-				<td><a href="{{ pathFor 'compose' }}" class="editButton">{{#if notes}}<em>{{notes}}</em> | {{/if}}{{headline}}</a></td>
+				<td><a href="{{ pathFor route='compose' }}" class="editButton">{{#if notes}}<em>{{notes}}</em> | {{/if}}{{headline}}</a></td>
 				<td>{{type}}</td>
 				<td>{{creator}}</td>
 				<td>{{savedBy}}</td>

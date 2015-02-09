@@ -6,13 +6,13 @@
 		new page
 		<hr style="color: #FFF;">
 		<ul>
-			<li id="templateChooser_petition"><a href="{{ pathFor 'createPage' template='petition' }}">petition</a></li>
-			<li id="templateChooser_letter"><a href="{{ pathFor 'createPage' template='letter' }}">letter</a></li>
-			<li id="templateChooser_event"><a href="{{ pathFor 'createPage' template='event' }}">event</a></li>
+			<li id="templateChooser_petition"><a href="{{ pathFor route='createPage' template='petition' }}">petition</a></li>
+			<li id="templateChooser_letter"><a href="{{ pathFor route='createPage' template='letter' }}">letter</a></li>
+			<li id="templateChooser_event"><a href="{{ pathFor route='createPage' template='event' }}">event</a></li>
 		</ul>
 		<hr style="color: #FFF; margin-top: 40px;">
-		<p><a href="{{ pathFor 'mailings' }}" id="returnFilePage">mailings</a></p>
-		{{# if isAdmin}}<p><a href="{{pathfor 'restore'}}" id="restoreLink">admin undelete</a></p>
+		<p><a href="{{ pathFor route='mailings' }}" id="returnFilePage">mailings</a></p>
+		{{# if isAdmin}}<p><a href="{{pathfor route='restore'}}" id="restoreLink">admin undelete</a></p>
 		{{/if}}
 		<p id="logoutButton" style="cursor: pointer;">logout</p>
 	</div>
@@ -28,7 +28,7 @@
 			</tr>
 		{{#each fileList}}
 			<tr>
-				<td><a href="{{ pathFor 'createPage' }}" class="editButton">{{#if notes}}<em>{{notes}}</em> | {{/if}}{{pageTitle}}</a></td>
+				<td><a href="{{ pathFor route='createPage' }}" class="editButton">{{#if notes}}<em>{{notes}}</em> | {{/if}}{{pageTitle}}</a></td>
 				<td>{{pageType}}</td>
 				<td>{{creator}}</td>
 				<td>{{savedBy}}</td>

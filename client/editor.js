@@ -340,6 +340,9 @@ Router.route('compose', {
     } 
     initSessionVarsForCompose();
     this.next();
+  },
+  action: function() {
+    this.render();
   }
 });
 
@@ -393,6 +396,9 @@ Router.route('createPage', {
     } 
     initSessionVarsForPageCompose();
     this.next();
+  },
+  action: function() {
+    this.render();
   }
 });
 
@@ -413,6 +419,9 @@ Router.route('postAPI', {
     var page = Files.findOne(this.params._id);  
     setSessionVarsForPage(page);
     this.next();
+  },
+  action: function() {
+    this.render();
   }
 });
 
@@ -425,21 +434,22 @@ Router.route('createSubEvents', {
     setSessionVarsForPage(eventUmbrella);
     setSessionVarsForNewSubEvent(eventUmbrella);
     this.next();
+  },
+  action: function() {
+    this.render();
   }
 });
 
-
+/*
 // this hook will run on almost all routes
-Router.onBeforeAction( function () {
+Router.onBeforeAction( function (pause) {
   if (! Meteor.user()) {
     this.render('loginPage');
 //    pause();
   } else {
     this.next();
   }
-});
-
-/*, {
+}, {
   except: ['login']
 });
 */
