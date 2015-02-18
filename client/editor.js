@@ -278,12 +278,8 @@ function initSessionVarsForPageCompose() {
 // Define our routes
 Router.route('/', {
   name: 'home',
-  template: 'filePage',
+  template: 'pages',
   path: '/',
-  onBeforeAction: function() {
-    Session.set('emailNotSaved',false);
-    this.next();
-  },
   action: function() {
     this.render();
   }
