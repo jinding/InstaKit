@@ -44,8 +44,8 @@
 	<div class="taf" >
 		<div class="taf_logo"><img src="http://shpg.org/images/icon-fb.gif"/><br>
 			<span style="color: #FF0000;">{{getValue 'pageFacebookLength'}}</span></div>
-		<div class="taf_title"><input type="text" id="pageFacebookTitle" class="{{highlight "pageFacebookTitle"}}" value="{{getValue "pageFacebookTitle"}}"></div>
-		<div class="taf_copy"><textarea class="textbox {{highlight "pageFacebookCopy"}}" rows="4" type="text" id="pageFacebookCopy">{{getValue "pageFacebookCopy"}}</textarea></div>
+		<div class="taf_title"><input type="text" id="pageFacebookTitle" class="{{highlight "pageFacebookTitle"}}" value="{{#if getValue "pageFacebookTitle"}}{{getValue "pageFacebookTitle"}}{{else}}Sign the petition: X{{/if}}"></div>
+		<div class="taf_copy"><textarea class="textbox {{highlight "pageFacebookCopy"}}" rows="4" type="text" id="pageFacebookCopy">{{#if getValue "pageFacebookCopy"}}{{getValue "pageFacebookCopy"}}{{else}}I just took action to... I think you should too.{{/if}}</textarea></div>
 	</div>
 </template>
 
@@ -53,15 +53,15 @@
 	<div class="taf" >
 		<div class="taf_logo"><img src="http://shpg.org/images/icon-twitter.gif"/><br>
 			<span style="color: #FF0000;">{{getValue 'pageTwitterLength'}}</span></div>
-		<div class="taf_copy"><textarea class="textbox {{highlight "pageTwitterCopy"}}" rows="3" type="text" id="pageTwitterCopy">{{#if getValue "pageTwitterCopy"}}{{getValue "pageTwitterCopy"}}{{else}}Include {LINK} where you want the short link inserted.{{/if}}</textarea></div>
+		<div class="taf_copy"><textarea class="textbox {{highlight "pageTwitterCopy"}}" rows="3" type="text" id="pageTwitterCopy">{{#if getValue "pageTwitterCopy"}}{{getValue "pageTwitterCopy"}}{{else}}Sign the petition: Tell TARGET to ACTION {LINK} #p2{{/if}}</textarea></div>
 	</div>
 </template>
 
 <template name="templatePageTAF">
 	<div class="taf" >
 		<div class="taf_logo"><img src="http://shpg.org/images/icon-email.gif"></div>
-		<div class="taf_title"><input type="text" id="pageTAFSL" class="{{highlight "pageTAFSL"}}" value="{{#if getValue "pageTAFSL"}}{{getValue "pageTAFSL"}}{{else}}TAF email subject line{{/if}}"></div>
-		<div class="taf_copy"><textarea class="textbox {{highlight "pageTAFCopy"}}" rows="5" type="text" id="pageTAFCopy">{{#if getValue "pageTAFCopy"}}{{getValue "pageTAFCopy"}}{{else}}TAF email body. Link: {LINK}{{/if}}</textarea></div>
+		<div class="taf_title"><input type="text" id="pageTAFSL" class="{{highlight "pageTAFSL"}}" value="{{#if getValue "pageTAFSL"}}{{getValue "pageTAFSL"}}{{else}}I just signed this petition -- will you?{{/if}}"></div>
+		<div class="taf_copy"><textarea class="textbox {{highlight "pageTAFCopy"}}" rows="5" type="text" id="pageTAFCopy">{{#if getValue "pageTAFCopy"}}{{getValue "pageTAFCopy"}}{{else}}I just took action to... I think you should too: {LINK}{{/if}}</textarea></div>
 	</div>
 </template>
 
