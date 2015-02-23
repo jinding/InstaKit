@@ -309,18 +309,18 @@ Router.route('compose', {
       Session.set("newEmail", false);
       var email = Files.findOne(this.params._id);
       setSessionVarsForEmail(email);
-    } else if (this.params.copy) {
+    } else if (this.params.query.copy) {
       // create a new email by copying another email
-      console.log("copying mailing " + this.params.copy);
-      var email = Files.findOne(this.params.copy);
+      console.log("copying mailing " + this.params.query.copy);
+      var email = Files.findOne(this.params.query.copy);
       setSessionVarsForEmail(email); // copy email vars from selected email
       Session.set("newEmail", true); // but this is a new email, not a current email
       // clear creator and ID vars because this is a new email
       Session.set("creator", "");
       Session.set("id", "");
-    } else if (this.params.page) {
+    } else if (this.params.query.page) {
       // create an email from a saved page
-      var page = Files.findOne(this.params.page);
+      var page = Files.findOne(this.params.query.page);
       setSessionVarsForEmailFromPage(page);
       Session.set("newEmail", true);
       Session.set("creator","");
@@ -331,7 +331,7 @@ Router.route('compose', {
       Session.set("creator","");
       Session.set("id","");
       // default to petition email if no query parameter for template set
-      Session.set('templateChooser',this.params.template || 'petition');
+      Session.set('templateChooser',this.params.query.template || 'petition');
       setSessionVarsForNewEmail();
     } 
     initSessionVarsForCompose();
@@ -386,9 +386,10 @@ Router.route('createPage', {
       Session.set("creator", "");
       Session.set("id", "");
       // default to petition page type if no query parameter for template set
-      Session.set('templateChooser', this.params.template || 'petition');
+      Session.set('templateChooser', this.params.query.template || 'petition');
+      console.log(this.params.query.template);
       setSessionVarsForNewPage();
-      if (this.params.template == 'event') { setSessionVarsForNewEvent(); }
+      if (this.params.query.template == 'event') { setSessionVarsForNewEvent(); }
     } 
     initSessionVarsForPageCompose();
     this.next();

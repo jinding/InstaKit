@@ -6,9 +6,9 @@
 		new page
 		<hr style="color: #FFF;">
 		<ul>
-			<li id="templateChooser_petition"><a href="{{ pathFor route='createPage' template='petition' }}">petition</a></li>
-			<li id="templateChooser_letter"><a href="{{ pathFor route='createPage' template='letter' }}">letter</a></li>
-			<li id="templateChooser_event"><a href="{{ pathFor route='createPage' template='event' }}">event</a></li>
+			<li id="templateChooser_petition"><a href="{{ pathFor route='createPage' query='template=petition' }}">petition</a></li>
+			<li id="templateChooser_letter"><a href="{{ pathFor route='createPage' query='template=letter' }}">letter</a></li>
+			<li id="templateChooser_event"><a href="{{ pathFor route='createPage' query='template=event' }}">event</a></li>
 		</ul>
 		<hr style="color: #FFF; margin-top: 40px;">
 		<p><a href="{{ pathFor route='mailings' }}" id="returnFilePage">mailings</a></p>
