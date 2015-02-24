@@ -58,7 +58,7 @@ Template.footnotes.events({
 
 Template.twitter.events({
   'keyup input[type=text]': function() {
-    Session.set("twitter", $('#twitter_text').val());
+    Session.set("twitter", urlEncodeQuotes($('#twitter_text').val()));
   }
 });
 
@@ -91,6 +91,12 @@ function removeCurlyQuotes(str) {
   .replace(/[\u2018\u2019]/g, "'")
   .replace(/[\u201C\u201D]/g, '"');
   return goodQuotes;
+};
+
+function urlEncodeQuotes (str) {
+  return str.replace(/['""]/g, function(c) {
+    return '%' + c.charCodeAt(0).toString(16);
+  });
 };
 
 function makeEmailFromSession() {
