@@ -71,8 +71,6 @@ Handlebars.registerHelper("prettifyDate", function(d) {
   } else { return ''; }
 });
 
-// router
-
 // email functions
 function setSessionVarsForEmail(obj) {
   Session.set("id", obj._id);
@@ -335,4 +333,3 @@ Handlebars.registerHelper("isAdmin", function() {
 
   return Meteor.user() && admins.indexOf(Meteor.user().profile.name) >= 0;
 });
-
