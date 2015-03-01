@@ -271,7 +271,7 @@ initSessionVarsForPageCompose = function () {
   Session.set("saveDialog",false);
 };
 
-window.onbeforeunload = function closeIt() {
+window.onbeforeunload = function () {
   if (Session.get("emailNotSaved")) {
     return "This email hasn't been saved.";
   } else if (Session.get("pageNotSaved")) {
