@@ -16,9 +16,13 @@ Template.adminDeletedFilesPage.fileList = function() {
 };
 
 Template.adminDeletedFilesPage.events({
-  'click #returnFilePage': function(evt) {
+  'click #goToPages': function(evt) {
     evt.preventDefault();
-    Router.go('home');
+    Router.go('pages');
+  },
+  'click #goToMailings': function(evt) {
+    evt.preventDefault();
+    Router.go('mailings');
   },
   'click .editButton': function(evt) {
     evt.preventDefault();
