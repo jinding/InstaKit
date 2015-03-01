@@ -140,7 +140,7 @@ setSessionVarsForEmailFromPage = function (obj) {
   Session.set("creator", Meteor.user().profile.name);
 };
 
-initSessionVarsForCompose = function () {
+initSessionVarsForEmailCompose = function () {
   Session.set("display", "visual");
   Session.set("showNavBar",false);
   Session.set("snippets",false);
