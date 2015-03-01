@@ -72,7 +72,7 @@ Handlebars.registerHelper("prettifyDate", function(d) {
 });
 
 // email functions
-function setSessionVarsForEmail(obj) {
+setSessionVarsForEmail = function (obj) {
   Session.set("id", obj._id);
   console.log("in setSessionVarsForEmail" + obj._id);
   Session.set("markdown_data", obj.markdown_data);
@@ -92,9 +92,9 @@ function setSessionVarsForEmail(obj) {
   Session.set("refcode", obj.refcode);
   Session.set("creator", obj.creator);
   Session.set("when", obj.when);
-}
+};
 
-function setSessionVarsForNewEmail() {
+setSessionVarsForNewEmail = function () {
   // template type is set in the link event handler so not necessary here
   // clear the other email session data
   Session.set("markdown_data", "");
@@ -118,9 +118,9 @@ function setSessionVarsForNewEmail() {
   Session.set("twitter", "");
   Session.set("refcode", "");
   Session.set("creator", "");
-}
+};
 
-function setSessionVarsForEmailFromPage(obj) {
+setSessionVarsForEmailFromPage = function (obj) {
   Session.set("markdown_data", obj.pageAboutText);
   if (obj.pageType === 'letter')
     Session.set('templateChooser', 'takeaction')
@@ -138,19 +138,19 @@ function setSessionVarsForEmailFromPage(obj) {
   var twitter = obj.pageTwitterCopy.replace(/{ *LINK *}/i, obj.AKpageBitly);
   Session.set("twitter", 'https://twitter.com/intent/tweet?&text='+encodeURIComponent(twitter));
   Session.set("creator", Meteor.user().profile.name);
-}
+};
 
-function initSessionVarsForCompose() {
+initSessionVarsForCompose = function () {
   Session.set("display", "visual");
   Session.set("showNavBar",false);
   Session.set("snippets",false);
   Session.set("toolTips",false);
   Session.set("emailNotSaved",false);
   Session.set("saveDialog",false);
-}
+};
 
 // page functions
-function setSessionVarsForPage(obj) {
+setSessionVarsForPage = function (obj) {
   Session.set("id", obj._id);
   Session.set("type", obj.type);
   Session.set("pageType", obj.pageType);
@@ -189,10 +189,9 @@ function setSessionVarsForPage(obj) {
   Session.set("eventUmbrellaCampaignURL", obj.eventUmbrellaCampaignURL);
   Session.set("eventUmbrellaHostURL", obj.eventUmbrellaHostURL);
   Session.set("eventUmbrellaSignupPageURL", obj.eventUmbrellaSignupPageURL);
+};
 
-}
-
-function setSessionVarsForNewPage() {
+setSessionVarsForNewPage = function () {
   // template type is set in the link event handler so not necessary here
   // clear the other email session data
   Session.set("type", "page");
@@ -221,7 +220,7 @@ function setSessionVarsForNewPage() {
   Session.set('AKpageResourceURI', "");
 }
 
-function setSessionVarsForNewEvent() {
+setSessionVarsForNewEvent = function () {
   // additional variables to be initialized for new events
   Session.set("eventDefaultTitle", "");
   Session.set("eventDefaultSize", "");
@@ -232,9 +231,9 @@ function setSessionVarsForNewEvent() {
   Session.set("eventUmbrellaHostURL", "");
   Session.set("eventUmbrellaSignupPageURL", "");
   Session.set('subEventCreatedMsg', "");
-}
+};
 
-function setSessionVarsForNewSubEvent(obj) {
+setSessionVarsForNewSubEvent = function (obj) {
   Session.set("subEventTitle", obj.eventDefaultTitle);
   Session.set("subEventMaxAttendees", obj.eventDefaultSize);
   Session.set("subEventStartsAt", obj.eventStartDate + " " + obj.eventStartTime);
@@ -262,15 +261,15 @@ function setSessionVarsForNewSubEvent(obj) {
   Session.set("subEventNoteToAttendees", "");
 */
   Session.set("subEventCreatedMsg","");
-}
+};
 
-function initSessionVarsForPageCompose() {
+initSessionVarsForPageCompose = function () {
   Session.set("showNavBar",false);
   Session.set("snippets",false);
   Session.set("toolTips",false);
   Session.set("pageNotSaved",false);
   Session.set("saveDialog",false);
-}
+};
 
 window.onbeforeunload = function closeIt() {
   if (Session.get("emailNotSaved")) {
@@ -326,7 +325,7 @@ Handlebars.registerHelper("belongsToUser", function(name) {
 
 Handlebars.registerHelper("isNotEvent", function(pageType) {
   return pageType !== 'event';
-})
+});
 
 Handlebars.registerHelper("isAdmin", function() {
   var admins = ['Jin Ding'];
