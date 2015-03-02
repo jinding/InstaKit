@@ -418,44 +418,44 @@ Template.postAPIpage.events({
 });
 
 Template.templatePageTitle.events({
-  'keyup input[type=text], keydown input[type=text]': function() {
+  'blur input[type=text]': function() {
     Session.set("pageTitle", $('#pageTitle').val());
   }
 });
 
 Template.templatePageName.events({
-  'keyup input[type=text], keydown input[type=text]': function() {
+  'blur input[type=text]': function() {
     Session.set("pageName", $('#pageName').val());
   }
 });
 
 Template.templatePageStatement.events({
-  'keyup input, keydown input': function() {
+  'blur input': function() {
     Session.set("pageStatementLeadIn", $('#pageStatementLeadIn').val());
  },
-  'keyup textarea, keydown textarea': function() {
+  'blur textarea': function() {
     Session.set("pageStatementText", $('#pageStatementText').val());
   }
 });
 
 Template.templatePageAboutText.events({
-  'keyup textarea, keydown textarea': function() {
+  'blur textarea': function() {
     Session.set("pageAboutText", $('#pageAboutText').val());
   }
 });
 
 Template.templatePageFacebook.events({
-  'keyup input[type=text], keydown input[type=text]': function() {
+  'blur input[type=text]': function() {
     Session.set("pageFacebookTitle", $('#pageFacebookTitle').val());
   },
-  'keyup textarea, keydown textarea': function() {
+  'blur textarea': function() {
     Session.set("pageFacebookCopy", $('#pageFacebookCopy').val());
     Session.set("pageFacebookLength", 260 - $('#pageFacebookCopy').val().length)
   }
 });
 
 Template.templatePageTwitterCopy.events({
-  'keyup textarea, keydown textarea': function() {
+  'blur textarea': function() {
     Session.set("pageTwitterCopy", $('#pageTwitterCopy').val());
     // assume 15 chars for bitly link, but if {LINK} exists then only need 9 more spaces
     var linkLength = $('#pageTwitterCopy').val().search(/{ *LINK *}/i) < 0 ? 23 : 16;
@@ -464,32 +464,32 @@ Template.templatePageTwitterCopy.events({
 });
 
 Template.templatePageTAF.events({
-  'keyup input[type=text], keydown input[type=text]': function() {
+  'blur input[type=text]': function() {
     Session.set("pageTAFSL", $('#pageTAFSL').val());
   },
-  'keyup textarea, keydown textarea': function() {
+  'blur textarea': function() {
     Session.set("pageTAFCopy", $('#pageTAFCopy').val());
   }
 });
 
 Template.templatePageConfEmail.events({
-  'keyup input[type=text], keydown input[type=text]': function() {
+  'blur input[type=text]': function() {
     Session.set("pageConfEmailSL", $('#pageConfEmailSL').val());
     Session.set("pageConfEmailBody", $('#pageConfEmailBody').val());
 },
-  'keyup textarea, keydown textarea': function() {
+  'blur textarea': function() {
     Session.set("pageConfEmailBody", $('#pageConfEmailBody').val());
   }
 });
 
 Template.templatePageGraphics.events({
-  'keyup #pageGraphicEmail, keydown #pageGraphicEmail': function() {
+  'blur #pageGraphicEmail': function() {
     Session.set("pageGraphicEmail", $('#pageGraphicEmail').val());
   },
-  'keyup #pageGraphicFacebook, keydown #pageGraphicFacebook': function() {
+  'blur #pageGraphicFacebook': function() {
     Session.set("pageGraphicFacebook", $('#pageGraphicFacebook').val());
   },
-  'keyup #pageGraphicHomePage, keydown #pageGraphicHomePage': function() {
+  'blur #pageGraphicHomePage': function() {
     Session.set("pageGraphicHomePage", $('#pageGraphicHomePage').val());
   }
 });
