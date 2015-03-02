@@ -136,7 +136,7 @@ setSessionVarsForEmailFromPage = function (obj) {
   Session.set('signature', Meteor.user().profile.name + ', Campaign Manager');
   Session.set("facebook", "");
   var twitter = obj.pageTwitterCopy.replace(/{ *LINK *}/i, obj.AKpageBitly);
-  Session.set("twitter", 'https://twitter.com/intent/tweet?&text='+encodeURIComponent(twitter));
+  Session.set("twitter", 'https://twitter.com/intent/tweet?&text='+urlEncodeQuotes(encodeURIComponent(removeCurlyQuotes(twitter))));
   Session.set("creator", Meteor.user().profile.name);
 };
 
@@ -147,6 +147,19 @@ initSessionVarsForEmailCompose = function () {
   Session.set("toolTips",false);
   Session.set("emailNotSaved",false);
   Session.set("saveDialog",false);
+};
+
+removeCurlyQuotes = function (str) {
+  var goodQuotes = str
+  .replace(/[\u2018\u2019]/g, "'")
+  .replace(/[\u201C\u201D]/g, '"');
+  return goodQuotes;
+};
+
+urlEncodeQuotes = function (str) {
+  return str.replace(/['""]/g, function(c) {
+    return '%' + c.charCodeAt(0).toString(16);
+  });
 };
 
 // page functions
