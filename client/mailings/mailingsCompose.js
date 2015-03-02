@@ -3,97 +3,90 @@ Template.composePage.buttonText = function() {
 };
 
 Template.notes.events({
-  'keyup input[type=text]': function() {
+  'blur input[type=text]': function() {
     Session.set("notes", $('#notes_text').val());
   }
 });
 
 Template.headline.events({
-  'keyup input[type=text]': function() {
+  'blur input[type=text]': function() {
     Session.set("headline", $('#headline_text').val());
   }
 });
 
 Template.statement_leadin.events({
-  'keyup input[type=text]': function() {
+  'blur input[type=text]': function() {
     Session.set("statement_leadin", $('#statement_leadin_text').val());
   }
 });
 
 Template.petition.events({
-  'keyup textarea': function() {
+  'blur textarea': function() {
     Session.set("petition", $('#petition_text').val());
   }
 });
 
 Template.link.events({
-  'keyup input[type=text]': function() {
+  'blur input[type=text]': function() {
     Session.set("link", $('#link_text').val());
   }
 });
 
 Template.graphic.events({
-  'keyup input[type=text]': function() {
+  'blur input[type=text]': function() {
     Session.set("graphic", $('#graphic_text').val());
   }
 });
 
 Template.graphic_alt.events({
-  'keyup input[type=text]': function() {
+  'blur input[type=text]': function() {
     Session.set("graphic_alt_text", $('#graphic_alt_text').val());
   }
 });
 
 Template.signature.events({
-  'keyup input[type=text]': function() {
+  'blur input[type=text]': function() {
     Session.set("signature", $('#signature_text').val());
   }
 });
 
 Template.footnotes.events({
-  'keyup textarea': function() {
+  'blur textarea': function() {
     Session.set("footnotes", $('#footnotes_text').val());
   }
 });
 
 Template.twitter.events({
-  'keyup input[type=text]': function() {
-    Session.set("twitter", $('#twitter_text').val());
+  'blur input[type=text]': function() {
+    Session.set("twitter", urlEncodeQuotes($('#twitter_text').val()));
   }
 });
 
 Template.markdown_input.events({
-  'keyup textarea': function() {
+  'blur textarea': function() {
     Session.set("markdown_data", $('#markdown_text').val());
   }
 });
 
 Template.topper.events({
-  'keyup textarea': function() {
+  'blur textarea': function() {
     Session.set("topper", $('#topper_text').val());
   }
 });
 
 Template.facebook.events({
-  'keyup input[type=text]': function() {
+  'blur input[type=text]': function() {
     Session.set("facebook", $('#facebook_text').val());
   }
 });
 
 Template.refcode.events({
-  'keyup input[type=text]': function() {
+  'blur input[type=text]': function() {
     Session.set("refcode", $('#refcode').val());
   }
 });
 
-function removeCurlyQuotes(str) {
-  var goodQuotes = str
-  .replace(/[\u2018\u2019]/g, "'")
-  .replace(/[\u201C\u201D]/g, '"');
-  return goodQuotes;
-};
-
-function makeEmailFromSession() {
+makeEmailFromSession = function() {
   return {
     id: Session.get("id"),
     type: Session.get("templateChooser"),
@@ -108,7 +101,7 @@ function makeEmailFromSession() {
     signature: Session.get("signature"),
     footnotes: Session.get("footnotes"),
     facebook: Session.get("facebook"),
-    twitter: removeCurlyQuotes(Session.get("twitter")),
+    twitter: urlEncodeQuotes(removeCurlyQuotes(Session.get("twitter"))),
     markdown_data: Session.get("markdown_data"),
     refcode: Session.get("refcode"),
     creator: Session.get("creator") || Meteor.user().profile.name,
@@ -319,7 +312,7 @@ Template.composePage.events({
   }
 });
 
-function insertAtCaret(areaId,text) {
+insertAtCaret = function(areaId,text) {
     var txtarea = document.getElementById(areaId);
     var scrollPos = txtarea.scrollTop;
     var strPos = 0;

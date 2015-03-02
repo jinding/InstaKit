@@ -71,10 +71,8 @@ Handlebars.registerHelper("prettifyDate", function(d) {
   } else { return ''; }
 });
 
-// router
-
 // email functions
-function setSessionVarsForEmail(obj) {
+setSessionVarsForEmail = function (obj) {
   Session.set("id", obj._id);
   console.log("in setSessionVarsForEmail" + obj._id);
   Session.set("markdown_data", obj.markdown_data);
@@ -94,9 +92,9 @@ function setSessionVarsForEmail(obj) {
   Session.set("refcode", obj.refcode);
   Session.set("creator", obj.creator);
   Session.set("when", obj.when);
-}
+};
 
-function setSessionVarsForNewEmail() {
+setSessionVarsForNewEmail = function () {
   // template type is set in the link event handler so not necessary here
   // clear the other email session data
   Session.set("markdown_data", "");
@@ -120,9 +118,9 @@ function setSessionVarsForNewEmail() {
   Session.set("twitter", "");
   Session.set("refcode", "");
   Session.set("creator", "");
-}
+};
 
-function setSessionVarsForEmailFromPage(obj) {
+setSessionVarsForEmailFromPage = function (obj) {
   Session.set("markdown_data", obj.pageAboutText);
   if (obj.pageType === 'letter')
     Session.set('templateChooser', 'takeaction')
@@ -138,21 +136,34 @@ function setSessionVarsForEmailFromPage(obj) {
   Session.set('signature', Meteor.user().profile.name + ', Campaign Manager');
   Session.set("facebook", "");
   var twitter = obj.pageTwitterCopy.replace(/{ *LINK *}/i, obj.AKpageBitly);
-  Session.set("twitter", 'https://twitter.com/intent/tweet?&text='+encodeURIComponent(twitter));
+  Session.set("twitter", 'https://twitter.com/intent/tweet?&text='+urlEncodeQuotes(encodeURIComponent(removeCurlyQuotes(twitter))));
   Session.set("creator", Meteor.user().profile.name);
-}
+};
 
-function initSessionVarsForCompose() {
+initSessionVarsForEmailCompose = function () {
   Session.set("display", "visual");
   Session.set("showNavBar",false);
   Session.set("snippets",false);
   Session.set("toolTips",false);
   Session.set("emailNotSaved",false);
   Session.set("saveDialog",false);
-}
+};
+
+removeCurlyQuotes = function (str) {
+  var goodQuotes = str
+  .replace(/[\u2018\u2019]/g, "'")
+  .replace(/[\u201C\u201D]/g, '"');
+  return goodQuotes;
+};
+
+urlEncodeQuotes = function (str) {
+  return str.replace(/['""]/g, function(c) {
+    return '%' + c.charCodeAt(0).toString(16);
+  });
+};
 
 // page functions
-function setSessionVarsForPage(obj) {
+setSessionVarsForPage = function (obj) {
   Session.set("id", obj._id);
   Session.set("type", obj.type);
   Session.set("pageType", obj.pageType);
@@ -191,10 +202,9 @@ function setSessionVarsForPage(obj) {
   Session.set("eventUmbrellaCampaignURL", obj.eventUmbrellaCampaignURL);
   Session.set("eventUmbrellaHostURL", obj.eventUmbrellaHostURL);
   Session.set("eventUmbrellaSignupPageURL", obj.eventUmbrellaSignupPageURL);
+};
 
-}
-
-function setSessionVarsForNewPage() {
+setSessionVarsForNewPage = function () {
   // template type is set in the link event handler so not necessary here
   // clear the other email session data
   Session.set("type", "page");
@@ -223,7 +233,7 @@ function setSessionVarsForNewPage() {
   Session.set('AKpageResourceURI', "");
 }
 
-function setSessionVarsForNewEvent() {
+setSessionVarsForNewEvent = function () {
   // additional variables to be initialized for new events
   Session.set("eventDefaultTitle", "");
   Session.set("eventDefaultSize", "");
@@ -234,9 +244,9 @@ function setSessionVarsForNewEvent() {
   Session.set("eventUmbrellaHostURL", "");
   Session.set("eventUmbrellaSignupPageURL", "");
   Session.set('subEventCreatedMsg', "");
-}
+};
 
-function setSessionVarsForNewSubEvent(obj) {
+setSessionVarsForNewSubEvent = function (obj) {
   Session.set("subEventTitle", obj.eventDefaultTitle);
   Session.set("subEventMaxAttendees", obj.eventDefaultSize);
   Session.set("subEventStartsAt", obj.eventStartDate + " " + obj.eventStartTime);
@@ -264,151 +274,17 @@ function setSessionVarsForNewSubEvent(obj) {
   Session.set("subEventNoteToAttendees", "");
 */
   Session.set("subEventCreatedMsg","");
-}
+};
 
-function initSessionVarsForPageCompose() {
+initSessionVarsForPageCompose = function () {
   Session.set("showNavBar",false);
   Session.set("snippets",false);
   Session.set("toolTips",false);
   Session.set("pageNotSaved",false);
   Session.set("saveDialog",false);
-}
+};
 
-Router.map(function () {
-  this.route('home', {
-    path: '/',
-    template: 'filePage',
-    action: Session.set('emailNotSaved',false)
-  });
-
-  this.route('mailings', {
-    path: '/mailings/',
-    template: 'filePage',
-    action: Session.set('emailNotSaved',false)
-  });
-
-  this.route('compose', {
-    // compose route with an optional ID parameter
-    path: '/mailings/compose/:_id?',
-    template: 'composePage',
-    onBeforeAction: function () {
-      if (this.params._id) {
-        // edit an existing email
-        Session.set("newEmail", false);
-        var email = Files.findOne(this.params._id);
-        setSessionVarsForEmail(email);
-      } else if (this.params.copy) {
-        // create a new email by copying another email
-        console.log("copying mailing " + this.params.copy);
-        var email = Files.findOne(this.params.copy);
-        setSessionVarsForEmail(email); // copy email vars from selected email
-        Session.set("newEmail", true); // but this is a new email, not a current email
-        // clear creator and ID vars because this is a new email
-        Session.set("creator", "");
-        Session.set("id", "");
-      } else if (this.params.page) {
-        // create an email from a saved page
-        var page = Files.findOne(this.params.page);
-        setSessionVarsForEmailFromPage(page);
-        Session.set("newEmail", true);
-        Session.set("creator","");
-        Session.set("id","");
-      } else {
-        // create a new email
-        Session.set("newEmail", true);
-        Session.set("creator","");
-        Session.set("id","");
-        // default to petition email if no query parameter for template set
-        Session.set('templateChooser',this.params.template || 'petition');
-        setSessionVarsForNewEmail();
-      } 
-      initSessionVarsForCompose();
-    }
-  });
-
-  this.route('pages', {
-    path: '/pages/',
-    template: 'pages'
-  });
-
-  this.route('createPage', {
-    path: '/pages/compose/:_id?',
-    template: 'createPage',
-    onBeforeAction: function () {
-      if (this.params._id) {
-        Session.set("newPage", false);
-        Session.set('subEventCreatedMsg', "");
-
-        var page = Files.findOne(this.params._id);
-        // check for missing page and throw a 404
-        setSessionVarsForPage(page);
-      } else if (this.params.copy) {
-        var page = Files.findOne(this.params.copy);
-       // check for missing email and throw a 404
-        setSessionVarsForPage(page); // copy page vars from selected page
-        Session.set("newPage", true); // but this is a new page, not a current page
-        // clear creator and ID vars, as well as created page vars because this is a new page
-        Session.set("creator", "");
-        Session.set("id", "");
-        Session.set('AKpageURL', "");
-        Session.set('AKpageEditURL', "");
-        Session.set('AKpageBitly', "");
-        Session.set('pageSharePageLink', "");
-        Session.set('AKpageID',"");
-        Session.set('AKpageResourceURI', "");
-        Session.set("eventUmbrellaCampaignURL", "");
-        Session.set("eventUmbrellaHostURL", "");
-        Session.set("eventUmbrellaSignupPageURL", "");
-        Session.set('subEventCreatedMsg', "");
-      } else {
-        Session.set("newPage", true);
-        Session.set("creator", "");
-        Session.set("id", "");
-        // default to petition page type if no query parameter for template set
-        Session.set('templateChooser', this.params.template || 'petition');
-        setSessionVarsForNewPage();
-        if (this.params.template == 'event') { setSessionVarsForNewEvent(); }
-      } 
-      initSessionVarsForPageCompose();
-    }
-  });
-
-  this.route('restore', {
-    path: '/restore/',
-    template: 'adminDeletedFilesPage'
-  });
-
-  this.route('postAPI', {
-    path: '/pages/postAPI/:_id?',
-    template: 'postAPIpage',
-    onBeforeAction: function() {
-      var page = Files.findOne(this.params._id);  
-      setSessionVarsForPage(page);
-    }
-  });
-
-  this.route('createSubEvents', {
-    path: '/pages/createSubEvents/:_id?',
-    template: 'createSubEvents',
-    onBeforeAction: function() {
-      var eventUmbrella = Files.findOne(this.params._id);
-      setSessionVarsForPage(eventUmbrella);
-      setSessionVarsForNewSubEvent(eventUmbrella);
-    }
-  })
-
-});
-
-// this hook will run on almost all routes
-Router.onBeforeAction(function (pause) {
-  if (! Meteor.user()) {
-    this.render('loginPage');
-    pause();
-  }
-}, {except: ['login']});
-
-
-window.onbeforeunload = function closeIt() {
+window.onbeforeunload = function () {
   if (Session.get("emailNotSaved")) {
     return "This email hasn't been saved.";
   } else if (Session.get("pageNotSaved")) {
@@ -462,11 +338,10 @@ Handlebars.registerHelper("belongsToUser", function(name) {
 
 Handlebars.registerHelper("isNotEvent", function(pageType) {
   return pageType !== 'event';
-})
+});
 
 Handlebars.registerHelper("isAdmin", function() {
   var admins = ['Jin Ding'];
 
   return Meteor.user() && admins.indexOf(Meteor.user().profile.name) >= 0;
 });
-

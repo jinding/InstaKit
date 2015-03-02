@@ -8,5 +8,5 @@ standard-app-packages
 showdown
 accounts-google
 accounts-ui
-iron-router
 http
+iron:router
