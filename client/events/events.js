@@ -35,7 +35,7 @@ Template.templateEventConfEmail.events({
 });
 
 
-function setEventSessionVars() {
+setEventSessionVars = function() {
   Session.set("pageTitle", $('#pageTitle').val());
   Session.set("notes", $('#pageNotes').val());
   Session.set("pageName", $('#pageName').val());
@@ -48,7 +48,7 @@ function setEventSessionVars() {
   Session.set("pageImportConfEmailBody", Session.get("pageConfEmailBody"));
 }
 
-function makeEventUmbrellaFromSession() {
+makeEventUmbrellaFromSession = function() {
   setEventSessionVars();
   return {
     id: Session.get("id"),
@@ -72,7 +72,7 @@ function makeEventUmbrellaFromSession() {
   }
 };
 
-function goodEventUmbrellaFields(event) {
+goodEventUmbrellaFields = function(event) {
   return event.pageTitle && event.pageName && event.eventDefaultTitle && event.eventDefaultSize && event.eventStartDate && event.eventStartTime;
 }
 
@@ -201,7 +201,7 @@ Template.createSubEvents.events({
   }
 });
 
-function setSubEventSessionVars() {
+setSubEventSessionVars = function() {
   Session.set("subEventTitle", $('#subEventTitle').val());
   Session.set("subEventMaxAttendees", $('#subEventMaxAttendees').val());
   Session.set("subEventStartsAt", $('#subEventStartsAt').val());
@@ -217,7 +217,7 @@ function setSubEventSessionVars() {
   Session.set("subEventNoteToAttendees", $('#subEventNoteToAttendees').val());
 };
 
-function makeSubEventFromSession() {
+makeSubEventFromSession = function() {
   setSubEventSessionVars();
   return {
     id: Session.get("id"),
@@ -254,7 +254,7 @@ function makeSubEventFromSession() {
   }
 };
 
-function getSubEventSessionVars(obj) {
+getSubEventSessionVars = function(obj) {
   Session.set("subEventTitle", obj.subEventTitle);
   Session.set("subEventMaxAttendees", obj.subEventMaxAttendees);
   Session.set("subEventStartsAt", obj.subEventStartsAt);
@@ -270,7 +270,7 @@ function getSubEventSessionVars(obj) {
   Session.set("subEventNoteToAttendees", obj.subEventNoteToAttendees);
 }
 
-function goodSubEventFields(event) {
+goodSubEventFields = function(event) {
   return event.subEventTitle && event.subEventMaxAttendees && event.subEventStartsAt && event.subEventHostEmail
     && event.subEventVenue && event.subEventAddress1 && event.subEventCity && event.subEventState && event.subEventZip;
 };

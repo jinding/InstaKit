@@ -1,4 +1,4 @@
-function standardizePageLinks(str) {
+standardizePageLinks = function(str) {
   // does {LINK} exist in the copy, if so, don't do anything
   if (str.search(/{ *LINK *}/i) < 0)
     //if {{page.canonical_url}} exists, replace with {LINK}
@@ -8,7 +8,7 @@ function standardizePageLinks(str) {
   else return str.replace(/{ *LINK *}/i, '{LINK}');
 };
 
-function setImageLinksToCloudfront(str) {
+setImageLinksToCloudfront = function(str) {
   if (str.search(/ *https/i) >= 0) // if https exist in the copy, change to http
     str = str.replace(/ *https/i, 'http');
   if (str.search(/s3.amazonaws.com\/s3.credoaction.com/i) >= 0) // if s3 exists in the copy, change to cloudfront
@@ -16,14 +16,7 @@ function setImageLinksToCloudfront(str) {
   return str;
 };
 
-function removeCurlyQuotes(str) { // replace single and double curly quotes with straight quotes
-  var goodQuotes = str
-  .replace(/[\u2018\u2019]/g, "'")
-  .replace(/[\u201C\u201D]/g, '"');
-  return goodQuotes;
-};
-
-function setSessionVars() {
+setSessionVars = function() {
   var converter = new Showdown.converter();
   Session.set("pageTitle", $('#pageTitle').val());
   Session.set("notes", $('#pageNotes').val());
@@ -50,7 +43,7 @@ function setSessionVars() {
   Session.set("pageTwitterLength", 140 - linkLength - $('#pageTwitterCopy').val().length);
 }
 
-function makePageFromSession() {
+makePageFromSession = function() {
   setSessionVars();
   var converter = new Showdown.converter();
 
@@ -371,8 +364,7 @@ Template.createPage.events({
   }
 }); 
 
-
-function insertAtCaret(areaId,text) {
+insertAtCaret = function(areaId,text) {
     var txtarea = document.getElementById(areaId);
     var scrollPos = txtarea.scrollTop;
     var strPos = 0;

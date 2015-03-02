@@ -86,7 +86,7 @@ Template.refcode.events({
   }
 });
 
-function makeEmailFromSession() {
+makeEmailFromSession = function() {
   return {
     id: Session.get("id"),
     type: Session.get("templateChooser"),
@@ -312,7 +312,7 @@ Template.composePage.events({
   }
 });
 
-function insertAtCaret(areaId,text) {
+insertAtCaret = function(areaId,text) {
     var txtarea = document.getElementById(areaId);
     var scrollPos = txtarea.scrollTop;
     var strPos = 0;
