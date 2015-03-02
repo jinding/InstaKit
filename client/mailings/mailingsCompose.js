@@ -3,85 +3,85 @@ Template.composePage.buttonText = function() {
 };
 
 Template.notes.events({
-  'keyup input[type=text]': function() {
+  'blur input[type=text]': function() {
     Session.set("notes", $('#notes_text').val());
   }
 });
 
 Template.headline.events({
-  'keyup input[type=text]': function() {
+  'blur input[type=text]': function() {
     Session.set("headline", $('#headline_text').val());
   }
 });
 
 Template.statement_leadin.events({
-  'keyup input[type=text]': function() {
+  'blur input[type=text]': function() {
     Session.set("statement_leadin", $('#statement_leadin_text').val());
   }
 });
 
 Template.petition.events({
-  'keyup textarea': function() {
+  'blur textarea': function() {
     Session.set("petition", $('#petition_text').val());
   }
 });
 
 Template.link.events({
-  'keyup input[type=text]': function() {
+  'blur input[type=text]': function() {
     Session.set("link", $('#link_text').val());
   }
 });
 
 Template.graphic.events({
-  'keyup input[type=text]': function() {
+  'blur input[type=text]': function() {
     Session.set("graphic", $('#graphic_text').val());
   }
 });
 
 Template.graphic_alt.events({
-  'keyup input[type=text]': function() {
+  'blur input[type=text]': function() {
     Session.set("graphic_alt_text", $('#graphic_alt_text').val());
   }
 });
 
 Template.signature.events({
-  'keyup input[type=text]': function() {
+  'blur input[type=text]': function() {
     Session.set("signature", $('#signature_text').val());
   }
 });
 
 Template.footnotes.events({
-  'keyup textarea': function() {
+  'blur textarea': function() {
     Session.set("footnotes", $('#footnotes_text').val());
   }
 });
 
 Template.twitter.events({
-  'keyup input[type=text]': function() {
+  'blur input[type=text]': function() {
     Session.set("twitter", urlEncodeQuotes($('#twitter_text').val()));
   }
 });
 
 Template.markdown_input.events({
-  'keyup textarea': function() {
+  'blur textarea': function() {
     Session.set("markdown_data", $('#markdown_text').val());
   }
 });
 
 Template.topper.events({
-  'keyup textarea': function() {
+  'blur textarea': function() {
     Session.set("topper", $('#topper_text').val());
   }
 });
 
 Template.facebook.events({
-  'keyup input[type=text]': function() {
+  'blur input[type=text]': function() {
     Session.set("facebook", $('#facebook_text').val());
   }
 });
 
 Template.refcode.events({
-  'keyup input[type=text]': function() {
+  'blur input[type=text]': function() {
     Session.set("refcode", $('#refcode').val());
   }
 });
