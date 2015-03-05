@@ -486,6 +486,15 @@ Template.templatePageGraphics.events({
   }
 });
 
+Template.templatePageTags.events({
+  'blur input[type=checkbox]': function() {
+    var checked =  $(":checkbox:checked").map(function() {
+        return this.value;
+    }).get();
+    Session.set("pageTags", checked);
+  }
+});
+
 Template.createPageDisplay.importData = function() {
 	return Session.set("pageImportAboutText", Template.pageCreationDisplay());
 };
@@ -658,3 +667,116 @@ Template.savePageDialog.events({
     });
   }
 });
+
+
+var tagDictionary = [
+{ name: "credo", resource_uri: "/rest/v1/tag/32/" },
+{ name: "environment", resource_uri: "/rest/v1/tag/3/" },
+{ name: "economic", resource_uri: "/rest/v1/tag/5/" },
+{ name: "non_action_page", resource_uri: "/rest/v1/tag/149/" },
+{ name: "women", resource_uri: "/rest/v1/tag/1/" },
+{ name: "fracking", resource_uri: "/rest/v1/tag/4/" },
+{ name: "corporations", resource_uri: "/rest/v1/tag/47/" },
+{ name: "labor", resource_uri: "/rest/v1/tag/15/" },
+{ name: "accountability", resource_uri: "/rest/v1/tag/6/" },
+{ name: "immigration", resource_uri: "/rest/v1/tag/14/" },
+{ name: "renewables", resource_uri: "/rest/v1/tag/85/" },
+{ name: "food", resource_uri: "/rest/v1/tag/8/" },
+{ name: "peace", resource_uri: "/rest/v1/tag/63/" },
+{ name: "media", resource_uri: "/rest/v1/tag/58/" },
+{ name: "paid", resource_uri: "/rest/v1/tag/28/" },
+{ name: "civilrights", resource_uri: "/rest/v1/tag/43/" },
+{ name: "netneutrality", resource_uri: "/rest/v1/tag/60/" },
+{ name: "superpac", resource_uri: "/rest/v1/tag/35/" },
+{ name: "financial", resource_uri: "/rest/v1/tag/53/" },
+{ name: "civil liberties", resource_uri: "/rest/v1/tag/237/" },
+{ name: "copied for delivery", resource_uri: "/rest/v1/tag/245/" },
+{ name: "tarsands", resource_uri: "/rest/v1/tag/70/" },
+{ name: "coal", resource_uri: "/rest/v1/tag/7/" },
+{ name: "dailykos", resource_uri: "/rest/v1/tag/33/" },
+{ name: "minimumwage", resource_uri: "/rest/v1/tag/263/" },
+{ name: "partnership", resource_uri: "/rest/v1/tag/244/" },
+{ name: "choice", resource_uri: "/rest/v1/tag/2/" },
+{ name: "conservation", resource_uri: "/rest/v1/tag/143/" },
+{ name: "socialsecurity", resource_uri: "/rest/v1/tag/69/" },
+{ name: "guns", resource_uri: "/rest/v1/tag/9/" },
+{ name: "Big Telecom", resource_uri: "/rest/v1/tag/290/" },
+{ name: "lgbt", resource_uri: "/rest/v1/tag/30/" },
+{ name: "call", resource_uri: "/rest/v1/tag/24/" },
+{ name: "education", resource_uri: "/rest/v1/tag/51/" },
+{ name: "Globalization", resource_uri: "/rest/v1/tag/265/" },
+{ name: "wiretapping", resource_uri: "/rest/v1/tag/74/" },
+{ name: "citizensunited", resource_uri: "/rest/v1/tag/42/" },
+{ name: "mobilize_calls", resource_uri: "/rest/v1/tag/269/" },
+{ name: "race", resource_uri: "/rest/v1/tag/66/" },
+{ name: "budget", resource_uri: "/rest/v1/tag/40/" },
+{ name: "Iran", resource_uri: "/rest/v1/tag/82/" },
+{ name: "affiliate", resource_uri: "/rest/v1/tag/266/" },
+{ name: "trade", resource_uri: "/rest/v1/tag/13/" },
+{ name: "taxes", resource_uri: "/rest/v1/tag/71/" },
+{ name: "voting", resource_uri: "/rest/v1/tag/11/" },
+{ name: "fan", resource_uri: "/rest/v1/tag/88/" },
+{ name: "judges", resource_uri: "/rest/v1/tag/56/" },
+{ name: "iraq", resource_uri: "/rest/v1/tag/221/" },
+{ name: "studentloans", resource_uri: "/rest/v1/tag/144/" },
+{ name: "medicare", resource_uri: "/rest/v1/tag/59/" },
+{ name: "drones", resource_uri: "/rest/v1/tag/87/" },
+{ name: "nuclear", resource_uri: "/rest/v1/tag/61/" },
+{ name: "healthcare", resource_uri: "/rest/v1/tag/55/" },
+{ name: "test", resource_uri: "/rest/v1/tag/19/" },
+{ name: "baddems", resource_uri: "/rest/v1/tag/38/" },
+{ name: "ethicalelectric", resource_uri: "/rest/v1/tag/257/" },
+{ name: "Taboola", resource_uri: "/rest/v1/tag/279/" },
+{ name: "donations voters", resource_uri: "/rest/v1/tag/285/" },
+{ name: "Mobile fundraiser", resource_uri: "/rest/v1/tag/287/" },
+{ name: "elizabethwarren", resource_uri: "/rest/v1/tag/109/" },
+{ name: "torture", resource_uri: "/rest/v1/tag/72/" },
+{ name: "bees", resource_uri: "/rest/v1/tag/90/" },
+{ name: "ssworks", resource_uri: "/rest/v1/tag/163/" },
+{ name: "fox", resource_uri: "/rest/v1/tag/54/" },
+{ name: "marriage", resource_uri: "/rest/v1/tag/57/" },
+{ name: "actblue", resource_uri: "/rest/v1/tag/100/" },
+{ name: "gmo", resource_uri: "/rest/v1/tag/75/" },
+{ name: "donors", resource_uri: "/rest/v1/tag/156/" },
+{ name: "Outbrain", resource_uri: "/rest/v1/tag/278/" },
+{ name: "momsdemandaction", resource_uri: "/rest/v1/tag/247/" },
+{ name: "international", resource_uri: "/rest/v1/tag/92/" },
+{ name: "medicaid", resource_uri: "/rest/v1/tag/183/" },
+{ name: "clarencethomas", resource_uri: "/rest/v1/tag/44/" },
+{ name: "senatereform", resource_uri: "/rest/v1/tag/68/" },
+{ name: "control", resource_uri: "/rest/v1/tag/146/" },
+{ name: "demsdotcom", resource_uri: "/rest/v1/tag/78/" },
+{ name: "reactivation match", resource_uri: "/rest/v1/tag/288/" },
+{ name: "solar", resource_uri: "/rest/v1/tag/83/" },
+{ name: "couragecampaign", resource_uri: "/rest/v1/tag/291/" },
+{ name: "medicaid_expansion", resource_uri: "/rest/v1/tag/262/" },
+{ name: "rhetoric", resource_uri: "/rest/v1/tag/67/" },
+{ name: "actblue_expresslane", resource_uri: "/rest/v1/tag/231/" },
+{ name: "nycc", resource_uri: "/rest/v1/tag/246/" },
+{ name: "specialprojects", resource_uri: "/rest/v1/tag/99/" },
+{ name: "Open media", resource_uri: "/rest/v1/tag/284/" },
+{ name: "drilling", resource_uri: "/rest/v1/tag/50/" },
+{ name: "filibuster", resource_uri: "/rest/v1/tag/52/" },
+{ name: "event", resource_uri: "/rest/v1/tag/26/" },
+{ name: "Yes on 92", resource_uri: "/rest/v1/tag/286/" },
+{ name: "patriotact", resource_uri: "/rest/v1/tag/162/" },
+{ name: "credo customer", resource_uri: "/rest/v1/tag/289/" },
+{ name: "action network", resource_uri: "/rest/v1/tag/264/" },
+{ name: "sumofus", resource_uri: "/rest/v1/tag/136/" },
+{ name: "animals", resource_uri: "/rest/v1/tag/105/" },
+{ name: "AFT", resource_uri: "/rest/v1/tag/283/" },
+{ name: "day we fight back", resource_uri: "/rest/v1/tag/267/" },
+{ name: "alan grayson", resource_uri: "/rest/v1/tag/270/" },
+{ name: "environmental action", resource_uri: "/rest/v1/tag/213/" },
+{ name: "ewg", resource_uri: "/rest/v1/tag/142/" },
+{ name: "KansasPeoplesAction", resource_uri: "/rest/v1/tag/268/" },
+{ name: "reset the net", resource_uri: "/rest/v1/tag/280/" },
+{ name: "toxic", resource_uri: "/rest/v1/tag/89/" },
+{ name: "climate", resource_uri: "/rest/v1/tag/46/" },
+{ name: "takeactionmn", resource_uri: "/rest/v1/tag/250/" },
+{ name: "demandprogress", resource_uri: "/rest/v1/tag/110/" },
+{ name: "blackwater", resource_uri: "/rest/v1/tag/39/" },
+{ name: "defense", resource_uri: "/rest/v1/tag/187/" },
+{ name: "deathpenalty", resource_uri: "/rest/v1/tag/48/" }
+];
+
