@@ -10,3 +10,4 @@ accounts-google
 accounts-ui
 http
 iron:router
+sacha:spin

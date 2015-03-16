@@ -53,6 +53,9 @@
 
 <!-- compose page templates -->
 <template name="createPage">
+	{{#if getValue 'showLoading'}}
+		{{> loading}}
+	{{/if}}
 	{{#if wrapperStyle "event"}}
 		{{> createEvent }}
 	{{ else }}

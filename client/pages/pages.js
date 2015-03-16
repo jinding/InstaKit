@@ -136,6 +136,7 @@ Template.createPage.events({
           console.log('upsert id ' + res.insertedId);
           if (!Session.get('id')) { Session.set('id', res.insertedId); }
           Session.set("pageNotSaved",false);
+          Session.set('showLoading', false);
           Router.go('pages');
         }
       });
@@ -150,6 +151,7 @@ Template.createPage.events({
     Router.go('postAPI', {_id: Session.get('id')});
   },
   'click #buttonAPIupdate': function() {
+    Session.set('showLoading', true);
     Session.set('duplicatePage',false);
     var page = makePageFromSession();
     // only move forward if the share text doesn't exceed length limits
@@ -160,18 +162,19 @@ Template.createPage.events({
       Meteor.call('saveFile', page, function (err, res) {
         if (err) {
           Session.set('saveError', err.error);
+          Session.set('showLoading', false);
         } else {
           console.log('page saved');
           console.log('upsert id ' + res.insertedId);
           if (!Session.get('id')) { Session.set('id', res.insertedId); }
           Session.set("pageNotSaved",false);
-          Session.set("saveDialog",false);
-        }
+          Session.set("saveDialog",false);        }
       });
       // edit created AK page
       Meteor.call('updateAKpage', page, function (error,res) {
         if (error) {
           Session.set('apiError', error.reason);
+          Session.set('showLoading', false);
         } else {
           Session.set('apiSuccess', 'API success!');
           Session.set('apiResults', res);
@@ -190,18 +193,21 @@ Template.createPage.events({
           Meteor.call('saveFile', page, function (err, res) {
             if (err) {
               Session.set('saveError', err.error);
+              Session.set('showLoading', false);
             } else {
               console.log('page saved');
               Session.set("pageNotSaved",false);
               Session.set("saveDialog",false);
             }
           });
+          Session.set('showLoading', false);
           console.log('updateAKpage success',res);
         }
       }); // end updateAKpage
     } // end if share text is within length limits
   }, 
   'click #buttonAPI': function() {
+    Session.set('showLoading', true);
     Session.set("apiError","");
     var page = makePageFromSession();
     // only move forward if the share text doesn't exceed length limits
@@ -211,6 +217,7 @@ Template.createPage.events({
       Meteor.call('saveFile', page, function (err, res) {
         if (err) {
           Session.set('saveError', err.error);
+          Session.set('showLoading', false);
         } else {
           console.log('page saved in click #buttonAPI');
           console.log('upsert id ' + res.insertedId);
@@ -234,12 +241,14 @@ Template.createPage.events({
           } else {
             Session.set('apiError', err.reason);
           }
+          Session.set('showLoading', false);
           console.log(err.reason);
         } else {
           console.log('create page success '+loc);
           Meteor.call('populateAKpage', page, loc, function (error,res) {
             if (error) {
                 Session.set('apiError', error.reason);
+                Session.set('showLoading', false);
             } else {
                 Session.set('apiSuccess', 'API success!');
                 Session.set('apiResults', res);
@@ -261,12 +270,14 @@ Template.createPage.events({
                 Meteor.call('saveFile', page, function (err, response) {
                   if (err) {
                     Session.set('saveError', err.error);
+                    Session.set('showLoading', false);
                   } else {
                     console.log('page saved');
                     Session.set("pageNotSaved",false);
                     Session.set("saveDialog",false);
                   }
                 });
+                Session.set('showLoading', false);
                 console.log('populateAKpage success',res);
             }
           }); // end populateAKpage
