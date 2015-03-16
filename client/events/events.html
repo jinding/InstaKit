@@ -1,7 +1,10 @@
 <!-- ============================ CREATE EVENT UMBRELLA CAMPAIGN ============================ -->
 
 <template name="createEvent">
-	<div id="createPage" class="eventPage">
+	{{#if getValue 'showLoading'}}
+		{{> loading}}
+	{{/if}}
+  	<div id="createPage" class="eventPage">
 		{{#if getValue "eventUmbrellaSignupPageURL" }}
 			<div class="eventMsgBox">
 				<p style="color: red;"><strong>This event umbrella campaign has already been created.</strong></p>
@@ -102,7 +105,10 @@ WHEN: {&#123; action.event.starts_at|date:"l, F j" &#125;} - {&#123; action.even
 <!-- ============================ CREATE SUBEVENTS ============================ -->
 
 <template name="createSubEvents">
-	<div id="createPage" class="eventPage">
+	{{#if getValue 'showLoading'}}
+		{{> loading}}
+	{{/if}}
+  	<div id="createPage" class="eventPage">
 		<h1>Step 2: Create sub events for event campaign "{{getValue "pageTitle"}}"</h1>
 		{{#if getValue "subEventCreatedMsg"}}
 			<div class="eventMsgBox">
