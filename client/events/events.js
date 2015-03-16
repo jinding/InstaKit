@@ -1,35 +1,35 @@
 // ======================== Event Umbrella functions ======================== //
 
 Template.templateEventDefaultTitle.events({
-  'keyup input[type=text]': function() {
+  'blur input[type=text]': function() {
     Session.set("eventDefaultTitle", $('#eventDefaultTitle').val());
   }
 });
 
 Template.templateEventDefaultSize.events({
-  'keyup input[type=text]': function() {
+  'blur input[type=text]': function() {
     Session.set("eventDefaultSize", $('#eventDefaultSize').val());
   }
 });
 
 Template.templateEventStartDate.events({
-  'keyup input[type=text]': function() {
+  'blur input[type=text]': function() {
     Session.set("eventStartDate", $('#eventStartDate').val());
   }
 });
 
 Template.templateEventStartTime.events({
-  'keyup input[type=text]': function() {
+  'blur input[type=text]': function() {
     Session.set("eventStartTime", $('#eventStartTime').val());
   }
 });
 
 Template.templateEventConfEmail.events({
-  'keyup input[type=text], keydown input[type=text]': function() {
+  'blur input[type=text]': function() {
     Session.set("pageConfEmailSL", $('#pageConfEmailSL').val());
     Session.set("pageConfEmailBody", $('#pageConfEmailBody').val());
 },
-  'keyup textarea, keydown textarea': function() {
+  'blur textarea': function() {
     Session.set("pageConfEmailBody", $('#pageConfEmailBody').val());
   }
 });

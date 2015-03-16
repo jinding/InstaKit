@@ -483,7 +483,7 @@ Meteor.methods({
 	  						  headers: {'Content-type': 'application/json'},
 	                          data: {
 	                          		campaign: eventUmbrellaURI,
-	                          		list: "/rest/v1/campaign/1/",
+	                          		//list: "/rest/v1/campaign/1/",
 	                      			name: eventUmbrella.pageName + "_host",
 	                      			title: eventUmbrella.pageTitle + " - Host",
 	                      			required_fields: [
@@ -500,6 +500,7 @@ Meteor.methods({
 										    name: 'name',
 										    resource_uri: '/rest/v1/formfield/11/'}
 									], // end required_fields
+									tags: [{name: 'credo', resource_uri: '/rest/v1/tag/32/'}]
 	                      		} // end data
 	                      });
   		console.log("eventHost URL " + createEventHostPage.headers.location);
@@ -540,7 +541,7 @@ Meteor.methods({
 	  						  headers: {'Content-type': 'application/json'},
 	                          data: {
 	                          		campaign: eventUmbrellaURI,
-	                          		list: "/rest/v1/campaign/1/",
+	                          		//list: "/rest/v1/campaign/1/",
 	                      			name: eventUmbrella.pageName + "_attend",
 	                      			title: eventUmbrella.pageTitle + " - Attend",
 	                      			required_fields: [
@@ -557,6 +558,7 @@ Meteor.methods({
 										    name: 'name',
 										    resource_uri: '/rest/v1/formfield/11/'}
 									], // end required_fields
+									tags: [{name: 'credo', resource_uri: '/rest/v1/tag/32/'}]
 	                      		} // end data
 	                      });
   		console.log("eventSignup URL " + createEventSignupPage.headers.location);
