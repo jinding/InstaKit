@@ -56,7 +56,8 @@ function updatePageShare(page, loc, bitly) {
 									'image_facebook_114': page.pageGraphicFacebook,
 									'taf_facebook_title': page.pageFacebookTitle,
 									'taf_facebook_copy': page.pageFacebookCopy,
-									'taf_tweet': updateTwitterForAK(page.pageTwitterCopy,bitly)
+									'taf_tweet': updateTwitterForAK(page.pageTwitterCopy,bitly),
+									'therm_landing_page': 1
                       			}, // end fields
                       			one_click: false,
                       			recognize: 'never',
@@ -186,7 +187,8 @@ function updatePageShareForCreatedPage(page, loc, bitly) {
 									'image_facebook_114': page.pageGraphicFacebook,
 									'taf_facebook_title': page.pageFacebookTitle,
 									'taf_facebook_copy': page.pageFacebookCopy,
-									'taf_tweet': updateTwitterForAK(page.pageTwitterCopy,bitly)
+									'taf_tweet': updateTwitterForAK(page.pageTwitterCopy,bitly),
+									'therm_landing_page': 1
                       			}, // end fields
                       			one_click: false,
                       			recognize: 'never',
