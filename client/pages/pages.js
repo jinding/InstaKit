@@ -41,6 +41,9 @@ setSessionVars = function() {
   Session.set("pageFacebookLength", 260 - $('#pageFacebookCopy').val().length);
   var linkLength = $('#pageTwitterCopy').val().search(/{ *LINK *}/i) < 0 ? 23 : 16;
   Session.set("pageTwitterLength", 140 - linkLength - $('#pageTwitterCopy').val().length);
+  Session.set("pageTags", $(":checkbox:checked").map(function() {
+        return this.value;
+    }).get());
 }
 
 makePageFromSession = function() {
@@ -67,6 +70,7 @@ makePageFromSession = function() {
     pageTwitterCopy: standardizePageLinks(Session.get("pageTwitterCopy")), // {LINK} is added if not present
     pageConfEmailSL: Session.get("pageConfEmailSL"),
     pageConfEmailBody: Session.get("pageConfEmailBody"),
+    pageTags: Session.get("pageTags"),
     creator: Session.get("creator") || Meteor.user().profile.name,
     savedBy: Meteor.user().profile.name,
     pageImportStatementLeadIn: converter.makeHtml(Session.get("pageStatementLeadIn")),
