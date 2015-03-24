@@ -83,3 +83,11 @@ Template.templatePageTags.events({
     Session.set("pageTags", checked);
   }
 });
+
+Template.templatePageTags.helpers({
+  tagCheckbox: function(name) {
+    if (Session.get('pageTags').indexOf(name) >= 0)
+        return '<label><input type="checkbox" name="pageTags" value="' + name + '" checked >'+ name +'</label>';
+    else return '<label><input type="checkbox" name="pageTags" value="' + name + '" >'+ name +'</label>';
+  }
+});
