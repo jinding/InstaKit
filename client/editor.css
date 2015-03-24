@@ -45,6 +45,7 @@ table, th, td {
 	margin: 0px;
 	border-spacing: 0px;
 }
+td { vertical-align: top;}
 ul {
 	list-style-type: circle;
 	padding: 0px;
@@ -211,6 +212,10 @@ button.sortButton {
   vertical-align: top;
   margin-left: 0px;
 }
+.createPageInputs input[type=checkbox] {
+	width: 8px;
+	margin-right: 8px;
+}
 #createPageDisplay { width: 520px; padding-top: 2px; float: right; padding-right: 12px;}
 
 /* page creation display styling
@@ -283,7 +288,7 @@ button.sortButton {
 .taf_copy { margin: 0px; color: gray;}
 .taf textarea, .taf input { width: 440px;}
 
-.bodytext_desc { float: left; padding-right: 4px; font-weight: bold; width: 65px; padding-top: 8px;}
+.bodytext_desc { float: left; padding-right: 4px; font-weight: bold; width: 65px; padding-top: 4px;}
 .bodytext textarea { width: 484px;}
 .bodytext input { width: 415px; vertical-align: middle; }
  

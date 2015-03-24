@@ -1,4 +1,14 @@
-function createShareProgressPage(page) {
+var setTags = function(pageTags) {
+	// always have 'credo' as a default tag
+	var tags = [{name: 'credo', resource_uri: '/rest/v1/tag/32/'}];
+
+	for (i=0; i<pageTags.length; i++) {
+		tags.push({name: pageTags[i], resource_uri: tagDictionary[pageTags[i]]});
+	}
+	return tags;
+};
+
+var createShareProgressPage = function(page) {
 	try {
 		var sp = HTTP.call('POST', 'https://run.shareprogress.org/api/v1/pages/update',
 				{ headers: {'Content-type': 'application/json'},
@@ -32,15 +42,15 @@ function createShareProgressPage(page) {
 	}
 }
 
-function updateTwitterForAK(str, bitly) {
+var updateTwitterForAK = function(str, bitly) {
 	return str.replace(/{ *LINK *}/i, bitly);
 }
 
-function updateTAFCopyForAK(str) {
+var updateTAFCopyForAK = function(str) {
 	return str.replace(/{ *LINK *}/i, '{{ page.canonical_url }}');
 }
 
-function updatePageShare(page, loc, bitly) {
+var updatePageShare = function(page, loc, bitly) {
 	// create new petition page.
 	try {
 		var updatePage = HTTP.call("PUT", loc,
@@ -56,7 +66,8 @@ function updatePageShare(page, loc, bitly) {
 									'image_facebook_114': page.pageGraphicFacebook,
 									'taf_facebook_title': page.pageFacebookTitle,
 									'taf_facebook_copy': page.pageFacebookCopy,
-									'taf_tweet': updateTwitterForAK(page.pageTwitterCopy,bitly)
+									'taf_tweet': updateTwitterForAK(page.pageTwitterCopy,bitly),
+									'therm_landing_page': 1
                       			}, // end fields
                       			one_click: false,
                       			recognize: 'never',
@@ -74,7 +85,7 @@ function updatePageShare(page, loc, bitly) {
 									    name: 'name',
 									    resource_uri: '/rest/v1/formfield/11/'}
 								], // end required_fields
-								tags: [{name: 'credo', resource_uri: '/rest/v1/tag/32/'}]
+								tags: setTags(page.pageTags)
                       		} // end data
                       });		
 		return true; 
@@ -86,7 +97,7 @@ function updatePageShare(page, loc, bitly) {
 	}
 };
 
-function updatePageForm(page,resource) {
+var updatePageForm = function(page,resource) {
 	// create the petition cms form and set its page to the petition page resource_uri.
 	// doing this automatically updates the petition page to find this form
 	try {
@@ -122,7 +133,7 @@ function updatePageForm(page,resource) {
   	}
 };
 
-function updatePageFields(page,resource,sp) {
+var updatePageFields = function(page,resource,sp) {
 	try {
 	  console.log('in updatePageFields '+resource);
 	  var addPageFields = HTTP.call("POST", 'https://act.credoaction.com/rest/v1/pagefollowup/',
@@ -150,7 +161,7 @@ function updatePageFields(page,resource,sp) {
   	}
 };
 
-function createShortLink(page) {
+var createShortLink = function(page) {
 	try {
 		var bitly = HTTP.call("GET", 'https://api-ssl.bitly.com/v3/shorten',
 					{
@@ -170,7 +181,7 @@ function createShortLink(page) {
 
 // functions for updating an already created AK page
 
-function updatePageShareForCreatedPage(page, loc, bitly) {
+var updatePageShareForCreatedPage = function(page, loc, bitly) {
 	// update petition page that already exists in AK
 	try {
 		var updatePage = HTTP.call("PUT", loc,
@@ -186,7 +197,8 @@ function updatePageShareForCreatedPage(page, loc, bitly) {
 									'image_facebook_114': page.pageGraphicFacebook,
 									'taf_facebook_title': page.pageFacebookTitle,
 									'taf_facebook_copy': page.pageFacebookCopy,
-									'taf_tweet': updateTwitterForAK(page.pageTwitterCopy,bitly)
+									'taf_tweet': updateTwitterForAK(page.pageTwitterCopy,bitly),
+									'therm_landing_page': 1
                       			}, // end fields
                       			one_click: false,
                       			recognize: 'never',
@@ -204,7 +216,7 @@ function updatePageShareForCreatedPage(page, loc, bitly) {
 									    name: 'name',
 									    resource_uri: '/rest/v1/formfield/11/'}
 								], // end required_fields
-								tags: [{name: 'credo', resource_uri: '/rest/v1/tag/32/'}]
+								tags: setTags(page.pageTags)
                       		} // end data
                       });		
 		return true; 
@@ -218,7 +230,7 @@ function updatePageShareForCreatedPage(page, loc, bitly) {
 	}
 };
 
-function updatePageFormForCreatedPage(page,loc) {
+var updatePageFormForCreatedPage = function(page,loc) {
 	// create the petition cms form and set its page to the petition page resource_uri.
 	// doing this automatically updates the petition page to find this form
 	try {
@@ -255,7 +267,7 @@ function updatePageFormForCreatedPage(page,loc) {
   	}
 };
 
-function updatePageFieldsForCreatedPage(page,loc,sp) {
+var updatePageFieldsForCreatedPage = function(page,loc,sp) {
 	try {
 	  console.log('in updatePageFieldsForCreatedPage '+loc);
 	  var updatePageFields = HTTP.call("PUT", loc,
@@ -282,7 +294,7 @@ function updatePageFieldsForCreatedPage(page,loc,sp) {
   	}
 };
 
-function updateShareProgressPageForCreatedPage(page) {
+var updateShareProgressPageForCreatedPage = function(page) {
 	try {
 		var loc = page.pageSharePageLink.replace('http://share.credoaction.com/4/','');
 		console.log('in updateShareProgressPageForCreatedPage ' + loc);
@@ -481,7 +493,7 @@ Meteor.methods({
 	  						  headers: {'Content-type': 'application/json'},
 	                          data: {
 	                          		campaign: eventUmbrellaURI,
-	                          		list: "/rest/v1/campaign/1/",
+	                          		//list: "/rest/v1/campaign/1/",
 	                      			name: eventUmbrella.pageName + "_host",
 	                      			title: eventUmbrella.pageTitle + " - Host",
 	                      			required_fields: [
@@ -498,6 +510,7 @@ Meteor.methods({
 										    name: 'name',
 										    resource_uri: '/rest/v1/formfield/11/'}
 									], // end required_fields
+									tags: [{name: 'credo', resource_uri: '/rest/v1/tag/32/'}]
 	                      		} // end data
 	                      });
   		console.log("eventHost URL " + createEventHostPage.headers.location);
@@ -538,7 +551,7 @@ Meteor.methods({
 	  						  headers: {'Content-type': 'application/json'},
 	                          data: {
 	                          		campaign: eventUmbrellaURI,
-	                          		list: "/rest/v1/campaign/1/",
+	                          		//list: "/rest/v1/campaign/1/",
 	                      			name: eventUmbrella.pageName + "_attend",
 	                      			title: eventUmbrella.pageTitle + " - Attend",
 	                      			required_fields: [
@@ -555,6 +568,7 @@ Meteor.methods({
 										    name: 'name',
 										    resource_uri: '/rest/v1/formfield/11/'}
 									], // end required_fields
+									tags: [{name: 'credo', resource_uri: '/rest/v1/tag/32/'}]
 	                      		} // end data
 	                      });
   		console.log("eventSignup URL " + createEventSignupPage.headers.location);
@@ -665,3 +679,271 @@ Meteor.methods({
   }
 });
 
+var tagDictionary = {
+  'women': '/rest/v1/tag/1/',
+  'choice': '/rest/v1/tag/2/',
+  'environment': '/rest/v1/tag/3/',
+  'fracking': '/rest/v1/tag/4/',
+  'economic': '/rest/v1/tag/5/',
+  'accountability': '/rest/v1/tag/6/',
+  'coal': '/rest/v1/tag/7/',
+  'food': '/rest/v1/tag/8/',
+  'guns': '/rest/v1/tag/9/',
+  'health': '/rest/v1/tag/10/',
+  'voting': '/rest/v1/tag/11/',
+  'Jin': '/rest/v1/tag/12/',
+  'trade': '/rest/v1/tag/13/',
+  'immigration': '/rest/v1/tag/14/',
+  'labor': '/rest/v1/tag/15/',
+  'homepage': '/rest/v1/tag/16/',
+  'kicker': '/rest/v1/tag/17/',
+  'chaser': '/rest/v1/tag/18/',
+  'test': '/rest/v1/tag/19/',
+  'local': '/rest/v1/tag/20/',
+  'national': '/rest/v1/tag/21/',
+  'organize': '/rest/v1/tag/22/',
+  'petition': '/rest/v1/tag/23/',
+  'call': '/rest/v1/tag/24/',
+  'public_comment': '/rest/v1/tag/25/',
+  'event': '/rest/v1/tag/26/',
+  'fundraiser': '/rest/v1/tag/27/',
+  'paid': '/rest/v1/tag/28/',
+  'core': '/rest/v1/tag/29/',
+  'lgbt': '/rest/v1/tag/30/',
+  'reactivation': '/rest/v1/tag/31/',
+  'credo': '/rest/v1/tag/32/',
+  'dailykos': '/rest/v1/tag/33/',
+  'allenwest': '/rest/v1/tag/34/',
+  'superpac': '/rest/v1/tag/35/',
+  'afghanistan': '/rest/v1/tag/36/',
+  'bachmann': '/rest/v1/tag/37/',
+  'baddems': '/rest/v1/tag/38/',
+  'blackwater': '/rest/v1/tag/39/',
+  'budget': '/rest/v1/tag/40/',
+  'chamber': '/rest/v1/tag/41/',
+  'citizensunited': '/rest/v1/tag/42/',
+  'civilrights': '/rest/v1/tag/43/',
+  'clarencethomas': '/rest/v1/tag/44/',
+  'cleanairact': '/rest/v1/tag/45/',
+  'climate': '/rest/v1/tag/46/',
+  'corporations': '/rest/v1/tag/47/',
+  'deathpenalty': '/rest/v1/tag/48/',
+  'debtceiling': '/rest/v1/tag/49/',
+  'drilling': '/rest/v1/tag/50/',
+  'education': '/rest/v1/tag/51/',
+  'filibuster': '/rest/v1/tag/52/',
+  'financial': '/rest/v1/tag/53/',
+  'fox': '/rest/v1/tag/54/',
+  'healthcare': '/rest/v1/tag/55/',
+  'judges': '/rest/v1/tag/56/',
+  'marriage': '/rest/v1/tag/57/',
+  'media': '/rest/v1/tag/58/',
+  'medicare': '/rest/v1/tag/59/',
+  'netneutrality': '/rest/v1/tag/60/',
+  'nuclear': '/rest/v1/tag/61/',
+  'palin': '/rest/v1/tag/62/',
+  'peace': '/rest/v1/tag/63/',
+  'pollution': '/rest/v1/tag/64/',
+  'publicbroadcasting': '/rest/v1/tag/65/',
+  'race': '/rest/v1/tag/66/',
+  'rhetoric': '/rest/v1/tag/67/',
+  'senatereform': '/rest/v1/tag/68/',
+  'socialsecurity': '/rest/v1/tag/69/',
+  'tarsands': '/rest/v1/tag/70/',
+  'taxes': '/rest/v1/tag/71/',
+  'torture': '/rest/v1/tag/72/',
+  'war': '/rest/v1/tag/73/',
+  'wiretapping': '/rest/v1/tag/74/',
+  'gmo': '/rest/v1/tag/75/',
+  'finance': '/rest/v1/tag/76/',
+  'progressivesunited': '/rest/v1/tag/77/',
+  'demsdotcom': '/rest/v1/tag/78/',
+  'colorofchange': '/rest/v1/tag/79/',
+  'wind': '/rest/v1/tag/80/',
+  'hlinko': '/rest/v1/tag/81/',
+  'Iran': '/rest/v1/tag/82/',
+  'solar': '/rest/v1/tag/83/',
+  'rebuildthedream': '/rest/v1/tag/84/',
+  'renewables': '/rest/v1/tag/85/',
+  'risingtide': '/rest/v1/tag/86/',
+  'drones': '/rest/v1/tag/87/',
+  'fan': '/rest/v1/tag/88/',
+  'toxic': '/rest/v1/tag/89/',
+  'bees': '/rest/v1/tag/90/',
+  'presente': '/rest/v1/tag/91/',
+  'international': '/rest/v1/tag/92/',
+  'mining': '/rest/v1/tag/93/',
+  'welcome_email': '/rest/v1/tag/94/',
+  'sweep': '/rest/v1/tag/95/',
+  'launch': '/rest/v1/tag/96/',
+  'rollout': '/rest/v1/tag/97/',
+  'dontuse': '/rest/v1/tag/98/',
+  'specialprojects': '/rest/v1/tag/99/',
+  'actblue': '/rest/v1/tag/100/',
+  'rootsaction': '/rest/v1/tag/101/',
+  'drugs': '/rest/v1/tag/102/',
+  'privatization': '/rest/v1/tag/103/',
+  'seniors': '/rest/v1/tag/104/',
+  'animals': '/rest/v1/tag/105/',
+  'grassroots': '/rest/v1/tag/106/',
+  'waunited': '/rest/v1/tag/107/',
+  'changedotorg_signers': '/rest/v1/tag/108/',
+  'elizabethwarren': '/rest/v1/tag/109/',
+  'demandprogress': '/rest/v1/tag/110/',
+  'PlannedParenthood': '/rest/v1/tag/128/',
+  'reginaschwartz': '/rest/v1/tag/129/',
+  'neworganizing': '/rest/v1/tag/130/',
+  'netrootsnation': '/rest/v1/tag/131/',
+  'pccc': '/rest/v1/tag/132/',
+  'sierraclub': '/rest/v1/tag/133/',
+  'arctic': '/rest/v1/tag/134/',
+  'usaction': '/rest/v1/tag/135/',
+  'sumofus': '/rest/v1/tag/136/',
+  'tp10': '/rest/v1/tag/137/',
+  'motherjones': '/rest/v1/tag/138/',
+  'votevets': '/rest/v1/tag/139/',
+  'mortgage': '/rest/v1/tag/140/',
+  'steveking': '/rest/v1/tag/141/',
+  'ewg': '/rest/v1/tag/142/',
+  'conservation': '/rest/v1/tag/143/',
+  'studentloans': '/rest/v1/tag/144/',
+  'joewalsh': '/rest/v1/tag/145/',
+  'control': '/rest/v1/tag/146/',
+  'treatment': '/rest/v1/tag/147/',
+  'chamberofcommerce': '/rest/v1/tag/148/',
+  'non_action_page': '/rest/v1/tag/149/',
+  'no_akid_mailing': '/rest/v1/tag/150/',
+  'taxcannibus': '/rest/v1/tag/151/',
+  'elections': '/rest/v1/tag/152/',
+  'saveourenvironment': '/rest/v1/tag/153/',
+  'eff': '/rest/v1/tag/154/',
+  'occupy': '/rest/v1/tag/155/',
+  'donors': '/rest/v1/tag/156/',
+  'denner': '/rest/v1/tag/157/',
+  'upworthy_email': '/rest/v1/tag/158/',
+  'kamalaharris': '/rest/v1/tag/159/',
+  'emilyslist': '/rest/v1/tag/160/',
+  'other98': '/rest/v1/tag/161/',
+  'patriotact': '/rest/v1/tag/162/',
+  'ssworks': '/rest/v1/tag/163/',
+  'boehner': '/rest/v1/tag/164/',
+  'ericcantor': '/rest/v1/tag/165/',
+  'monsanto': '/rest/v1/tag/166/',
+  'fdn': '/rest/v1/tag/167/',
+  'rickperry': '/rest/v1/tag/168/',
+  'doublehit': '/rest/v1/tag/169/',
+  'upworthy_holler': '/rest/v1/tag/170/',
+  'uganda': '/rest/v1/tag/171/',
+  'lcv': '/rest/v1/tag/172/',
+  'outsourcing': '/rest/v1/tag/173/',
+  'freespeech': '/rest/v1/tag/174/',
+  'bullying': '/rest/v1/tag/175/',
+  'doma': '/rest/v1/tag/176/',
+  'burma': '/rest/v1/tag/177/',
+  'dfa': '/rest/v1/tag/178/',
+  'clcv': '/rest/v1/tag/179/',
+  'defenders': '/rest/v1/tag/180/',
+  'dadt': '/rest/v1/tag/181/',
+  'greenpeace': '/rest/v1/tag/182/',
+  'medicaid': '/rest/v1/tag/183/',
+  'texas': '/rest/v1/tag/184/',
+  'water': '/rest/v1/tag/185/',
+  'deficit': '/rest/v1/tag/186/',
+  'defense': '/rest/v1/tag/187/',
+  'spending': '/rest/v1/tag/188/',
+  'bushtaxcuts': '/rest/v1/tag/189/',
+  'cleanair': '/rest/v1/tag/190/',
+  'wilderness': '/rest/v1/tag/191/',
+  'truemajority': '/rest/v1/tag/192/',
+  'iowa': '/rest/v1/tag/193/',
+  'wisconsin': '/rest/v1/tag/194/',
+  'thankyou': '/rest/v1/tag/195/',
+  'nelson': '/rest/v1/tag/196/',
+  'senate': '/rest/v1/tag/197/',
+  'att': '/rest/v1/tag/198/',
+  'breitbart': '/rest/v1/tag/199/',
+  'earthjustice': '/rest/v1/tag/200/',
+  'stumbledupon': '/rest/v1/tag/201/',
+  'glennbeck': '/rest/v1/tag/202/',
+  'maryland': '/rest/v1/tag/203/',
+  'obama': '/rest/v1/tag/204/',
+  'rightwing': '/rest/v1/tag/205/',
+  'ccd': '/rest/v1/tag/206/',
+  'piven': '/rest/v1/tag/207/',
+  'oreilly': '/rest/v1/tag/208/',
+  'rawstory': '/rest/v1/tag/209/',
+  'chongandkoster': '/rest/v1/tag/210/',
+  'nationalmemo': '/rest/v1/tag/211/',
+  'Causes': '/rest/v1/tag/212/',
+  'environmental action': '/rest/v1/tag/213/',
+  'ran': '/rest/v1/tag/214/',
+  'fcc': '/rest/v1/tag/215/',
+  'copps': '/rest/v1/tag/216/',
+  'jerrybrown': '/rest/v1/tag/217/',
+  'methyliodide': '/rest/v1/tag/218/',
+  'delay': '/rest/v1/tag/219/',
+  'disclose': '/rest/v1/tag/220/',
+  'iraq': '/rest/v1/tag/221/',
+  'bush': '/rest/v1/tag/222/',
+  'salmon': '/rest/v1/tag/223/',
+  'labeling': '/rest/v1/tag/224/',
+  'judicial': '/rest/v1/tag/225/',
+  'voterregistrationact': '/rest/v1/tag/226/',
+  'irs': '/rest/v1/tag/227/',
+  'ckads': '/rest/v1/tag/228/',
+  'upworthy': '/rest/v1/tag/229/',
+  'mailing 8622 target': '/rest/v1/tag/230/',
+  'actblue_expresslane': '/rest/v1/tag/231/',
+  'walmart': '/rest/v1/tag/232/',
+  'mixed channel': '/rest/v1/tag/233/',
+  'kxl_action_event_host': '/rest/v1/tag/236/',
+  'civil liberties': '/rest/v1/tag/237/',
+  'ControlShift Category: education': '/rest/v1/tag/238/',
+  'oil change international': '/rest/v1/tag/239/',
+  'testing_universe': '/rest/v1/tag/240/',
+  'deliveries - closed': '/rest/v1/tag/241/',
+  'delivery': '/rest/v1/tag/242/',
+  'friends_of_the_earth': '/rest/v1/tag/243/',
+  'partnership': '/rest/v1/tag/244/',
+  'copied for delivery': '/rest/v1/tag/245/',
+  'nycc': '/rest/v1/tag/246/',
+  'momsdemandaction': '/rest/v1/tag/247/',
+  'rhrealitycheck': '/rest/v1/tag/248/',
+  'socialsecurityworks': '/rest/v1/tag/249/',
+  'takeactionmn': '/rest/v1/tag/250/',
+  'boldnebraska': '/rest/v1/tag/251/',
+  '350': '/rest/v1/tag/252/',
+  'fossilfree': '/rest/v1/tag/253/',
+  'MissouriansOrganizingforReformandEmpowerment': '/rest/v1/tag/254/',
+  'foodandwaterwatch': '/rest/v1/tag/255/',
+  'turtleisland': '/rest/v1/tag/256/',
+  'ethicalelectric': '/rest/v1/tag/257/',
+  'CenterforCommunityChange': '/rest/v1/tag/258/',
+  'berim': '/rest/v1/tag/259/',
+  'ALEC': '/rest/v1/tag/260/',
+  'medicaid expansion': '/rest/v1/tag/261/',
+  'medicaid_expansion': '/rest/v1/tag/262/',
+  'minimumwage': '/rest/v1/tag/263/',
+  'action network': '/rest/v1/tag/264/',
+  'Globalization': '/rest/v1/tag/265/',
+  'affiliate': '/rest/v1/tag/266/',
+  'day we fight back': '/rest/v1/tag/267/',
+  'KansasPeoplesAction': '/rest/v1/tag/268/',
+  'mobilize_calls': '/rest/v1/tag/269/',
+  'alan grayson': '/rest/v1/tag/270/',
+  'scalia': '/rest/v1/tag/271/',
+  'Outbrain': '/rest/v1/tag/278/',
+  'Taboola': '/rest/v1/tag/279/',
+  'reset the net': '/rest/v1/tag/280/',
+  'McConnell': '/rest/v1/tag/281/',
+  'Gardner': '/rest/v1/tag/282/',
+  'AFT': '/rest/v1/tag/283/',
+  'Open media': '/rest/v1/tag/284/',
+  'donations voters': '/rest/v1/tag/285/',
+  'Yes on 92': '/rest/v1/tag/286/',
+  'Mobile fundraiser': '/rest/v1/tag/287/',
+  'reactivation match': '/rest/v1/tag/288/',
+  'credo customer': '/rest/v1/tag/289/',
+  'Big Telecom': '/rest/v1/tag/290/',
+  'couragecampaign': '/rest/v1/tag/291/'
+};

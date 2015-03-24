@@ -1,35 +1,35 @@
 // ======================== Event Umbrella functions ======================== //
 
 Template.templateEventDefaultTitle.events({
-  'keyup input[type=text]': function() {
+  'blur input[type=text]': function() {
     Session.set("eventDefaultTitle", $('#eventDefaultTitle').val());
   }
 });
 
 Template.templateEventDefaultSize.events({
-  'keyup input[type=text]': function() {
+  'blur input[type=text]': function() {
     Session.set("eventDefaultSize", $('#eventDefaultSize').val());
   }
 });
 
 Template.templateEventStartDate.events({
-  'keyup input[type=text]': function() {
+  'blur input[type=text]': function() {
     Session.set("eventStartDate", $('#eventStartDate').val());
   }
 });
 
 Template.templateEventStartTime.events({
-  'keyup input[type=text]': function() {
+  'blur input[type=text]': function() {
     Session.set("eventStartTime", $('#eventStartTime').val());
   }
 });
 
 Template.templateEventConfEmail.events({
-  'keyup input[type=text], keydown input[type=text]': function() {
+  'blur input[type=text]': function() {
     Session.set("pageConfEmailSL", $('#pageConfEmailSL').val());
     Session.set("pageConfEmailBody", $('#pageConfEmailBody').val());
 },
-  'keyup textarea, keydown textarea': function() {
+  'blur textarea': function() {
     Session.set("pageConfEmailBody", $('#pageConfEmailBody').val());
   }
 });
@@ -101,10 +101,12 @@ Template.createEvent.events({
     Session.set('apiSuccess',"");
   },
   'click #buttonEventCreateUmbrella': function() {
+    Session.set('showLoading', true);
     var eventUmbrella = makeEventUmbrellaFromSession();
     Meteor.call('saveFile', eventUmbrella, function (err, res) {
       if (err) {
         Session.set('saveError', err.error);
+        Session.set('showLoading', false);
       } else {
         console.log('upsert id ' + res.insertedId);
         if (!Session.get('id')) { 
@@ -118,6 +120,7 @@ Template.createEvent.events({
           Meteor.call('eventCreateUmbrella', eventUmbrella, function (err2,res2) {
             if (err2) {
                 Session.set('apiError', err2.reason);
+                Session.set('showLoading', false);
             } else {
                 console.log('event umbrella created successfully');
                 console.log('eventUmbrellaCampaignURL: ', res2);
@@ -125,6 +128,7 @@ Template.createEvent.events({
                 Meteor.call('eventCreateHostPage', res2, eventUmbrella, function (err3, res3) {
                   if (err3) {
                       Session.set('apiError', err3.reason);
+                      Session.set('showLoading', false);
                   } else {
                     console.log('eventUmbrellaHostURL: ', res3);
                     Session.set('eventUmbrellaHostURL', res3);
@@ -133,13 +137,15 @@ Template.createEvent.events({
                     Meteor.call('eventCreateSignupPage', eventUmbrella, function (err4, res4) {
                       if (err4) {
                           Session.set('apiError', err4.reason);
+                          Session.set('showLoading', false);
                       } else {
                         Session.set('eventUmbrellaSignupPageURL', res4);
                         console.log('eventUmbrellaSignupPageURL: ', res4);
                         console.log('Event signup page created successfully');
                         eventUmbrella = makeEventUmbrellaFromSession();
                         Meteor.call('saveFile', eventUmbrella, function (err5, res5) {
-                          if (err4) {
+                          Session.set('showLoading', false);
+                          if (err5) {
                             Session.set('saveError', err5.error);
                           } else {
                             console.log('event umbrella, host page and signup page saved');
@@ -174,17 +180,20 @@ Template.createSubEvents.events({
     Session.set('apiSuccess',"");
   },
   'click #buttonEventCreateSubEvent': function() {
+    Session.set('showLoading', true);
     var subEvent = makeSubEventFromSession();
     console.log(subEvent);
     if (goodSubEventFields(subEvent)) {
       Meteor.call('saveFile', subEvent, function (err, res) {
         if (err) {
           Session.set('saveError', err.error);
+          Session.set('showLoading', false);
         } else {
           console.log('subevent saved');
         }
       });
       Meteor.call('eventCreateSubEvent', subEvent, function (err, res) {
+        Session.set('showLoading', false);
         if (err) {
           Session.set('saveError', err.reason);
         } else {

@@ -4,27 +4,27 @@ Meteor.startup(function () {
 
 Meteor.subscribe('files');
 
-Handlebars.registerHelper("wrapperStyle", function(str) {
+UI.registerHelper("wrapperStyle", function(str) {
   return Session.equals('templateChooser', str) ? "true" : "";
 });
 
-Handlebars.registerHelper("display_setting", function(selection) {
+UI.registerHelper("display_setting", function(selection) {
   return Session.equals("display",selection);
 });
 
-Handlebars.registerHelper("getValue", function(value) {
+UI.registerHelper("getValue", function(value) {
   return Session.get(value);
 });
 
-Handlebars.registerHelper("highlight", function(value) {
+UI.registerHelper("highlight", function(value) {
   return Session.get(value) ? null : 'unchanged';
 });
 
-Handlebars.registerHelper("sigFirstName", function() {
+UI.registerHelper("sigFirstName", function() {
   return Session.get("signature").split(' ')[0];
 });
 
-Handlebars.registerHelper("unformattedHtml", function(wrapper) {
+UI.registerHelper("unformattedHtml", function(wrapper) {
   // return the HTML code of the template being referenced
   var div = document.createElement('div');
   switch (wrapper) {
@@ -41,17 +41,17 @@ Handlebars.registerHelper("unformattedHtml", function(wrapper) {
   return div.innerHTML;
 });
 
-Handlebars.registerHelper("htmlFromMarkdown", function(field) {
+UI.registerHelper("htmlFromMarkdown", function(field) {
   var converter = new Showdown.converter();
   return converter.makeHtml(Session.get(field));
 });
 
-Handlebars.registerHelper("removeBackslash", function(field) {
+UI.registerHelper("removeBackslash", function(field) {
   var str = Session.get(field);
   return str.replace(/\\/g,'');
 });
 
-Handlebars.registerHelper("prettifyDate", function(d) {
+UI.registerHelper("prettifyDate", function(d) {
   if (d) {
     var a_p = "";
     var curr_hour = d.getHours();
@@ -184,6 +184,7 @@ setSessionVarsForPage = function (obj) {
   Session.set("pageTwitterCopy", obj.pageTwitterCopy);
   Session.set("pageConfEmailSL", obj.pageConfEmailSL);
   Session.set("pageConfEmailBody", obj.pageConfEmailBody);
+  Session.set("pageTags", obj.pageTags);
   Session.set("creator", obj.creator);
   Session.set("when", obj.when);
   Session.set('AKpageURL', obj.AKpageURL);
@@ -224,6 +225,7 @@ setSessionVarsForNewPage = function () {
   Session.set("pageTwitterCopy", "");
   Session.set("pageConfEmailSL", "");
   Session.set("pageConfEmailBody", "");
+  Session.set("pageTags", "");
   Session.set("creator", "");
   Session.set('AKpageURL', "");
   Session.set('AKpageEditURL', "");
@@ -292,7 +294,7 @@ window.onbeforeunload = function () {
   } else { return null; }
 };
 
-Handlebars.registerHelper("headlineButtonText", function() {
+UI.registerHelper("headlineButtonText", function() {
   switch (Session.get("fileSort")) {
     case 'headlineAsc': return "▲";
     case 'headlineDesc': return '▼';
@@ -300,7 +302,7 @@ Handlebars.registerHelper("headlineButtonText", function() {
   }
 });
 
-Handlebars.registerHelper("typeButtonText", function() {
+UI.registerHelper("typeButtonText", function() {
   switch (Session.get("fileSort")) {
     case 'typeAsc': return "▲";
     case 'typeDesc': return '▼';
@@ -308,7 +310,7 @@ Handlebars.registerHelper("typeButtonText", function() {
   }
 });
 
-Handlebars.registerHelper("createdByButtonText", function() {
+UI.registerHelper("createdByButtonText", function() {
   switch (Session.get("fileSort")) {
     case 'createdByAsc': return "▲";
     case 'createdByDesc': return '▼';
@@ -316,7 +318,7 @@ Handlebars.registerHelper("createdByButtonText", function() {
   }
 });
 
-Handlebars.registerHelper("savedByButtonText", function() {
+UI.registerHelper("savedByButtonText", function() {
   switch (Session.get("fileSort")) {
     case 'savedByAsc': return "▲";
     case 'savedByDesc': return '▼';
@@ -324,7 +326,7 @@ Handlebars.registerHelper("savedByButtonText", function() {
   }
 });
 
-Handlebars.registerHelper("savedAtButtonText", function() {
+UI.registerHelper("savedAtButtonText", function() {
   switch (Session.get("fileSort")) {
     case 'savedAtAsc': return "▲";
     case 'savedAtDesc': return '▼';
@@ -332,15 +334,15 @@ Handlebars.registerHelper("savedAtButtonText", function() {
   }
 });
 
-Handlebars.registerHelper("belongsToUser", function(name) {
+UI.registerHelper("belongsToUser", function(name) {
   return Meteor.user() && Meteor.user().profile.name === name;
 });
 
-Handlebars.registerHelper("isNotEvent", function(pageType) {
+UI.registerHelper("isNotEvent", function(pageType) {
   return pageType !== 'event';
 });
 
-Handlebars.registerHelper("isAdmin", function() {
+UI.registerHelper("isAdmin", function() {
   var admins = ['Jin Ding'];
 
   return Meteor.user() && admins.indexOf(Meteor.user().profile.name) >= 0;
