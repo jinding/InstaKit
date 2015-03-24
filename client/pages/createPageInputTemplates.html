@@ -1,0 +1,163 @@
+<template name="templatePageNotes">
+	<div class="bodytext" >
+		<div class="bodytext_desc">Notes</div>
+		<div class="taf_title"><input type="text" id="pageNotes" class="{{highlight "notes"}}" value="{{getValue "notes"}}"></div>
+	</div>
+</template>
+
+<template name="templatePageTitle">
+	<div class="bodytext" >
+		<div class="bodytext_desc">Title</div>
+		<div class="taf_title"><input type="text" id="pageTitle" class="{{highlight "pageTitle"}}" value="{{getValue "pageTitle"}}"></div>
+	</div>
+</template>
+
+<template name="templatePageName">
+	<div class="bodytext" >
+		<div class="bodytext_desc">Short URL</div>
+		<div class="taf_title"><input type="text" id="pageName" class="{{highlight "pageName"}}" value="{{getValue "pageName"}}"></div>
+	</div>
+</template>
+
+<template name="templatePageStatement">
+	<div class="bodytext" >
+		{{#if wrapperStyle 'letter'}}
+		<div class="bodytext_desc">Comment</div>
+		<div class="taf_title"><input type="text" id="pageStatementLeadIn" class="{{highlight "pageStatementLeadIn"}}" value="{{#if getValue "pageStatementLeadIn"}}{{getValue "pageStatementLeadIn"}}{{else}}Statement lead-in:{{/if}}"></div>
+		<div class="taf_copy"><textarea class="textbox {{highlight "pageStatementText"}}" rows="4" type="text" id="pageStatementText">{{#if getValue "pageStatementText"}}{{getValue "pageStatementText"}}{{else}}"Public comment text in Markdown"{{/if}}</textarea></div>
+		{{else}}
+		<div class="bodytext_desc">Petition</div>
+		<div class="taf_title"><input type="text" id="pageStatementLeadIn" class="{{highlight "pageStatementLeadIn"}}" value="{{#if getValue "pageStatementLeadIn"}}{{getValue "pageStatementLeadIn"}}{{else}}Statement lead-in:{{/if}}"></div>
+		<div class="taf_copy"><textarea class="textbox {{highlight "pageStatementText"}}" rows="4" type="text" id="pageStatementText">{{#if getValue "pageStatementText"}}{{getValue "pageStatementText"}}{{else}}"Petition text in Markdown"{{/if}}</textarea></div>
+		{{/if}}
+	</div>
+</template>
+
+<template name="templatePageAboutText">
+	<div class="bodytext" >
+		<div class="bodytext_desc">About text</div>
+		<div class="taf_copy"><textarea class="textbox {{highlight "pageAboutText"}}" rows="15" type="text" id="pageAboutText">{{#if getValue "pageAboutText"}}{{getValue "pageAboutText"}}{{else}}In Markdown{{/if}}</textarea></div>
+	</div>
+</template>
+
+<template name="templatePageFacebook">
+	<div class="taf" >
+		<div class="taf_logo"><img src="http://shpg.org/images/icon-fb.gif"/><br>
+			<span style="color: #FF0000;">{{getValue 'pageFacebookLength'}}</span></div>
+		<div class="taf_title"><input type="text" id="pageFacebookTitle" class="{{highlight "pageFacebookTitle"}}" value="{{#if getValue "pageFacebookTitle"}}{{getValue "pageFacebookTitle"}}{{else}}Sign the petition: X{{/if}}"></div>
+		<div class="taf_copy"><textarea class="textbox {{highlight "pageFacebookCopy"}}" rows="4" type="text" id="pageFacebookCopy">{{#if getValue "pageFacebookCopy"}}{{getValue "pageFacebookCopy"}}{{else}}I just took action to... I think you should too.{{/if}}</textarea></div>
+	</div>
+</template>
+
+<template name="templatePageTwitterCopy">
+	<div class="taf" >
+		<div class="taf_logo"><img src="http://shpg.org/images/icon-twitter.gif"/><br>
+			<span style="color: #FF0000;">{{getValue 'pageTwitterLength'}}</span></div>
+		<div class="taf_copy"><textarea class="textbox {{highlight "pageTwitterCopy"}}" rows="3" type="text" id="pageTwitterCopy">{{#if getValue "pageTwitterCopy"}}{{getValue "pageTwitterCopy"}}{{else}}Sign the petition: Tell TARGET to ACTION {LINK} via @CREDOMobile #p2{{/if}}</textarea></div>
+	</div>
+</template>
+
+<template name="templatePageTAF">
+	<div class="taf" >
+		<div class="taf_logo"><img src="http://shpg.org/images/icon-email.gif"></div>
+		<div class="taf_title"><input type="text" id="pageTAFSL" class="{{highlight "pageTAFSL"}}" value="{{#if getValue "pageTAFSL"}}{{getValue "pageTAFSL"}}{{else}}I just signed this petition -- will you?{{/if}}"></div>
+		<div class="taf_copy"><textarea class="textbox {{highlight "pageTAFCopy"}}" rows="5" type="text" id="pageTAFCopy">{{#if getValue "pageTAFCopy"}}{{getValue "pageTAFCopy"}}{{else}}I just took action to... I think you should too: {LINK}{{/if}}</textarea></div>
+	</div>
+</template>
+
+<template name="templatePageConfEmail">
+	<div class="bodytext" >
+		<div class="bodytext_desc">Conf email</div>
+		<div class="taf_title"><input type="text" id="pageConfEmailSL" class="{{highlight "pageConfEmailSL"}}" value="{{#if getValue "pageConfEmailSL"}}{{getValue "pageConfEmailSL"}}{{else}}Subject line{{/if}}"></div>
+		<div class="taf_copy"><textarea class="textbox {{highlight "pageConfEmailBody"}}" rows="8" type="text" id="pageConfEmailBody">{{#if getValue "pageConfEmailBody"}}{{getValue "pageConfEmailBody"}}{{else}}Thanks for taking action on our petition: {&#123; page.title &#125;}.
+
+Here are some ways you can spread the word:
+
+[Email your friends](mailto:?subject={% include\_tmpl page.followup.taf_subject %}&body={% filter referring\_akid:user.akid|tag\_links:"source=conf\_email"|urlencode %}{% include\_tmpl page.followup.taf\_body %}{% endfilter %}) or forward the message below.
+
+If you are on Facebook, 
+[click here to post the petition to your timeline](http://www.facebook.com/sharer.php?no\_akid=1&u={&#123; page.canonical\_url|tag\_links:"source=share\_email"|referring_akid:user.akid|urlencode &#125;}).
+
+If you have a Twitter account, click here to automatically tweet:  
+[{% if page.custom\_fields.taf\_tweet %}{&#123; page.custom\_fields.taf\_tweet &#125;}{% else %} {&#123;page.title&#125;} {&#123;page.canonical\_url&#125;}{% endif %}](http://twitter.com/intent/tweet?no\_akid=1&text={% if page.custom\_fields.taf\_tweet %}{&#123; page.custom_fields.taf\_tweet|urlencode &#125;}{% else %}{&#123; page.title|urlencode &#125;} {&#123;page.canonical\_url|tag\_links:"source=tw\_email"|referring\_akid:user.akid&#125;}{% endif %})
+
+Thanks for all you do.
+
+–The CREDO Action Team
+
+<hr>
+
+Here’s a sample message to send to your friends:
+
+SUBJECT: {% include\_tmpl page.followup.taf\_subject escaped %}
+
+{% filter referring\_akid:user.akid|tag\_links:"source=conf\_email"|linebreaksbr %}
+{% include\_tmpl page.followup.taf\_body %}
+{% endfilter %}
+
+		{{/if}}</textarea></div>
+	</div>
+</template>
+
+<template name="templatePageGraphics">
+	<div class="bodytext" >
+		<div class="bodytext_desc">HP 100px</div>
+		<div class="taf_title"><input type="text" id="pageGraphicHomePage" class="{{highlight "pageGraphicHomePage"}}" value="{{getValue "pageGraphicHomePage"}}"></div>
+		<div class="bodytext_desc">FB 1200px</div>
+		<div class="taf_title"><input type="text" id="pageGraphicFacebook" class="{{highlight "pageGraphicFacebook"}}" value="{{getValue "pageGraphicFacebook"}}"></div>
+		<div class="bodytext_desc">Email 180px</div>
+		<div class="taf_title"><input type="text" id="pageGraphicEmail" class="{{highlight "pageGraphicEmail"}}" value="{{getValue "pageGraphicEmail"}}"></div>
+	</div>
+</template>
+
+<template name="templatePageTags">
+	<div class="bodytext">
+		<div class="bodytext_desc">Tags</div>
+		<table width="496">
+		<tr>
+			<td>
+<label><input type="checkbox" name="pageTags" value="economic" id="pageTagsEconomic">economic</label><br>
+<label><input type="checkbox" name="pageTags" value="corporations" id="pageTagsCorporations">corporations</label><br>
+<label><input type="checkbox" name="pageTags" value="financial">financial</label><br>
+<label><input type="checkbox" name="pageTags" value="labor">labor</label><br>
+<label><input type="checkbox" name="pageTags" value="civilrights">civilrights</label><br>
+<label><input type="checkbox" name="pageTags" value="immigration">immigration</label><br>
+<label><input type="checkbox" name="pageTags" value="race">race</label><br>
+<label><input type="checkbox" name="pageTags" value="voting">voting</label>
+			</td>
+			<td>
+<label><input type="checkbox" name="pageTags" value="accountability">accountability</label><br>
+<label><input type="checkbox" name="pageTags" value="baddems">baddems</label><br>
+<label><input type="checkbox" name="pageTags" value="media">media</label><br>
+<label><input type="checkbox" name="pageTags" value="women">women</label><br>
+<label><input type="checkbox" name="pageTags" value="choice">choice</label><br>
+<label><input type="checkbox" name="pageTags" value="netneutrality">netneutrality</label><br>
+<label><input type="checkbox" name="pageTags" value="wiretapping">wiretapping</label><br>
+<label><input type="checkbox" name="pageTags" value="civil liberties">civil liberties</label>
+			</td>
+			<td>
+<label><input type="checkbox" name="pageTags" value="environment">environment</label><br>
+<label><input type="checkbox" name="pageTags" value="coal">coal</label><br>
+<label><input type="checkbox" name="pageTags" value="conservation">conservation</label><br>
+<label><input type="checkbox" name="pageTags" value="food">food</label><br>
+<label><input type="checkbox" name="pageTags" value="fracking">fracking</label><br>
+<label><input type="checkbox" name="pageTags" value="renewables">renewables</label><br>
+<label><input type="checkbox" name="pageTags" value="tarsands">tarsands</label><br>
+<label><input type="checkbox" name="pageTags" value="paid">paid</label>
+			</td>
+			<td>
+<label><input type="checkbox" name="pageTags" value="peace">peace</label><br>
+<label><input type="checkbox" name="pageTags" value="Iran">Iran</label><br>
+<label><input type="checkbox" name="pageTags" value="drones">drones</label><br>
+<label><input type="checkbox" name="pageTags" value="socialsecurity">socialsecurity</label><br>
+<label><input type="checkbox" name="pageTags" value="medicare">medicare</label><br>
+<label><input type="checkbox" name="pageTags" value="budget">budget</label><br>
+<label><input type="checkbox" name="pageTags" value="taxes">taxes</label><br>
+<label><input type="checkbox" name="pageTags" value="trade">trade</label>
+			</td>
+		</tr>
+		<tr>
+		</tr>
+		</table>
+	</div>
+</template>
