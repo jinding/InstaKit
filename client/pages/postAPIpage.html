@@ -1,0 +1,21 @@
+<template name="postAPIpage">
+	<div id="postAPIpage">
+		<div class="apiInfo">
+			<button id="buttonBackToPageList">back to pages</button>
+			<button id="buttonMakeEmail" style="background-color:#FF6319;">create email</button>
+			<p><b>MAKE SURE TO EDIT PAGE TAGS AFTER CREATING OR EDITING PAGES</b></p>
+			<p>ActionKit page ID: {{getValue 'AKpageID'}}</p>
+			<p>ActionKit page URL: <a href="{{getValue 'AKpageURL'}}" target="_blank">{{getValue 'AKpageURL'}}</a></p>
+			<p>ActionKit edit page URL: <a href="{{getValue 'AKpageEditURL'}}" target="_blank">{{getValue 'AKpageEditURL'}}</a></p>
+			<p>Share page URL: <a href="{{getValue 'pageSharePageLink'}}" target="_blank">{{getValue 'pageSharePageLink'}}</a></p>
+			<p>Bitly: <a href="{{getValue 'AKpageBitly'}}" target="_blank">{{getValue 'AKpageBitly'}}</a></p>
+	{{#if isAdmin}}
+			<p>ActionKit page resource URI: <a href="{{getValue 'AKpageResourceURI'}}" target="_blank">{{getValue 'AKpageResourceURI'}}</a></p>
+	{{/if}}
+		</div>
+		<div id="createPageDisplay" style="width: 550px;">
+			{{> createPageDisplay }}
+		</div>
+	  	<div class="clear"></div>
+	</div>
+</template>
