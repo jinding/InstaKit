@@ -86,7 +86,7 @@ Template.templatePageTags.events({
 
 Template.templatePageTags.helpers({
   tagCheckbox: function(name) {
-    if (Session.get('pageTags').indexOf(name) >= 0)
+    if (Session.get('pageTags') && Session.get('pageTags').indexOf(name) >= 0)
         return '<label><input type="checkbox" name="pageTags" value="' + name + '" checked >'+ name +'</label>';
     else return '<label><input type="checkbox" name="pageTags" value="' + name + '" >'+ name +'</label>';
   }
