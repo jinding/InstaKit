@@ -142,6 +142,7 @@ var updatePageFields = function(page,resource,sp) {
 	  							 data: {
 	                      			page: resource,
                       			 	email_body: page.pageImportConfEmailBody,
+                      			 	email_from_line: senderDictionary[page.pageConfEmailSender],
                       			 	email_subject: page.pageConfEmailSL,
                       			 	send_email: true,
                       			 	send_taf: true,
@@ -276,6 +277,7 @@ var updatePageFieldsForCreatedPage = function(page,loc,sp) {
 	  							 data: {
 	                      			page: page.AKpageResourceURI,
                       			 	email_body: page.pageImportConfEmailBody,
+                      			 	email_from_line: senderDictionary[page.pageConfEmailSender],
                       			 	email_subject: page.pageConfEmailSL,
                       			 	taf_body: updateTAFCopyForAK(page.pageTAFCopy),
                       			 	taf_subject: page.pageTAFSL,
@@ -678,6 +680,21 @@ Meteor.methods({
   	}
   }
 });
+
+var senderDictionary = {
+	'CREDO Action': '/rest/v1/fromline/1/',
+	'CREDO SuperPAC': '/rest/v1/fromline/18/',
+	'Becky Bond, CREDO Action': '/rest/v1/fromline/3/',
+	'Becky Bond, CREDO SuperPAC': '/rest/v1/fromline/13/',
+	'Elijah Zarlin, CREDO Action': '/rest/v1/fromline/4/',
+	'Heidi Hess, CREDO Action': '/rest/v1/fromline/15/',
+	'Jordan Krueger, CREDO Action': '/rest/v1/fromline/2/',
+	'Josh Nelson, CREDO Action': '/rest/v1/fromline/8/',
+	'Michael Kieschnick, CREDO Action': '/rest/v1/fromline/11/',
+	'Murshed Zaheed, CREDO Action': '/rest/v1/fromline/5/',
+	'Zack Malitz, CREDO Action': '/rest/v1/fromline/7/',
+	'Zack Malitz, CREDO SuperPAC': '/rest/v1/fromline/19/'
+};
 
 var tagDictionary = {
   'women': '/rest/v1/tag/1/',

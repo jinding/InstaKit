@@ -183,6 +183,7 @@ setSessionVarsForPage = function (obj) {
   Session.set("pageFacebookCopy", obj.pageFacebookCopy);
   Session.set("pageTwitterCopy", obj.pageTwitterCopy);
   Session.set("pageConfEmailSL", obj.pageConfEmailSL);
+  Session.set("pageConfEmailSender", obj.pageConfEmailSender);
   Session.set("pageConfEmailBody", obj.pageConfEmailBody);
   Session.set("pageTags", obj.pageTags);
   Session.set("creator", obj.creator);
@@ -224,6 +225,7 @@ setSessionVarsForNewPage = function () {
   Session.set("pageFacebookCopy", "");
   Session.set("pageTwitterCopy", "");
   Session.set("pageConfEmailSL", "");
+  Session.set("pageConfEmailSender", "");
   Session.set("pageConfEmailBody", "");
   Session.set("pageTags", "");
   Session.set("creator", "");

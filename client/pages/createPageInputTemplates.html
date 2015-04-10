@@ -67,8 +67,25 @@
 
 <template name="templatePageConfEmail">
 	<div class="bodytext" >
-		<div class="bodytext_desc">Conf email</div>
-		<div class="taf_title"><input type="text" id="pageConfEmailSL" class="{{highlight "pageConfEmailSL"}}" value="{{#if getValue "pageConfEmailSL"}}{{getValue "pageConfEmailSL"}}{{else}}Subject line{{/if}}"></div>
+		<div class="bodytext_desc"><label for="pageConfEmailSender">From</label></div>
+		<div class="taf_title">
+			<select name="pageConfEmailSender" id="pageConfEmailSender" class="{{highlight "pageConfEmailSender"}}">
+				{{{confEmailSender "CREDO Action"}}}
+				{{{confEmailSender "CREDO SuperPAC"}}}
+				{{{confEmailSender "Becky Bond, CREDO Action"}}}
+				{{{confEmailSender "Becky Bond, CREDO SuperPAC"}}}
+				{{{confEmailSender "Elijah Zarlin, CREDO Action"}}}
+				{{{confEmailSender "Heidi Hess, CREDO Action"}}}
+				{{{confEmailSender "Jordan Krueger, CREDO Action"}}}
+				{{{confEmailSender "Josh Nelson, CREDO Action"}}}
+				{{{confEmailSender "Michael Kieschnick, CREDO Action"}}}
+				{{{confEmailSender "Murshed Zaheed, CREDO Action"}}}
+				{{{confEmailSender "Zack Malitz, CREDO Action"}}}
+				{{{confEmailSender "Zack Malitz, CREDO SuperPAC"}}}
+			</select>
+		</div>
+		<div class="bodytext_desc">Subject</div>
+		<div class="taf_title"><input type="text" id="pageConfEmailSL" class="{{highlight "pageConfEmailSL"}}" value="{{#if getValue "pageConfEmailSL"}}{{getValue "pageConfEmailSL"}}{{/if}}"></div>
 		<div class="taf_copy"><textarea class="textbox {{highlight "pageConfEmailBody"}}" rows="8" type="text" id="pageConfEmailBody">{{#if getValue "pageConfEmailBody"}}{{getValue "pageConfEmailBody"}}{{else}}Thanks for taking action on our petition: {&#123; page.title &#125;}.
 
 Here are some ways you can spread the word:

@@ -32,6 +32,7 @@ setSessionVars = function() {
   Session.set("pageTwitterCopy", removeCurlyQuotes($('#pageTwitterCopy').val()));
   Session.set("pageTAFSL", removeCurlyQuotes($('#pageTAFSL').val()));
   Session.set("pageTAFCopy", removeCurlyQuotes($('#pageTAFCopy').val()));
+  Session.set("pageConfEmailSender", $('#pageConfEmailSender').val());
   Session.set("pageConfEmailSL", $('#pageConfEmailSL').val());
   Session.set("pageConfEmailBody", $('#pageConfEmailBody').val());
   Session.set("pageImportConfEmailBody", converter.makeHtml(Session.get("pageConfEmailBody")));
@@ -66,6 +67,7 @@ makePageFromSession = function() {
     pageFacebookCopy: Session.get("pageFacebookCopy"),
     pageTwitterCopy: standardizePageLinks(Session.get("pageTwitterCopy")), // {LINK} is added if not present
     pageConfEmailSL: Session.get("pageConfEmailSL"),
+    pageConfEmailSender: Session.get("pageConfEmailSender"),
     pageConfEmailBody: Session.get("pageConfEmailBody"),
     pageTags: Session.get("pageTags"),
     creator: Session.get("creator") || Meteor.user().profile.name,
@@ -84,7 +86,7 @@ makePageFromSession = function() {
 };
 
 Template.createPage.events({
-  'blur input, blur textarea': function() {
+  'blur input, blur textarea, blur select': function() {
     Session.set("pageNotSaved",true);
   },
   'click #createPageDisplay': function() {
