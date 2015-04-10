@@ -57,9 +57,20 @@ Template.templatePageConfEmail.events({
   'blur input[type=text]': function() {
     Session.set("pageConfEmailSL", $('#pageConfEmailSL').val());
     Session.set("pageConfEmailBody", $('#pageConfEmailBody').val());
-},
+  },
   'blur textarea': function() {
     Session.set("pageConfEmailBody", $('#pageConfEmailBody').val());
+  },
+  'blur select': function() {
+    Session.set('pageConfEmailSender', $('#pageConfEmailSender').val());
+  }
+});
+
+Template.templatePageConfEmail.helpers({
+  confEmailSender: function(name) {
+    if (Session.get('pageConfEmailSender') && Session.get('pageConfEmailSender') === name)
+      return '<option value="' + name + '"" selected >' + name + '</option>';
+    else return '<option value="' + name + '">' + name + '</option>';
   }
 });
 
