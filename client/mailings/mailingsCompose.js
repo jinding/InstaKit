@@ -1,6 +1,8 @@
-Template.composePage.buttonText = function() {
-  return Session.equals("display", "visual") ? "HTML" : "visual";
-};
+Template.composePage.helpers({
+  buttonText: function() {
+    return Session.equals("display", "visual") ? "HTML" : "visual";
+  }
+});
 
 Template.notes.events({
   'blur input[type=text]': function() {
