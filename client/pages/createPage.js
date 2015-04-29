@@ -86,7 +86,7 @@ makePageFromSession = function() {
 };
 
 Template.createPage.events({
-  'blur input, blur textarea, blur select': function() {
+  'keyup input, keyup textarea, keyup select': function() {
     Session.set("pageNotSaved",true);
   },
   'click #createPageDisplay': function() {
