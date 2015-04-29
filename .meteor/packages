@@ -11,3 +11,4 @@ accounts-ui
 http
 iron:router
 sacha:spin
+uzumaxy:prevent-backspace
