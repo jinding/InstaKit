@@ -51,7 +51,7 @@
 <template name="templateEventDefaultTitle">
 	<div class="eventInputs">
 		<div class="bodytext_desc event">Sub event default title</div>
-		<div class="taf_title event"><input type="text" id="eventDefaultTitle" class="{{highlight "eventDefaultTitle"}}" value="{{getValue "eventDefaultTitle"}}"></div>
+		<div class="taf_title event"><input type="text" id="eventDefaultTitle" class="{{highlight "eventDefaultTitle"}}" value="{{getValue "eventDefaultTitle"}}" autofocus></div>
 	</div>
 </template>
 
@@ -145,7 +145,7 @@ WHEN: {&#123; action.event.starts_at|date:"l, F j" &#125;} - {&#123; action.even
 <template name="templateSubEventTitle">
 	<div class="eventInputs">
 		<div class="bodytext_desc event">Title</div>
-		<div class="taf_title event"><input type="text" id="subEventTitle" class="{{highlight "subEventTitle"}}" value="{{getValue "subEventTitle"}}"></div>
+		<div class="taf_title event"><input type="text" id="subEventTitle" class="{{highlight "subEventTitle"}}" value="{{getValue "subEventTitle"}}" autofocus></div>
 	</div>
 </template>
 
