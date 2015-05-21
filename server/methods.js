@@ -69,6 +69,7 @@ var updatePageShare = function(page, loc, bitly) {
 									'taf_tweet': updateTwitterForAK(page.pageTwitterCopy,bitly),
 									'therm_landing_page': 1
                       			}, // end fields
+                      			goal_type: 'users',
                       			one_click: false,
                       			recognize: 'never',
                       			required_fields: [
@@ -201,6 +202,7 @@ var updatePageShareForCreatedPage = function(page, loc, bitly) {
 									'taf_tweet': updateTwitterForAK(page.pageTwitterCopy,bitly),
 									'therm_landing_page': 1
                       			}, // end fields
+                      			goal_type: 'users',
                       			one_click: false,
                       			recognize: 'never',
                       			required_fields: [
