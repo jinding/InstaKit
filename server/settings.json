@@ -7,11 +7,13 @@
   "shareProgressApi": {
     "shareProgressApiUrl": "https://run.shareprogress.org/api/v1/",
     "key": "saYLoUzgQUmlYRjyrEhUiQ",
-    "shareProgressUrl": "http://share.credoaction.com/4/"
+    "shareProgressUrl": "http://share.credoaction.com/4/",
+    "actionKitUrl": "http://act.credoaction.com/sign/"
   },
   "bitlyApi": {
     "access_token": "466eb20f1f095be8eb935f7c6fdfbc649c2655fc",
     "longUrl": "http://act.credoaction.com/sign/"
-  }
+  },
+  "orgName": "CREDO Action"
 }
 

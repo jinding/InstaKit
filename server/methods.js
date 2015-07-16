@@ -15,7 +15,7 @@ var createShareProgressPage = function(page) {
   				  data: {
 					  'key': Meteor.settings.shareProgressApi.key,
 					  'page_url': Meteor.settings.shareProgressApi.actionKitUrl+page.pageName,
-					  'page_title': page.pageTitle+' | CREDO Action',
+					  'page_title': page.pageTitle+' | '+Meteor.settings.orgName,
 					  'variants': {
 					  	'facebook': [{ facebook_title: page.pageFacebookTitle,
 					  					facebook_description: page.pageFacebookCopy,
@@ -316,7 +316,7 @@ var updateShareProgressPageForCreatedPage = function(page) {
   				  	  id: loc,
 					  'key': Meteor.settings.shareProgressApi.key,
 					  'page_url': Meteor.settings.shareProgressApi.actionKitUrl+page.pageName,
-					  'page_title': page.pageTitle+' | CREDO Action',
+					  'page_title': page.pageTitle+' | '+Meteor.settings.orgName,
 					  'auto_fill': true,
 					  'variants': {
 					  	'facebook': [{  id: variants.facebook[0].id,
