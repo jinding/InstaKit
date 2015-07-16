@@ -1,7 +1,8 @@
 {
   "actionKitApi": {
     "actionKitAuth": "meteor:dingbergalis",
-    "actionKitUrl": "https://act.credoaction.com/"
+    "actionKitUrl": "https://act.credoaction.com/",
+    "actionKitOrgTag": [{"name": "credo", "resource_uri": "/rest/v1/tag/32/"}]
   },
   "shareProgressApi": {
     "shareProgressApiUrl": "https://run.shareprogress.org/api/v1/",

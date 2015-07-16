@@ -1,6 +1,6 @@
 var setTags = function(pageTags) {
 	// always have "credo" as a default tag
-	var tags = [{name: "credo", resource_uri: "/rest/v1/tag/32/"}];
+	var tags = Meteor.settings.actionKitApi.actionKitOrgTag;
 
 	for (i=0; i<pageTags.length; i++) {
 		tags.push({name: pageTags[i], resource_uri: tagDictionary[pageTags[i]]});
@@ -514,7 +514,7 @@ Meteor.methods({
 										    name: "name",
 										    resource_uri: "/rest/v1/formfield/11/"}
 									], // end required_fields
-									tags: [{name: "credo", resource_uri: "/rest/v1/tag/32/"}]
+									tags: Meteor.settings.actionKitApi.actionKitOrgTag
 	                      		} // end data
 	                      });
   		console.log("eventHost URL " + createEventHostPage.headers.location);
@@ -572,7 +572,7 @@ Meteor.methods({
 										    name: "name",
 										    resource_uri: "/rest/v1/formfield/11/"}
 									], // end required_fields
-									tags: [{name: "credo", resource_uri: "/rest/v1/tag/32/"}]
+									tags: Meteor.settings.actionKitApi.actionKitOrgTag
 	                      		} // end data
 	                      });
   		console.log("eventSignup URL " + createEventSignupPage.headers.location);
