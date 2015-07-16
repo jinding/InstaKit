@@ -10,11 +10,11 @@ var setTags = function(pageTags) {
 
 var createShareProgressPage = function(page) {
 	try {
-		var sp = HTTP.call('POST', 'https://run.shareprogress.org/api/v1/pages/update',
+		var sp = HTTP.call('POST', Meteor.settings.shareProgressApi.shareProgressApiUrl+'pages/update',
 				{ headers: {'Content-type': 'application/json'},
   				  data: {
-					  'key': 'saYLoUzgQUmlYRjyrEhUiQ',
-					  'page_url': 'http://act.credoaction.com/sign/'+page.pageName,
+					  'key': Meteor.settings.shareProgressApi.key,
+					  'page_url': Meteor.settings.shareProgressApi.actionKitUrl+page.pageName,
 					  'page_title': page.pageTitle+' | CREDO Action',
 					  'variants': {
 					  	'facebook': [{ facebook_title: page.pageFacebookTitle,
@@ -168,8 +168,8 @@ var createShortLink = function(page) {
 		var bitly = HTTP.call("GET", 'https://api-ssl.bitly.com/v3/shorten',
 					{
 		  				params: {
-							access_token: '466eb20f1f095be8eb935f7c6fdfbc649c2655fc',
-		  					longUrl: 'http://act.credoaction.com/sign/'+page.pageName+'/?source=tw1'
+							access_token: Meteor.settings.bitlyApi.access_token,
+		  					longUrl: Meteor.settings.bitlyApi.longUrl+page.pageName+'/?source=tw1'
 		  				}
 					});
 		return bitly.data.data.url;
@@ -300,22 +300,22 @@ var updatePageFieldsForCreatedPage = function(page,loc,sp) {
 
 var updateShareProgressPageForCreatedPage = function(page) {
 	try {
-		var loc = page.pageSharePageLink.replace('http://share.credoaction.com/4/','');
+		var loc = page.pageSharePageLink.replace(Meteor.settings.shareProgressApi.shareProgressUrl,'');
 		console.log('in updateShareProgressPageForCreatedPage ' + loc);
-		var res = HTTP.call('GET', 'https://run.shareprogress.org/api/v1/pages/read',
+		var res = HTTP.call('GET', Meteor.settings.shareProgressApi.shareProgressApiUrl+'pages/read',
 				{ headers: {'Content-type': 'application/json'},
 				  data: {
 				  	id: loc,
-					'key': 'saYLoUzgQUmlYRjyrEhUiQ'
+					'key': Meteor.settings.shareProgressApi.key
 				  }
 				}); // end GET
 		var variants = res.data.response[0].variants;
-		var sp = HTTP.call('POST', 'https://run.shareprogress.org/api/v1/pages/update',
+		var sp = HTTP.call('POST', Meteor.settings.shareProgressApi.shareProgressApiUrl+'pages/update',
 				{ headers: {'Content-type': 'application/json'},
   				  data: {
   				  	  id: loc,
-					  'key': 'saYLoUzgQUmlYRjyrEhUiQ',
-					  'page_url': 'http://act.credoaction.com/sign/'+page.pageName,
+					  'key': Meteor.settings.shareProgressApi.key,
+					  'page_url': Meteor.settings.shareProgressApi.actionKitUrl+page.pageName,
 					  'page_title': page.pageTitle+' | CREDO Action',
 					  'auto_fill': true,
 					  'variants': {
