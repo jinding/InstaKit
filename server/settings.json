@@ -1,6 +1,5 @@
 {
   "actionKitApi": {
-    "actionKitApiUrl": "https://act.credoaction.com/rest/v1/",
     "actionKitAuth": "meteor:dingbergalis",
     "actionKitUrl": "https://act.credoaction.com/"
   },
