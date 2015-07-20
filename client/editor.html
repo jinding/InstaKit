@@ -6,49 +6,8 @@
 
 <template name="loginPage">
 	<div id="loginScreen">
-		<p>welcome to the credo campaign editor.<br/> 
+		<p>welcome to the credo campaign creator.<br/> 
 		please sign in.</p>
 		{{>loginButtons }}
 	</div>
 </template>
-
-<!-- ADMIN DELETE PAGE TEMPLATES -->
-<template name="adminDeletedFilesPage">
-	<div id="fileLeft">
-		<p><a href="{{ pathFor route='mailings' }}" id="goToMailings">mailings</a></p>
-		<p><a href="{{ pathFor route='pages' }}" id="goToPages">pages</a></p>
-		<hr style="color: #FFF;">
-		<p id="logoutButton" style="cursor: pointer;">logout</p>
-	</div>
-	<div id="fileRight">
-		<table>
-			<tr>
-				<th>headline <button class="sortButton" id="sortHeadline">{{headlineButtonText}}</button></th>
-				<th>type <button class="sortButton" id="sortType">{{typeButtonText}}</button></th>
-				<th>created by <button class="sortButton" id="sortCreatedBy">{{createdByButtonText}}</button></th>
-				<th>saved by <button class="sortButton" id="sortSavedBy">{{savedByButtonText}}</button></th>
-				<th>last saved <button class="sortButton" id="sortSavedAt">{{savedAtButtonText}}</button></th>
-				<th></th><th></th>
-			</tr>
-		{{#each fileList}}
-			<tr>
-				<td><a href="{{ pathFor route='compose' }}" class="editButton">{{#if notes}}<em>{{notes}}</em> | {{/if}}{{#if headline}}{{headline}}{{else}}{{pageTitle}}{{/if}}</a></td>
-				<td>{{type}}</td>
-				<td>{{creator}}</td>
-				<td>{{savedBy}}</td>
-				<td style="min-width: 115px;">{{prettifyDate when}}</td>
-				<td style="padding-right:0px;">{{#if isAdmin}}<input type="button" name="restoreButton" class="restoreButton tableButton" value="admin restore" style="background-color:#13D333;">{{/if}}</td>
-				<td style="padding-right:0px;">{{#if isAdmin}}<input type="button" name="deleteButton" class="deleteButton tableButton" value="admin delete" style="background-color:#FF0000;">{{/if}}</td>
-			</tr>
-		{{/each}}
-		</table>
-	</div>
-	{{#if getValue "confirmDelete"}}
-		<div id="confirmPopup">
-			<p>Are you sure you want to delete this?<br>This action cannot be reversed.</p>
-			<input type="button" name="yesDelete" id="yesDelete" value="yes, delete this" style="background-color:#13D333;">
-			<input type="button" name="cancelDelete" id="cancelDelete" value="cancel" style="background-color: #FF0000;">
-		</div>
-	{{/if}}
-</template>
-
