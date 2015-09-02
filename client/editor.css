@@ -302,3 +302,7 @@ button.sortButton {
 #subEventForm { border: 2px gray solid; border-radius: 2px; width:700px; margin: 0px auto; padding: 10px 12px;}
 .eventMsgBox { border: 2px red solid; margin: 10px 0px; padding: 10px 12px; width: 700px;}
 .eventInputs { margin: 10px;}
+
+/* settings */
+.settingsLabel { margin-left: 20px; width: 400px; }
+.settingsInput { float: left; width: 440px; }
