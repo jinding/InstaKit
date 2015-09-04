@@ -1,3 +1,5 @@
-Template.createPageDisplay.importData = function() {
-	return Session.set("pageImportAboutText", Template.pageCreationDisplay());
-};
+Template.createPageDisplay.helpers({
+	importData: function() {
+		return Session.set("pageImportAboutText", Template.pageCreationDisplay());
+	}
+});
