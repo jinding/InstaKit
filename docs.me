@@ -1,0 +1,25 @@
+1. Install Meteor
+
+2. This is set up to use Google authentication. For organizations that don't use Google Apps you'll need to modify this to use the native Meteor auth functionality, or the FB auth.
+
+2a. Edit config.js, replacing "credoaction.com" with your email address domain
+2b. Edit this bit in editor.js:
+UI.registerHelper("isAdmin", function() {
+  var admins = ['Jin Ding'];
+
+  return Meteor.user() && admins.indexOf(Meteor.user().profile.name) >= 0;
+});
+
+Put your full name in there. Only admins can see the Settings page where you'll be setting the passwords and URLs for your organization
+
+3. Run "meteor" in the folder that you've installed this app. This starts a local copy at localhost:3000
+
+4. See if it works.
+
+5. If it does, great! Run "meteor deploy [your choice here].meteor.com"
+
+6. After that deploys, head to [your choice here].meteor.com, log in, and set your authentication settings for your organization.
+
+- Mailing wrappers
+- Page fields
+- Tags
