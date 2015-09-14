@@ -2,6 +2,7 @@ Meteor.startup(function () {
   Session.set("emailNotSaved",false);
 });
 
+// subscribe to the files collection (ie database)
 Meteor.subscribe('files');
 
 // curly quotes break some links so convert them to straight quotes
@@ -29,13 +30,13 @@ window.onbeforeunload = function () {
 
 // GLOBAL HELPERS
 
-/* Set the name(s) of people who have access to
+/*****************************************************
+  Set the name(s) of people who have access to
   - Settings: set the AK and SP auth information
   - Admin Deleted Pages: actually delete files from the database
-*/
+******************************************************/
 UI.registerHelper("isAdmin", function() {
   var admins = ['Jin Ding'];
-
   return Meteor.user() && admins.indexOf(Meteor.user().profile.name) >= 0;
 });
 
