@@ -349,6 +349,9 @@ var updateShareProgressPageForCreatedPage = function(page) {
 
 
 Meteor.methods({
+  saveSettings: function(resp) {
+  	return Settings.upsert(resp.id, resp);
+  },
   saveFile: function (resp) {
     resp.when = new Date;
     return Files.upsert(resp.id, resp);

@@ -1,3 +1,3 @@
 Meteor.publish('settings', function () {
-	return Settings.find({});
+	return Settings.findOne({});
 });

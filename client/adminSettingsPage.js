@@ -67,6 +67,7 @@ makeSettingsFromSession = function() {
   setSessionVars();
 
   return {
+    id: '1',
   	orgName: Session.get('orgName'),
   	akAuth: Session.get('akAuth'),
   	tagName: Session.get('tagName'),
