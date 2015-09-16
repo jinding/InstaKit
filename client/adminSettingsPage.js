@@ -12,6 +12,12 @@ Template.templateSettingsAkAuth.events({
 
 Template.templateSettingsAkUrl.events({
   'keyup input[type=text]': function() {
+    Session.set("akUrl", $('#akUrl').val());
+  }
+});
+
+Template.templateSettingsAkOrgTagName.events({
+  'keyup input[type=text]': function() {
     Session.set("tagName", $('#tagName').val());
   }
 });
