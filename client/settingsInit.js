@@ -10,6 +10,7 @@ setSessionVarsForSettings = function (obj) {
   Session.set("spKey", obj.spKey);
   Session.set("spUrl", obj.spUrl);
   Session.set("bitlyToken", obj.bitlyToken);
+  Session.set("newSettings", false);
 };
 
 setSessionVarsForNewSettings = function() {
@@ -21,5 +22,5 @@ setSessionVarsForNewSettings = function() {
   Session.set("spKey", "");
   Session.set("spUrl", "");
   Session.set("bitlyToken", "");
- 
-}
+  Session.set("newSettings", true);
+};

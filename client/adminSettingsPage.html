@@ -24,8 +24,11 @@
 		{{> templateSettingsSpKey }}
 		{{> templateSettingsSpUrl }}
 		{{> templateSettingsBitlyToken }}
-
-		<button id="buttonSaveSettings" style="background-color: #01E;">save settings</button>
+		{{#if getValue "newSettings"}}
+			<button id="buttonSaveSettings" style="background-color: #01E;">save settings</button>
+		{{else}}
+			<button id="buttonSaveSettings" style="background-color: #01E;">update settings</button>
+		{{/if}}
 	</div>
 </template>
 
