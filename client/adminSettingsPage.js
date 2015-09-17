@@ -61,7 +61,8 @@ Template.settingsInputs.events({
 
 setSessionVars = function() {
 	Session.set("orgName", $('#orgName').val());
-	Session.set("akAuth", $('#akAuth').val());
+  Session.set("akAuth", $('#akAuth').val());
+  Session.set("akUrl", $('#akUrl').val());
 	Session.set("tagName", $('#tagName').val());
 	Session.set("resourceId", $('#resourceId').val());
 	Session.set("spKey", $('#spKey').val());
@@ -76,6 +77,7 @@ makeSettingsFromSession = function() {
     id: Session.get('sessionId'),
   	orgName: Session.get('orgName'),
   	akAuth: Session.get('akAuth'),
+    akUrl: Session.get('akUrl'),
   	tagName: Session.get('tagName'),
   	resourceId: Session.get('resourceId'),
   	spKey: Session.get('spKey'),
