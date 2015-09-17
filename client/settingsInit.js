@@ -4,6 +4,7 @@ setSessionVarsForSettings = function (obj) {
   Session.set("sessionId", obj._id);
   Session.set("orgName", obj.orgName);
   Session.set("akAuth", obj.akAuth);
+  Session.set("akUrl", obj.akUrl);
   Session.set("tagName", obj.tagName);
   Session.set("resourceId", obj.resourceId);
   Session.set("spKey", obj.spKey);
@@ -14,6 +15,7 @@ setSessionVarsForSettings = function (obj) {
 setSessionVarsForNewSettings = function() {
   Session.set("orgName", "");
   Session.set("akAuth", "");
+  Session.set("akUrl", "");
   Session.set("tagName", "");
   Session.set("resourceId", "");
   Session.set("spKey", "");
