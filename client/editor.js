@@ -30,14 +30,10 @@ window.onbeforeunload = function () {
 
 // GLOBAL HELPERS
 
-/*****************************************************
-  Set the name(s) of people who have access to
-  - Settings: set the AK and SP auth information
-  - Admin Deleted Pages: actually delete files from the database
-******************************************************/
+// admins are the ones who can truly delete files (in adminDelete).
+// also can undelete files that were mistakenly "deleted" by regular users.
 UI.registerHelper("isAdmin", function() {
-  var admins = ['Jin Ding'];
-  return Meteor.user() && admins.indexOf(Meteor.user().profile.name) >= 0;
+  return Meteor.user() && Meteor.settings.public.admins.indexOf(Meteor.user().profile.name) >= 0;
 });
 
 // Return the type of mailing
