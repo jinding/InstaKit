@@ -304,5 +304,7 @@ button.sortButton {
 .eventInputs { margin: 10px;}
 
 /* settings */
-.settingsLabel { margin-left: 20px; width: 400px; }
-.settingsInput { float: left; width: 440px; }
+#settings { padding: 30px;}
+.settingsGroup { margin-bottom: 20px; }
+.settingsGroup label { display: inline-block; width: 180px;}
+.settingsGroup input { width: 300px;}

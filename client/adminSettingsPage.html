@@ -15,56 +15,72 @@
 </template>
 
 <template name="settingsInputs">
-	{{> templateSettingsOrgName }}
-	{{> templateSettingsAkAuth }}
-	{{> templateSettingsAkUrl }}
-	{{> templateSettingsAkOrgTagName }}
-	{{> templateSettingsAkOrgTagResourceId }}
-	{{> templateSettingsSpKey }}
-	{{> templateSettingsSpUrl }}
-	{{> templateSettingsBitlyToken }}
+	<div id="settings">
+		{{> templateSettingsOrgName }}
+		{{> templateSettingsAkAuth }}
+		{{> templateSettingsAkUrl }}
+		{{> templateSettingsAkOrgTagName }}
+		{{> templateSettingsAkOrgTagResourceId }}
+		{{> templateSettingsSpKey }}
+		{{> templateSettingsSpUrl }}
+		{{> templateSettingsBitlyToken }}
 
-<div class="clear"></div>
-	<button id="buttonSaveSettings" style="background-color: #01E;">save settings</button>
-
+		<button id="buttonSaveSettings" style="background-color: #01E;">save settings</button>
+	</div>
 </template>
 
 <template name="templateSettingsOrgName">
-	<div class="settingsLabel">Organization Name</div>
-	<div class="settingsInput"><input type="text" id="orgName" class="{{highlight "orgName"}}" value="{{getValue "orgName"}}"></div>
+	<div class="settingsGroup">
+		<label for="orgName">Organization Name</label>
+		<input type="text" id="orgName" class="{{highlight "orgName"}}" value="{{getValue "orgName"}}" />
+	</div>
 </template>
 
 <template name="templateSettingsAkAuth">
-	<div class="settingsLabel">ActionKit Auth (ex: "username:password")</div>
-	<div class="settingsInput"><input type="text" id="akAuth" class="{{highlight "akAuth"}}" value="{{getValue "akAuth"}}"></div>
+	<div class="settingsGroup">
+		<label for="akAuth">ActionKit Auth</label>
+		<input type="text" id="akAuth" class="{{highlight "akAuth"}}" value="{{getValue "akAuth"}}" placeholder="username:password">
+	</div>
 </template>
 
 <template name="templateSettingsAkUrl">
-	<div class="settingsLabel">ActionKit URL (ex: "act.<i>organization</i>.com")</div>
-	<div class="settingsInput"><input type="text" id="akUrl" class="{{highlight "akUrl"}}" value="{{getValue "akUrl"}}"></div>
+	<div class="settingsGroup">
+		<label for="akUrl">ActionKit URL</label>
+		<input type="text" id="akUrl" class="{{highlight "akUrl"}}" value="{{getValue "akUrl"}}" placeholder="act.ORGANIZATION.com">
+	</div>
 </template>
 
 <template name="templateSettingsAkOrgTagName">
-	<div class="settingsLabel">Organization tag name</div>
-	<div class="settingsInput"><input type="text" id="tagName" class="{{highlight "tagName"}}" value="{{getValue "tagName"}}"></div>
+	<div class="settingsGroup">
+		<label for="tagName">Organization tag name</label>
+		<input type="text" id="tagName" class="{{highlight "tagName"}}" value="{{getValue "tagName"}}">
+	</div>
 </template>
 
 <template name="templateSettingsAkOrgTagResourceId">
-	<div class="settingsLabel">Organization tag resource ID</div>
-	<div class="settingsInput"><input type="text" id="resourceId" class="{{highlight "resourceId"}}" value="{{getValue "resourceId"}}"></div>
+	<div class="settingsGroup">
+		<label for="resourceId">Organization tag resource ID</label>
+		<input type="text" id="resourceId" class="{{highlight "resourceId"}}" value="{{getValue "resourceId"}}">
+	</div>
 </template>
 
 <template name="templateSettingsSpKey">
-	<div class="settingsLabel">ShareProgress Key</div>
-	<div class="settingsInput"><input type="text" id="spKey" class="{{highlight "spKey"}}" value="{{getValue "spKey"}}"></div>
+	<div class="settingsGroup">
+		<label for="spKey">ShareProgress Key</label>
+		<input type="text" id="spKey" class="{{highlight "spKey"}}" value="{{getValue "spKey"}}">
+	</div>
 </template>
 
 <template name="templateSettingsSpUrl">
-	<div class="settingsLabel">ShareProgress URL (ex: "http://share.credoaction.com/NUM/")</div>
-	<div class="settingsInput"><input type="text" id="spUrl" class="{{highlight "spUrl"}}" value="{{getValue "spUrl"}}"></div>
+	<div class="settingsGroup">
+		<label for="spUrl">ShareProgress URL</label>
+		<input type="text" id="spUrl" class="{{highlight "spUrl"}}" value="{{getValue "spUrl"}}" placeholder="http://share.credoaction.com/NUM/">
+	</div>
 </template>
 
 <template name="templateSettingsBitlyToken">
-	<div class="settingsLabel">bitly Token</div>
-	<div class="settingsInput"><input type="text" id="bitlyToken" class="{{highlight "bitlyToken"}}" value="{{getValue "bitlyToken"}}"></div>
+	<div class="settingsGroup">
+		<label for="bitlyToken">bitly Token</label>
+		<input type="text" id="bitlyToken" class="{{highlight "bitlyToken"}}" value="{{getValue "bitlyToken"}}">
+	</div>
 </template>
