@@ -1,1 +1,1 @@
-Accounts.config({ restrictCreationByEmailDomain: 'credoaction.com' });
+Accounts.config({ restrictCreationByEmailDomain: Meteor.settings.emailDomain });

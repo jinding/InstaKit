@@ -1,19 +1,21 @@
-Template.adminDeletedFilesPage.fileList = function() {
-  // only show the files where idDeleted flag is true so that you can restore or delete them for real
-  switch (Session.get("fileSort")) {
-    case 'savedAtAsc': return Files.find({isDeleted: true},{sort: {when: 1}});
-    case 'savedAtDesc': return Files.find({isDeleted: true},{sort: {when: -1}});
-    case 'headlineAsc': return Files.find({isDeleted: true},{sort: {headline: 1}});
-    case 'headlineDesc': return Files.find({isDeleted: true},{sort: {headline: -1}});
-    case 'typeAsc': return Files.find({isDeleted: true},{sort: {type: 1}});
-    case 'typeDesc': return Files.find({isDeleted: true},{sort: {type: -1}});
-    case 'createdByAsc': return Files.find({isDeleted: true},{sort: {creator: 1}});
-    case 'createdByDesc': return Files.find({isDeleted: true},{sort: {creator: -1}});
-    case 'savedByAsc': return Files.find({isDeleted: true},{sort: {savedBy: 1}});
-    case 'savedByDesc': return Files.find({isDeleted: true},{sort: {savedBy: -1}});
-    default: Session.set("fileSort", "savedAtDesc"); return Files.find({isDeleted: true},{sort: {when: -1}});
+Template.adminDeletedFilesPage.helpers({
+  fileList: function() {
+    // only show the files where idDeleted flag is true so that you can restore or delete them for real
+    switch (Session.get("fileSort")) {
+      case 'savedAtAsc': return Files.find({isDeleted: true},{sort: {when: 1}});
+      case 'savedAtDesc': return Files.find({isDeleted: true},{sort: {when: -1}});
+      case 'headlineAsc': return Files.find({isDeleted: true},{sort: {headline: 1}});
+      case 'headlineDesc': return Files.find({isDeleted: true},{sort: {headline: -1}});
+      case 'typeAsc': return Files.find({isDeleted: true},{sort: {type: 1}});
+      case 'typeDesc': return Files.find({isDeleted: true},{sort: {type: -1}});
+      case 'createdByAsc': return Files.find({isDeleted: true},{sort: {creator: 1}});
+      case 'createdByDesc': return Files.find({isDeleted: true},{sort: {creator: -1}});
+      case 'savedByAsc': return Files.find({isDeleted: true},{sort: {savedBy: 1}});
+      case 'savedByDesc': return Files.find({isDeleted: true},{sort: {savedBy: -1}});
+      default: Session.set("fileSort", "savedAtDesc"); return Files.find({isDeleted: true},{sort: {when: -1}});
+    }
   }
-};
+});
 
 Template.adminDeletedFilesPage.events({
   'click #goToPages': function(evt) {
