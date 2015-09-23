@@ -163,3 +163,7 @@ Only displays the last 3 months’ worth of pages and mailings
 [Discover Meteor book](https://www.discovermeteor.com/)
 
 [StackOverflow](https://stackoverflow.com/questions/tagged/meteor)
+
+### License
+
+This project is licensed under the terms of the MIT license.
