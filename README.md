@@ -29,9 +29,9 @@ It has been built for CREDO’s needs, which may not be the same as your organiz
 	
   Follow the instructions here: https://www.meteor.com/install
 
-2. Set organization-specific variables in settings.json
+2. Set organization-specific variables in **settings.json**
 
-  Create a new file called settings.json in the main app folder. Update the JSON below with the authorization tokens and URLs specific to your organization, then save that in settings.json. Note that this is in .gitignore so it won’t be checked in with the rest of the repo. 
+  Create a new file called **settings.json** in the main app folder. Update the JSON below with the authorization tokens and URLs specific to your organization, then save that in **settings.json**. Note that this is in **.gitignore** so it won’t be checked in with the rest of the repo. 
 
   ``` javascript
   {
@@ -69,7 +69,7 @@ It has been built for CREDO’s needs, which may not be the same as your organiz
 
 4. Set up Google authentication
 
-  Go to http://localhost:3000/
+  Go to [http://localhost:3000/]
 
 	Click on “Configure Google”
 
@@ -81,7 +81,7 @@ It has been built for CREDO’s needs, which may not be the same as your organiz
 
 5. Update dictionaries
 
-  At the end of the meteor.js file, there are 2 dictionaries hard-coded in: sender and tags. These are used to pull in confirmation email sender and optional page tags.
+  At the end of the **meteor.js** file, there are 2 dictionaries hard-coded in: sender and tags. These are used to pull in confirmation email sender and optional page tags.
 
   They’re formatted like this:
 
@@ -98,7 +98,7 @@ It has been built for CREDO’s needs, which may not be the same as your organiz
   ```
   Just update them with the values for your own AK instance.
 
-  Next you’ll need to update which tags show up as options when creating a page. Edit this section in createPageInputTemplates.html with the names of the tags:
+  Next you’ll need to update which tags show up as options when creating a page. Edit this section in **createPageInputTemplates.html** with the names of the tags:
 
   ``` javascript
   <template name="templatePageTags">
