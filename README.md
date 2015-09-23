@@ -69,7 +69,7 @@ It has been built for CREDO’s needs, which may not be the same as your organiz
 
 4. Set up Google authentication
 
-  Go to [http://localhost:3000/]
+  Go to <http://localhost:3000/>
 
 	Click on “Configure Google”
 
