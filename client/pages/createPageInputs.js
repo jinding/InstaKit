@@ -20,7 +20,7 @@ Template.templatePageStatement.events({
 });
 
 Template.templatePageAboutText.events({
-  'blur textarea': function() {
+  'keyup textarea': function() {
     Session.set("pageAboutText", $('#pageAboutText').val());
   }
 });
