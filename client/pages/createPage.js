@@ -179,7 +179,7 @@ Template.createPage.events({
           Session.set('apiError', error.reason);
           Session.set('showLoading', false);
         } else {
-          Session.set('apiSuccess', 'API success!');
+          Session.set('apiSuccess', 'Your page has been updated');
           Session.set('apiResults', res);
           Session.set('AKpageURL', res.AKpage);
           Session.set('AKpageEditURL', res.AKpageEdit);
@@ -253,7 +253,7 @@ Template.createPage.events({
                 Session.set('apiError', error.reason);
                 Session.set('showLoading', false);
             } else {
-                Session.set('apiSuccess', 'API success!');
+                Session.set('apiSuccess', 'Your page has been created');
                 Session.set('apiResults', res);
                 Session.set('AKpageURL', res.AKpage);
                 Session.set('AKpageEditURL', res.AKpageEdit);
