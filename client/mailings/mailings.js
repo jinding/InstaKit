@@ -65,32 +65,11 @@ Template.filePage.events({
                 {query: {template: 'takeaction'}}
               );
   },
-  'click #templateChooser_publicComment': function(evt) {
-    evt.preventDefault();
-    Router.go('compose',
-                {},
-                {query: {template: 'public comment'}}
-              );
-  },
-  'click #templateChooser_call': function(evt) {
-    evt.preventDefault();
-    Router.go('compose',
-                {},
-                {query: {template: 'call'}}
-              );
-  },
   'click #templateChooser_event': function(evt) {
     evt.preventDefault();
     Router.go('compose',
                 {},
                 {query: {template: 'event'}}
-              );
-  },
-  'click #templateChooser_mobilize': function(evt) {
-    evt.preventDefault();
-    Router.go('compose',
-                {},
-                {query: {template: 'mobilize'}}
               );
   },
   'click #templateChooser_blank': function(evt) {
@@ -100,14 +79,6 @@ Template.filePage.events({
                 {query: {template: 'blank'}}
               );
   },
-  'click #templateChooser_superpacFundraiser': function(evt) {
-    evt.preventDefault();
-    Router.go('compose',
-                {},
-                {query: {template: 'superpacFundraiser'}}
-              );
-  },
-  // edit, copy and delete functions
   'click #logoutButton': function() {
     Meteor.logout();
   },
