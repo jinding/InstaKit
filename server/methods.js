@@ -621,7 +621,6 @@ Meteor.methods({
   }, 
   eventCreateSubEvent: function(subEvent) {
   	try {
-  		// REMEMBER TO CHANGE THIS BACK TO CREDO FROM ROBOTIC DOGS AND USER AUTH
   		var eventUmbrellaURI = subEvent.eventUmbrellaCampaignURL.replace(Meteor.settings.actionKitApi.actionKitUrl,"");
 
 		var host = HTTP.call("GET", 
@@ -630,9 +629,8 @@ Meteor.methods({
 
 		console.log(host.objects[0].resource_uri);  
 
-  		// REMEMBER TO CHANGE THIS BACK TO CREDO FROM ROBOTIC DOGS AND USER AUTH
   		var createSubEvent = HTTP.call("POST", Meteor.settings.actionKitApi.actionKitUrl+"rest/v1/event/",
-	  						 {auth: "meteor:dingbergalis",
+	  						 {auth: Meteor.settings.actionKitApi.actionKitAuth,
 	  						  headers: {"Content-type": "application/json"},
 	                          data: {
 	                          		campaign: eventUmbrellaURI,
@@ -657,7 +655,7 @@ Meteor.methods({
   		console.log("page: " + subEvent.eventUmbrellaHostURL.replace(Meteor.settings.actionKitApi.actionKitUrl,""));
 
   		var createHostSignup = HTTP.call("POST", Meteor.settings.actionKitApi.actionKitUrl+"rest/v1/eventsignup/",
-	  						 {auth: "meteor:dingbergalis",
+	  						 {auth: Meteor.settings.actionKitApi.actionKitAuth,
 	  						  headers: {"Content-type": "application/json"},
 	                          data: {
 	                          		event: createSubEvent.headers.location.replace(Meteor.settings.actionKitApi.actionKitUrl,""),
