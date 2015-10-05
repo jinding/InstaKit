@@ -678,6 +678,37 @@ Meteor.methods({
         	throw new Meteor.Error(500, "Unknown error creating sub event", e.response.data);
 
   	}
+  },
+ /*********** MAILINGS API *****************/
+  mailingCreate: function(mailing) {
+  	try {
+		var copyModel = HTTP.call("POST", Meteor.settings.actionKitApi.actionKitUrl+"rest/v1/mailer/14271/copy/",
+	  						 {auth: "meteor:dingbergalis",
+	  						  headers: {"Content-type": "application/json"},
+	                          data: { }
+	                      });
+//		console.log(copyModel);
+		console.log(copyModel.headers.location);
+		var editMailing = HTTP.call("PATCH", copyModel,
+	  						 {auth: "meteor:dingbergalis",
+	  						  headers: {"Content-type": "application/json"},
+	                          data: { 
+	                          	html: mailing.html
+
+	                          } // end data
+	                      });
+ 		return editMailing.headers.location;
+
+  	} catch (e) {
+		console.log(e.response);
+		if (e.response.statusCode && e.response.statusCode === 400)
+			if (e.response.data)
+	        	throw new Meteor.Error(e.response.statusCode, e.response.data, e.response);
+	        else throw new Meteor.Error(e.response.statusCode, e.response.content, e.response);
+        else
+        	throw new Meteor.Error(500, "Unknown error creating mailing", e.response.data);
+
+  	}
   }
 });
 
