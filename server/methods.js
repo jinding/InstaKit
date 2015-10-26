@@ -374,7 +374,7 @@ Meteor.methods({
 		return createPage.headers.location; 
 	} catch (e) {
 		console.log(e.response);
-		if (e.response.statusCode && e.response.statusCode === 400)
+		if (e.response && e.response.statusCode && e.response.statusCode === 400)
 			if (e.response.data && e.response.data.petitionpage && e.response.data.petitionpage.name[0])
 	        	throw new Meteor.Error(e.response.statusCode, e.response.data.petitionpage.name[0], e.response);
 	        else throw new Meteor.Error(e.response.statusCode, e.response.content, e.response);
