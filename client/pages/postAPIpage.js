@@ -6,3 +6,9 @@ Template.postAPIpage.events({
     Router.go('compose', {}, {query: {page: Session.get("id")}});
   }
 });
+
+Template.postAPIpage.helpers({
+  sharePageEditUrl: function() {
+  	return Session.get("pageSharePageLink").replace("http://share.credoaction.com/4/", "https://run.shareprogress.org/pages/") + "/edit";
+  }
+});

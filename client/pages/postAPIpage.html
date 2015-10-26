@@ -3,15 +3,22 @@
 		<div class="apiInfo">
 			<button id="buttonBackToPageList">back to pages</button>
 			<button id="buttonMakeEmail" style="background-color:#FF6319;">create email</button>
-			<p><b>MAKE SURE TO EDIT PAGE TAGS AFTER CREATING OR EDITING PAGES</b></p>
-			<p>ActionKit page ID: {{getValue 'AKpageID'}}</p>
+			<h1>Public page information</h1>
 			<p>ActionKit page URL: <a href="{{getValue 'AKpageURL'}}" target="_blank">{{getValue 'AKpageURL'}}</a></p>
-			<p>ActionKit edit page URL: <a href="{{getValue 'AKpageEditURL'}}" target="_blank">{{getValue 'AKpageEditURL'}}</a></p>
 			<p>Share page URL: <a href="{{getValue 'pageSharePageLink'}}" target="_blank">{{getValue 'pageSharePageLink'}}</a></p>
 			<p>Bitly: <a href="{{getValue 'AKpageBitly'}}" target="_blank">{{getValue 'AKpageBitly'}}</a></p>
+
+			<br>
+			<h1>Edit your AK or SP page</h1>
+			<p>ActionKit page ID: {{getValue 'AKpageID'}}</p>
+			<p>Edit in ActionKit: <a href="{{getValue 'AKpageEditURL'}}" target="_blank">{{getValue 'AKpageEditURL'}}</a></p>
+			<p>Edit in ShareProgress: <a href="{{sharePageEditUrl}}" target="_blank">{{sharePageEditUrl}}</a></p>
+
 	{{#if isAdmin}}
 			<p>ActionKit page resource URI: <a href="{{getValue 'AKpageResourceURI'}}" target="_blank">{{getValue 'AKpageResourceURI'}}</a></p>
 	{{/if}}
+			<br>
+			<h1 style="color:red;"><b>MAKE SURE TO EDIT PAGE TAGS AFTER CREATING OR EDITING PAGES</b></h1>
 		</div>
 		<div id="createPageDisplay" style="width: 550px;">
 			{{> createPageDisplay }}
