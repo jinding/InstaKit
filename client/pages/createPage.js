@@ -9,8 +9,8 @@ standardizePageLinks = function(str) {
 };
 
 setImageLinksToCloudfront = function(str) {
-  if (str.search(/ *https/i) >= 0) // if https exist in the copy, change to http
-    str = str.replace(/ *https/i, 'http');
+  if (str.search(/ *http:/i) >= 0) // if http exist in the copy, change to https
+    str = str.replace(/ *http:/i, 'https:');
   if (str.search(/s3.amazonaws.com\/s3.credoaction.com/i) >= 0) // if s3 exists in the copy, change to cloudfront
     str = str.replace(/s3.amazonaws.com\/s3.credoaction.com/i, 'd2omw6a1nm6pnh.cloudfront.net');
   return str;
@@ -148,10 +148,13 @@ Template.createPage.events({
     }
   },
   'click .buttonAPIok': function() {
-    Session.set("apiError","");
     Session.set("apiSuccess","");
     Session.set("duplicatePage",false);
-    Router.go('postAPI', {_id: Session.get('id')});
+    if (Session.get("apiError")) {
+      Session.set("apiError","");
+    } else {
+      Router.go('postAPI', {_id: Session.get('id')});      
+    }
   },
   'click #buttonAPIupdate': function() {
     Session.set('showLoading', true);
