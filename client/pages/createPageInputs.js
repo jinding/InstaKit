@@ -29,7 +29,7 @@ Template.templatePageFacebook.events({
   'blur input[type=text]': function() {
     Session.set("pageFacebookTitle", $('#pageFacebookTitle').val());
   },
-  'blur textarea': function() {
+  'keyup textarea': function() {
     Session.set("pageFacebookCopy", $('#pageFacebookCopy').val());
     Session.set("pageFacebookLength", 260 - $('#pageFacebookCopy').val().length)
   }
