@@ -160,6 +160,8 @@ Template.createPage.events({
     // only move forward if the share text doesn't exceed length limits
     if (Session.get('pageTwitterLength') < 0 || Session.get('pageFacebookLength') < 0) {
       Session.set('apiError', 'Share text is too long. Please check Facebook and Twitter copy again.');
+    } else if (!page.pageTags.length) {
+      Session.set('apiError', 'Tags are not set for this page');
     } else {
       // first, save the page
       Meteor.call('saveFile', page, function (err, res) {
@@ -216,6 +218,10 @@ Template.createPage.events({
     // only move forward if the share text doesn't exceed length limits
     if (Session.get('pageTwitterLength') < 0 || Session.get('pageFacebookLength') < 0) {
       Session.set('apiError', 'Share text is too long. Please check Facebook and Twitter copy again.');
+      Session.set('showLoading', false);
+     } else if (!page.pageTags.length) {
+      Session.set('apiError', 'Tags are not set for this page');
+      Session.set('showLoading', false);
     } else {
       Meteor.call('saveFile', page, function (err, res) {
         if (err) {
