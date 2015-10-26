@@ -36,9 +36,9 @@ Template.templatePageFacebook.events({
 });
 
 Template.templatePageTwitterCopy.events({
-  'blur textarea': function() {
+  'keyup textarea': function() {
     Session.set("pageTwitterCopy", $('#pageTwitterCopy').val());
-    // assume 15 chars for bitly link, but if {LINK} exists then only need 9 more spaces
+    // assume 23 chars for links, but if {LINK} exists then only need 16 more spaces
     var linkLength = $('#pageTwitterCopy').val().search(/{ *LINK *}/i) < 0 ? 23 : 16;
     Session.set("pageTwitterLength", 140 - linkLength - $('#pageTwitterCopy').val().length)
   }
