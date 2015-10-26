@@ -157,6 +157,8 @@ Template.createPage.events({
     }
   },
   'click #buttonAPIupdate': function() {
+    // scroll to top of screen so that you can see any errors / update messages
+    $('html, body').animate({ scrollTop: 0 }, 'fast');
     Session.set('showLoading', true);
     Session.set('duplicatePage',false);
     var page = makePageFromSession();
@@ -215,6 +217,8 @@ Template.createPage.events({
     } // end if share text is within length limits
   }, 
   'click #buttonAPI': function() {
+    // scroll to top of screen so that you can see any errors / update messages
+    $('html, body').animate({ scrollTop: 0 }, 'fast');
     Session.set('showLoading', true);
     Session.set("apiError","");
     var page = makePageFromSession();

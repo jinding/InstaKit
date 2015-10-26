@@ -27,6 +27,20 @@
 					<button id="snippets">ak snippets</button>
 				</div>
 				{{> createPageInputs}}
+				<div class="buttonHeader"> <!-- show save/update/push buttons at the bottom of the page too -->
+				{{#if getValue "pageNotSaved" }}
+					<button id="buttonSavePage" style="background-color: #01E;">save page</button>
+					<button id="buttonBackToPageList">discard changes</button>
+				{{else}}
+					<button id="buttonBackToPageList">back to pages</button>
+				{{/if}}
+				{{#if getValue 'AKpageID' }}
+					<button id="buttonAPIupdate">update AK page</button>
+				{{else}}
+					<button id="buttonAPI">push to AK</button>
+				{{/if}}
+					<button id="buttonMakeEmail" style="background-color:#FF6319;">create email</button>
+				</div>
 			</div>
 			<div id="createPageDisplay">
 				{{#if getValue "toolTips"}} {{> toolTipsText }} {{/if}}
