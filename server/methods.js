@@ -1,6 +1,7 @@
 var setTags = function(pageTags) {
+	var tags = [];
 	// always have "credo" as a default tag
-	var tags = Meteor.settings.actionKitApi.actionKitOrgTag;
+	tags.push(Meteor.settings.actionKitApi.actionKitOrgTag);
 
 	for (i=0; i<pageTags.length; i++) {
 		tags.push({name: pageTags[i], resource_uri: tagDictionary[pageTags[i]]});
