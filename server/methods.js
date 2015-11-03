@@ -1,6 +1,7 @@
 var setTags = function(pageTags) {
+	var tags = [];
 	// always have "credo" as a default tag
-	var tags = Meteor.settings.actionKitApi.actionKitOrgTag;
+	tags.push(Meteor.settings.actionKitApi.actionKitOrgTag);
 
 	for (i=0; i<pageTags.length; i++) {
 		tags.push({name: pageTags[i], resource_uri: tagDictionary[pageTags[i]]});
@@ -71,7 +72,7 @@ var updatePageShare = function(page, loc, bitly) {
                       			}, // end fields
                       			goal_type: "users",
                       			one_click: false,
-                      			recognize: "never",
+//                      			recognize: "never",
                       			required_fields: [
                       			 	{   id: 2,
 										name: "zip",
@@ -204,7 +205,7 @@ var updatePageShareForCreatedPage = function(page, loc, bitly) {
                       			}, // end fields
                       			goal_type: "users",
                       			one_click: false,
-                      			recognize: "never",
+//                      			recognize: "never",
                       			required_fields: [
                       			 	{   id: 2,
 										name: "zip",
@@ -374,7 +375,7 @@ Meteor.methods({
 		return createPage.headers.location; 
 	} catch (e) {
 		console.log(e.response);
-		if (e.response.statusCode && e.response.statusCode === 400)
+		if (e.response && e.response.statusCode && e.response.statusCode === 400)
 			if (e.response.data && e.response.data.petitionpage && e.response.data.petitionpage.name[0])
 	        	throw new Meteor.Error(e.response.statusCode, e.response.data.petitionpage.name[0], e.response);
 	        else throw new Meteor.Error(e.response.statusCode, e.response.content, e.response);

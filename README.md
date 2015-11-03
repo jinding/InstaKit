@@ -38,7 +38,7 @@ It has been built for CREDO’s needs, which may not be the same as your organiz
     "actionKitApi": {
       "actionKitAuth": "username:password",
       "actionKitUrl": "https://act.credoaction.com/",
-      "actionKitOrgTag": [{"name": "credo", "resource_uri": "/rest/v1/tag/32/"}]
+      "actionKitOrgTag": {"name": "credo", "resource_uri": "/rest/v1/tag/32/"}
     },
     "shareProgressApi": {
       "shareProgressApiUrl": "https://run.shareprogress.org/api/v1/",
