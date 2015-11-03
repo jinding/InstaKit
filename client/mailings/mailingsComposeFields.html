@@ -64,6 +64,15 @@ Make sure to escape underscores in visible text like so: "\_" (but not necessary
 <template name="markdown_input">
 	<textarea class="textbox {{highlight "markdown_data"}}" rows="20" type="text" id="markdown_text">
 {{#if getValue "markdown_data"}}{{getValue "markdown_data"}}
+{{else}}{{#if wrapperStyle "mobilize"}}We have to speak out now to stop it. That's why I started my own campaign on CREDOMobilize.com, which allows activists to start their own petitions. My petition, which is to the U.S. Bureau of Reclamation, says the following:
+
+> *Abandon the proposal to raise the height of the Shasta Dam by 18.5 feet, and prevent cultural harm to the Winnemem Wintu's sacred lands and ecological damage to the McCloud and other rivers of northern California.*
+
+**[Tell the Bureau of Reclamation: Stop the disastrous plan to raise the Shasta Dam]({{getValue "link"}})**
+
+**[Will you join me and add your name to my petition to the U.S. Bureau of Reclamation to demand it stop the proposal to raise the Shasta Dam?]({{getValue "link"}})**
+
+Thank you for your support.
 {{else}}{{#if wrapperStyle "event"}}
 Link: [{{getValue "link"}}]({{getValue "link"}})
 
@@ -76,7 +85,7 @@ Make sure to escape underscores like so: "\_"
 Make sure to escape underscores like so: "\_"
 
 Link: [{{getValue "link"}}]({{getValue "link"}})
-{{/if}}{{/if}}{{/if}}</textarea>
+{{/if}}{{/if}}{{/if}}{{/if}}</textarea>
 </template>
 
 <template name="topper">

@@ -58,6 +58,26 @@
 		{{> signature }}
 		{{> footnotes}}
 		{{> twitter}}
+	{{else}}{{#if wrapperStyle "public comment"}}
+		{{> headline}}
+		{{> statement_leadin}}
+		{{> petition}}
+		{{> link}}
+		{{> graphic}}
+		{{> graphic_alt}}
+		{{> markdown_input}}
+		{{> signature }}
+		{{> footnotes}}
+		{{> twitter}}
+	{{else}}{{#if wrapperStyle "call"}}
+		{{> headline}}
+		{{> petition}}
+		{{> link}}
+		{{> graphic}}
+		{{> graphic_alt}}
+		{{> markdown_input}}
+		{{> signature }}
+		{{> footnotes}}
 	{{else}}{{#if wrapperStyle "event"}}
 		{{> headline}}
 		{{> petition}}
@@ -67,16 +87,40 @@
 		{{> markdown_input}}
 		{{> signature }}
 		{{> footnotes}}
+	{{else}}{{#if wrapperStyle "mobilize"}}
+		{{> link}}
+		{{> signature }}
+		{{> topper}}
+		{{> headline}}
+		{{> markdown_input}}
+		{{> footnotes}}
+		{{> facebook }}
+		{{> twitter}}
 	{{else}}{{#if wrapperStyle "blank"}}
 		{{> headline}}
 		{{> markdown_input}}
-	{{/if}}{{/if}}{{/if}}{{/if}}
+	{{else}}{{#if wrapperStyle "superpacFundraiser"}}
+		{{> headline}}
+		{{> link}}
+		{{> refcode }}
+		{{> graphic}}
+		{{> graphic_alt}}
+		{{> markdown_input}}
+		{{> signature }}
+		{{> footnotes}}
+	{{/if}}{{/if}}{{/if}}{{/if}}{{/if}}{{/if}}{{/if}}{{/if}}
 </template>
 
 <template name="display">
 	{{#if display_setting "visual"}}
 		<div id="display">
-			{{> emailWrapper}}
+			{{#if wrapperStyle "mobilize"}}
+				{{> mobilizeEmailWrapper}}
+			{{else}} {{#if wrapperStyle "superpacFundraiser"}}
+				{{> superpacEmailWrapper}}
+			{{else}}
+				{{> emailWrapper}}
+			{{/if}}{{/if}}
 		</div>
 	{{else}} <!-- show the unformatted HTML for the chosen template style -->
 		<div id="display_html">
@@ -85,11 +129,19 @@
 	{{unformattedHtml "petition" }}
 {{else}} {{#if wrapperStyle "takeaction"}}
 	{{unformattedHtml "takeAction" }}
+{{else}} {{#if wrapperStyle "public comment"}}
+	{{unformattedHtml "publicComment" }}
+{{else}} {{#if wrapperStyle "call"}}
+	{{unformattedHtml "call" }}
 {{else}} {{#if wrapperStyle "event"}}
 	{{unformattedHtml "event" }}
+{{else}} {{#if wrapperStyle "mobilize"}}
+	{{unformattedHtml "mobilize" }}
 {{else}} {{#if wrapperStyle "blank"}}
 	{{unformattedHtml "blank" }}
-{{/if}}{{/if}}{{/if}}{{/if}}
+{{else}} {{#if wrapperStyle "superpacFundraiser"}}
+	{{unformattedHtml "superpacFundraiser" }}
+{{/if}}{{/if}}{{/if}}{{/if}}{{/if}}{{/if}}{{/if}}{{/if}}
 </pre>
 		</div>
 	{{/if}}
@@ -106,11 +158,34 @@
 			{{> petitionEmailWrapperBody}}
 		{{else}} {{#if wrapperStyle "takeaction"}}
 			{{> takeActionEmailWrapperBody}}
+		{{else}} {{#if wrapperStyle "public comment"}}
+			{{> publicCommentEmailWrapperBody}}
+		{{else}} {{#if wrapperStyle "call"}}
+			{{> callEmailWrapperBody}}
 		{{else}} {{#if wrapperStyle "event"}}
 			{{> eventEmailWrapperBody}}
 		{{else}} {{#if wrapperStyle "blank"}}
 			{{> blankEmailWrapperBody}}
-		{{/if}}{{/if}}{{/if}}{{/if}}
+		{{/if}}{{/if}}{{/if}}{{/if}}{{/if}}{{/if}}
+		<tr><td style="font-size:12px;padding: 0px 12px;">
+		© 2015 CREDO. All rights reserved.
+		</td></tr>
+	</table> <!-- end inner table -->
+</template>
+
+<template name="superpacEmailWrapper">
+	<!-- start inner table -->
+	<table width="100%" cellpadding="0" cellspacing="0" style="padding:12px 0px; margin:0 auto; background:#fff; font-family: Arial, helvetica, sans-serif; font-size: 13px; line-height: 18px; text-align:left; height: 45px;">
+		<!-- CREDO logo -->
+		<tr><td style="background:#FF6319;text-align:left; padding-left:12px; line-height:40px;padding-top:5px;color:#FFF;font-weight:bold; vertical-align:middle; height:45px;font-size:17px;font-weight:bold;">
+		    <img src="http://d2omw6a1nm6pnh.cloudfront.net/images/logo-superpac-email-120.png" border="0" alt="CREDO SuperPAC" style="vertical-align:middle;min-width:91px;">
+		</td></tr>
+		{{#if wrapperStyle "superpacFundraiser"}}
+			{{> superpacFundraiserEmailWrapperBody}}
+		{{/if}}
+		<tr><td style="font-size:12px; padding: 0px 12px 12px;">
+			<em>Paid for by CREDO SuperPAC, www.credosuperpac.com, not authorized by any candidate or candidate's committee.</em>
+		</td></tr>
 		<tr><td style="font-size:12px;padding: 0px 12px;">
 		© 2015 CREDO. All rights reserved.
 		</td></tr>
@@ -164,6 +239,7 @@
 		<li><span class="snippetsText" id="donationsMostRecent">Donations most recent</span></li>
 		<li><span class="snippetsText" id="donationsMostRecentDate">Donations most recent date</span></li>
 		<li><span class="snippetsText" id="donationsYTD">Donations year to date</span></li>
+		<li><span class="snippetsText" id="superpacAskBlock">SuperPAC ask block</span></li>
 	</ul>
   </div>
 </template>
