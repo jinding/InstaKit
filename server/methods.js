@@ -394,7 +394,7 @@ Meteor.methods({
 	console.log("shareprogress returns ",sp);
   	updatePageFields(page, AK.resource_uri, sp.share_page_url);
   	var pageObj = {};
-  	pageObj.AKpage = Meteor.settings.actionKitApi.actionKitUrl+"sign/" + page.pageName;
+  	pageObj.AKpage = Meteor.settings.actionKitApi.actionKitUrl.replace("https:","http:")+"sign/" + page.pageName;
   	if (page.pageType === "letter") 
   		pageObj.AKpageEdit = Meteor.settings.actionKitApi.actionKitUrl+"admin/core/letterpage/" + AK.id;
   	else pageObj.AKpageEdit = Meteor.settings.actionKitApi.actionKitUrl+"admin/core/petitionpage/" + AK.id;
@@ -432,7 +432,7 @@ Meteor.methods({
 	  	updatePageFieldsForCreatedPage(page, Meteor.settings.actionKitApi.actionKitUrl+followupPageFields, sp.share_page_url);
 
 	  	var pageObj = {};
-	  	pageObj.AKpage = Meteor.settings.actionKitApi.actionKitUrl+"sign/" + page.pageName;
+	  	pageObj.AKpage = Meteor.settings.actionKitApi.actionKitUrl.replace("https:","http:")+"sign/" + page.pageName;
 	  	if (page.pageType === "letter") 
 	  		pageObj.AKpageEdit = Meteor.settings.actionKitApi.actionKitUrl+"admin/core/letterpage/" + page.AKpageID;
 	  	else pageObj.AKpageEdit = Meteor.settings.actionKitApi.actionKitUrl+"admin/core/petitionpage/" + page.AKpageID;
