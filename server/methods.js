@@ -72,7 +72,7 @@ var updatePageShare = function(page, loc, bitly) {
                       			}, // end fields
                       			goal_type: "users",
                       			one_click: false,
-//                      			recognize: "never",
+                      			recognize: "never",
                       			required_fields: [
                       			 	{   id: 2,
 										name: "zip",
@@ -205,7 +205,7 @@ var updatePageShareForCreatedPage = function(page, loc, bitly) {
                       			}, // end fields
                       			goal_type: "users",
                       			one_click: false,
-//                      			recognize: "never",
+                      			recognize: "never",
                       			required_fields: [
                       			 	{   id: 2,
 										name: "zip",
