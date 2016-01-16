@@ -15,6 +15,8 @@ This app also allows you to copy the campaign data of title, URL, petition text,
 
 You can also create standalone mailings of whichever templates you’ve defined in the app. This ships with a “blank” and a generic “petition” template.
 
+Screenshots can be viewed in the "screenshots" folder.
+
 ### Before you start
 
 This app uses Google authentication, which means it assumes you have a Google apps account with the same domain for all users accessing this app. You would edit that domain in the settings.json file (below) and set it for “emailDomain”.
