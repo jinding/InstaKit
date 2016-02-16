@@ -9,7 +9,7 @@ This allows you to create AK pages of type:
 
 For petition and letter pages, your SP pages will be automatically created and linked up.
 
-Event pages use the standard /thanks template in your AK instance. The event campaign will be created as well as the any subevents that you might want to set up at the same time. This is primarily geared towards centrally-hosted events
+For event pages, the event campaign will be created as well as any subevents that you might want to set up at the same time. This is primarily geared towards centrally-hosted events.
 
 This app also allows you to copy the campaign data of title, URL, petition text, about text and images into a mailing so that you can copy the HTML and paste it into an AK mailing.
 
@@ -83,7 +83,7 @@ It has been built for CREDO’s needs, which may not be the same as your organiz
 
 5. Update dictionaries
 
-  At the end of the **meteor.js** file, there are 2 dictionaries hard-coded in: sender and tags. These are used to pull in confirmation email sender and optional page tags.
+  At the end of the **server/methods.js** file, there are 2 dictionaries hard-coded in: sender and tags. These are used to pull in confirmation email sender and optional page tags.
 
   They’re formatted like this:
 
