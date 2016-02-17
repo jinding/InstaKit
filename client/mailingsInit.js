@@ -1,4 +1,3 @@
-
 // email initialization functions
 setSessionVarsForEmail = function (obj) {
   Session.set("id", obj._id);
@@ -38,14 +37,8 @@ setSessionVarsForNewEmail = function () {
   Session.set("graphic_alt_text", "");
   if (Session.equals("templateChooser","mobilize"))
     Session.set("signature", "");
-  else if (Meteor.user().profile.name == "Mark Ristaino")
-    Session.set('signature', "Mark Ristaino, Emperor");
-  else if (Meteor.user().profile.name == 'Elijah Zarlin')
-    Session.set("signature", "Elijah Zarlin, Director of Climate Campaigns");
-  else if (Meteor.user().profile.name == 'Heidi Hess')
-    Session.set("signature", "Heidi Hess, Senior Campaign Manager");
-  else if (Meteor.user().profile.name == 'Murshed Zaheed')
-    Session.set("signature", "Murshed Zaheed, Deputy Political Director");
+  else if (Session.equals("templateChooser","superpacFundraiser"))
+    Session.set("signature", "Becky Bond, President");
   else Session.set('signature', Meteor.user().profile.name + ', Campaign Manager');
   Session.set("footnotes", "");
   Session.set("facebook", "");
@@ -67,15 +60,7 @@ setSessionVarsForEmailFromPage = function (obj) {
   Session.set("graphic", obj.pageGraphicEmail);
   Session.set("graphic_alt_text", "");
   Session.set("footnotes", "");
-  if (Meteor.user().profile.name == "Mark Ristaino")
-    Session.set('signature', "Mark Ristaino, Emperor");
-  else if (Meteor.user().profile.name == 'Elijah Zarlin')
-    Session.set("signature", "Elijah Zarlin, Director of Climate Campaigns");
-  else if (Meteor.user().profile.name == 'Heidi Hess')
-    Session.set("signature", "Heidi Hess, Senior Campaign Manager");
-  else if (Meteor.user().profile.name == 'Murshed Zaheed')
-    Session.set("signature", "Murshed Zaheed, Deputy Political Director");
-  else Session.set('signature', Meteor.user().profile.name + ', Campaign Manager');
+  Session.set('signature', Meteor.user().profile.name + ', Campaign Manager');
   Session.set("facebook", "");
   var twitter = obj.pageTwitterCopy.replace(/{ *LINK *}/i, obj.AKpageBitly);
   Session.set("twitter", 'https://twitter.com/intent/tweet?&text='+urlEncodeQuotes(encodeURIComponent(removeCurlyQuotes(twitter))));
@@ -90,5 +75,3 @@ initSessionVarsForEmailCompose = function () {
   Session.set("emailNotSaved",false);
   Session.set("saveDialog",false);
 };
-
-
