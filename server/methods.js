@@ -72,7 +72,7 @@ var updatePageShare = function(page, loc, bitly) {
                       			}, // end fields
                       			goal_type: "users",
                       			one_click: false,
-//                      			recognize: "never",
+                      			recognize: "never",
                       			required_fields: [
                       			 	{   id: 2,
 										name: "zip",
@@ -205,7 +205,7 @@ var updatePageShareForCreatedPage = function(page, loc, bitly) {
                       			}, // end fields
                       			goal_type: "users",
                       			one_click: false,
-//                      			recognize: "never",
+                      			recognize: "never",
                       			required_fields: [
                       			 	{   id: 2,
 										name: "zip",
@@ -394,7 +394,7 @@ Meteor.methods({
 	console.log("shareprogress returns ",sp);
   	updatePageFields(page, AK.resource_uri, sp.share_page_url);
   	var pageObj = {};
-  	pageObj.AKpage = Meteor.settings.actionKitApi.actionKitUrl+"sign/" + page.pageName;
+  	pageObj.AKpage = Meteor.settings.actionKitApi.actionKitUrl.replace("https:","http:")+"sign/" + page.pageName;
   	if (page.pageType === "letter") 
   		pageObj.AKpageEdit = Meteor.settings.actionKitApi.actionKitUrl+"admin/core/letterpage/" + AK.id;
   	else pageObj.AKpageEdit = Meteor.settings.actionKitApi.actionKitUrl+"admin/core/petitionpage/" + AK.id;
@@ -432,7 +432,7 @@ Meteor.methods({
 	  	updatePageFieldsForCreatedPage(page, Meteor.settings.actionKitApi.actionKitUrl+followupPageFields, sp.share_page_url);
 
 	  	var pageObj = {};
-	  	pageObj.AKpage = Meteor.settings.actionKitApi.actionKitUrl+"sign/" + page.pageName;
+	  	pageObj.AKpage = Meteor.settings.actionKitApi.actionKitUrl.replace("https:","http:")+"sign/" + page.pageName;
 	  	if (page.pageType === "letter") 
 	  		pageObj.AKpageEdit = Meteor.settings.actionKitApi.actionKitUrl+"admin/core/letterpage/" + page.AKpageID;
 	  	else pageObj.AKpageEdit = Meteor.settings.actionKitApi.actionKitUrl+"admin/core/petitionpage/" + page.AKpageID;
@@ -684,18 +684,13 @@ Meteor.methods({
 
 var senderDictionary = {
 	"CREDO Action": "/rest/v1/fromline/1/",
-	"CREDO SuperPAC": "/rest/v1/fromline/18/",
-	"Becky Bond, CREDO Action": "/rest/v1/fromline/3/",
-	"Becky Bond, CREDO SuperPAC": "/rest/v1/fromline/13/",
 	"Elijah Zarlin, CREDO Action": "/rest/v1/fromline/4/",
 	"Heidi Hess, CREDO Action": "/rest/v1/fromline/15/",
 	"Jordan Krueger, CREDO Action": "/rest/v1/fromline/2/",
 	"Josh Nelson, CREDO Action": "/rest/v1/fromline/8/",
-	"Michael Kieschnick, CREDO Action": "/rest/v1/fromline/11/",
-	"Murshed Zaheed, CREDO Action": "/rest/v1/fromline/5/",
-	"Zack Malitz, CREDO Action": "/rest/v1/fromline/7/",
-	"Zack Malitz, CREDO SuperPAC": "/rest/v1/fromline/19/"
+	"Murshed Zaheed, CREDO Action": "/rest/v1/fromline/5/"
 };
+
 
 var tagDictionary = {
   "women": "/rest/v1/tag/1/",
