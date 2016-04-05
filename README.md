@@ -1,21 +1,21 @@
 ## InstaKit
 
-A Meteor.js app that simplifies the creation of ActionKit campaigns with ShareProgress after-action redirect pages.
+InstaKit is a Meteor.js app that simplifies the creation of ActionKit campaigns (pages and mailings) with ShareProgress after-action redirect pages. Abstract away the templates and wrappers and organization-standard requirements, and allow your campaigners to focus solely on the content of the page or mailing. Also automatically generate the mailing for a given page based upon the page content.
 
-This allows you to create AK pages of type:
+<a href="screenshots.md">**View screenshots here**</a>.
+
+You can create AK pages of type:
 * petition
 * letter
 * event
 
-For petition and letter pages, your SP pages will be automatically created and linked up.
+For petition and letter pages, your SP pages will be automatically created and linked up. You can set rules on the server-side for your organization-wide standard requirements (ex: "all pages are set to 'Recognize once', use the 'default' templateset, and be tagged 'awesome sauce') so that the campaigners don't need to remember to do these things.
 
 For event pages, the event campaign will be created as well as any subevents that you might want to set up at the same time. This is primarily geared towards centrally-hosted events.
 
 This app also allows you to copy the campaign data of title, URL, petition text, about text and images into a mailing so that you can copy the HTML and paste it into an AK mailing.
 
 You can also create standalone mailings of whichever templates you’ve defined in the app. This ships with a “blank” and a generic “petition” template.
-
-Screenshots can be viewed in the "screenshots" folder.
 
 ### Before you start
 
