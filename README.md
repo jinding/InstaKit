@@ -134,15 +134,27 @@ It has been built for CREDO’s needs, which may not be the same as your organiz
 
   If you get errors, you might get more information in the console or in the terminal.
 
-6. Customizations
+7. Customizations
   * Mailing wrappers
   * Page confirmation email
 
-7. Deploy it
+8. Deploy it
 
-  `meteor deploy [pick a name].meteor.com --settings settings.json`
+  For free hosting, you can use a combination of free services from Heroku and MongoLab. Here are links to some community articles to help you get started:
 
-  Go to [pick a name].meteor.com
+   [How to run a MeteorJS application on Heroku in 10 steps](https://medium.com/@leonardykris/how-to-run-a-meteor-js-application-on-heroku-in-10-steps-7aceb12de234?mkt_tok=3RkMMJWWfF9wsRonu6rNZKXonjHpfsX67uQrXqSg38431UFwdcjKPmjr1YIBTsd0aPyQAgobGp5I5FEOSLfYTrZqt6wJWg%3D%3D#.omto8uft5)
+   
+   [Deploy to production on Heroku](http://justmeteor.com/blog/deploy-to-production-on-heroku/?mkt_tok=3RkMMJWWfF9wsRonu6rNZKXonjHpfsX67uQrXqSg38431UFwdcjKPmjr1YIBTsd0aPyQAgobGp5I5FEOSLfYTrZqt6wJWg%3D%3D)
+
+   You can also consult [the Meteor Guide for other DIY deployment options](http://guide.meteor.com/deployment.html?mkt_tok=3RkMMJWWfF9wsRonu6rNZKXonjHpfsX67uQrXqSg38431UFwdcjKPmjr1YIBTsd0aPyQAgobGp5I5FEOSLfYTrZqt6wJWg%3D%3D).
+
+   For paid hosting (~$12/mo) you can deploy to [Meteor Galaxy](https://www.meteor.com/galaxy/) which supports one-line deployment that will look like this:
+
+  `meteor deploy [your app name].meteorapp.com --settings settings.json`
+
+9. Set up the live app
+  
+  Go to your deployed app's URL
 
   Log in
   
